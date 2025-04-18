@@ -19,7 +19,7 @@ pacman::p_load(tidyverse)
 
 ## 2.2 Importing the data
 
-Below code chunks imports the .csv file provided for this hands-on into R environment by using the *read_csv()* function. The data set contains examination grades scored for different subjects of Primary 3 students.
+Below code chunks imports the .csv file provided for this hands-on into R environment by using the *`read_csv()`* function. The data set contains examination grades scored for different subjects of Primary 3 students.
 
 ```{r}
 exam_data <- read_csv("data/Exam_data.csv")
@@ -30,7 +30,7 @@ exam_data <- read_csv("data/Exam_data.csv")
 First, let us compare how R Graphics, the core graphical functions of Base R and ggplot plot a simple histogram.
 
 ::: panel-tabset
-## R Graphhics
+## R Graphics
 
 ```{r}
 hist(exam_data$MATHS)
@@ -50,7 +50,8 @@ ggplot(data=exam_data, aes(x = MATHS)) +
 
 # 4. Essential Grammatical Elements in ggplot2: data
 
-Let us call the `ggplot()` function using the code chunk below. 
+Let us call the `ggplot()` function using the code chunk below.
+
 ```{r}
 ggplot(data=exam_data)
 ```
@@ -143,7 +144,7 @@ ggplot(data=exam_data,
   geom_density()           
 ```
 
-We can also plot two kernel density lines by using *colour* or *fill* argument of *aes()*
+We can also plot two kernel density lines by using *colour* or *fill* argument of *`aes()`*
 
 ```{r}
 ggplot(data=exam_data, 
@@ -152,9 +153,9 @@ ggplot(data=exam_data,
   geom_density()
 ```
 
-## 4.5 Plotting a boxplots: geom_boxplot()
+## 4.5 Plotting a box plot: geom_boxplot()
 
-The code chunk below plots a boxplot which displays a continuous value list by visualising 5 summary statistics (the median, two hinges and two whispers), and all "outlying" points individually.
+The code chunk below plots a box plot which displays a continuous value list by visualizing 5 summary statistics (the median, two hinges and two whispers), and all "outlying" points individually.
 
 ```{r}
 ggplot(data=exam_data, 
@@ -163,7 +164,7 @@ ggplot(data=exam_data,
   geom_boxplot()            
 ```
 
-### 4.5.1 Notches in boxplots
+### 4.5.1 Notches in box plots
 
 The code chunk below will show notches which are used in box plots to help visually assess whether the medians of distributions differ. If notches do not overlap, it is evidence that the medians are different.
 
@@ -223,7 +224,7 @@ The statistics function statistically transform data, usually as some form of su
 
     -   add a `geom_()` function and override the default stat.
 
-For the boxplots below, they are considered incomplete because the positions of the means were not shown
+For the box plots below, they are considered incomplete because the positions of the means were not shown
 
 ```{r}
 ggplot(data=exam_data, 
@@ -233,7 +234,7 @@ ggplot(data=exam_data,
 
 ## 5.1 Working with stat - the stat_summary()
 
-The code chunk below adds mean values by using stat_summary() function and overriding the default geom
+The code chunk below adds mean values by using `stat_summary()` function and overriding the default geom
 
 ```{r}
 ggplot(data=exam_data, 
@@ -247,7 +248,7 @@ ggplot(data=exam_data,
 
 ## 5.2 Working with stat - the geom() method
 
-The code chunk below adds mean values by using geom\_() function and overriding the default stat.
+The code chunk below adds mean values by using `geom_()` function and overriding the default stat.
 
 ```{r}
 ggplot(data=exam_data, 
@@ -261,7 +262,7 @@ ggplot(data=exam_data,
 
 ## 5.3 Adding a best fit curve on a scatterplot
 
-The code chunk below, geom_smooth() is used to plot a best fit curve on the scatter plot
+The code chunk below, `geom_smooth()` is used to plot a best fit curve on the scatter plot
 
 ```{r}
 ggplot(data=exam_data, 
@@ -300,7 +301,7 @@ ggplot(data=exam_data,
 
 ## 6.2 facet_grid() function
 
-facet_grid() forms a matrix of panels defined by row and column facetting variables. It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.
+facet_grid() forms a matrix of panels defined by row and column faceting variables. It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.
 
 The code chunk below plots a trellis plot using `facet_grid().`
 
@@ -396,7 +397,7 @@ ggplot(data=exam_data,
 
 ## 8.3 Working with theme: theme_miminal()
 
-A horizontal bar chart plotted using theme_minimal()
+A horizontal bar chart plotted using `theme_minimal()`
 
 ```{r}
 ggplot(data=exam_data, 
@@ -405,5 +406,3 @@ ggplot(data=exam_data,
   coord_flip() +
   theme_minimal()
 ```
-
-

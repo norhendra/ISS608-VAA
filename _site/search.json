@@ -116,7 +116,7 @@
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#facet_grid-function",
     "title": "Hands-on Exercise 1",
     "section": "6.2 facet_grid() function",
-    "text": "6.2 facet_grid() function\nfacet_grid() forms a matrix of panels defined by row and column facetting variables. It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.\nThe code chunk below plots a trellis plot using facet_grid().\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
+    "text": "6.2 facet_grid() function\nfacet_grid() forms a matrix of panels defined by row and column faceting variables. It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.\nThe code chunk below plots a trellis plot using facet_grid().\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20) +\n    facet_grid(~ CLASS)"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#working-with-coordinate",
@@ -166,5 +166,12 @@
     "title": "Visual Analytics and Applications",
     "section": "Hands-on Exercises",
     "text": "Hands-on Exercises\n\n\n\n\n\n\n\n\n\nHands-on Exercise 1\n\n\n\nNor Hendra\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-box-plot-geom_boxplot",
+    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-box-plot-geom_boxplot",
+    "title": "Hands-on Exercise 1",
+    "section": "4.5 Plotting a box plot: geom_boxplot()",
+    "text": "4.5 Plotting a box plot: geom_boxplot()\nThe code chunk below plots a box plot which displays a continuous value list by visualizing 5 summary statistics (the median, two hinges and two whispers), and all “outlying” points individually.\n\nggplot(data=exam_data, \n       aes(y = MATHS,       \n           x= GENDER)) +    \n  geom_boxplot()            \n\n\n\n\n\n\n\n\n\n4.5.1 Notches in box plots\nThe code chunk below will show notches which are used in box plots to help visually assess whether the medians of distributions differ. If notches do not overlap, it is evidence that the medians are different.\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot(notch=TRUE)"
   }
 ]

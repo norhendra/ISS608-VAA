@@ -202,9 +202,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#providing-clarity-of-data-in-histogram" id="toc-providing-clarity-of-data-in-histogram" class="nav-link" data-scroll-target="#providing-clarity-of-data-in-histogram">4.3.2 Providing clarity of data in histogram</a></li>
   </ul></li>
   <li><a href="#plotting-kernel-density-estimate-geom_density" id="toc-plotting-kernel-density-estimate-geom_density" class="nav-link" data-scroll-target="#plotting-kernel-density-estimate-geom_density">4.4 Plotting kernel density estimate: geom_density()</a></li>
-  <li><a href="#plotting-a-boxplots-geom_boxplot" id="toc-plotting-a-boxplots-geom_boxplot" class="nav-link" data-scroll-target="#plotting-a-boxplots-geom_boxplot">4.5 Plotting a boxplots: geom_boxplot()</a>
+  <li><a href="#plotting-a-box-plot-geom_boxplot" id="toc-plotting-a-box-plot-geom_boxplot" class="nav-link" data-scroll-target="#plotting-a-box-plot-geom_boxplot">4.5 Plotting a box plot: geom_boxplot()</a>
   <ul class="collapse">
-  <li><a href="#notches-in-boxplots" id="toc-notches-in-boxplots" class="nav-link" data-scroll-target="#notches-in-boxplots">4.5.1 Notches in boxplots</a></li>
+  <li><a href="#notches-in-box-plots" id="toc-notches-in-box-plots" class="nav-link" data-scroll-target="#notches-in-box-plots">4.5.1 Notches in box plots</a></li>
   </ul></li>
   <li><a href="#plotting-a-violin-plot-geom_violin" id="toc-plotting-a-violin-plot-geom_violin" class="nav-link" data-scroll-target="#plotting-a-violin-plot-geom_violin">4.6 Plotting a violin plot: geom_violin()</a></li>
   <li><a href="#plotting-a-scatterplot-geom_point-code-chunk-below-creates-a-scatter-plot-showing-the-maths-and-english-grades-of-pupils-by-using-geom_point" id="toc-plotting-a-scatterplot-geom_point-code-chunk-below-creates-a-scatter-plot-showing-the-maths-and-english-grades-of-pupils-by-using-geom_point" class="nav-link" data-scroll-target="#plotting-a-scatterplot-geom_point-code-chunk-below-creates-a-scatter-plot-showing-the-maths-and-english-grades-of-pupils-by-using-geom_point">4.7 Plotting a scatterplot: geom_point() Code chunk below creates a scatter plot showing the Maths and English grades of pupils by using geom_point()</a></li>
@@ -278,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="importing-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-the-data">2.2 Importing the data</h2>
-<p>Below code chunks imports the .csv file provided for this hands-on into R environment by using the <em>read_csv()</em> function. The data set contains examination grades scored for different subjects of Primary 3 students.</p>
+<p>Below code chunks imports the .csv file provided for this hands-on into R environment by using the <em><code>read_csv()</code></em> function. The data set contains examination grades scored for different subjects of Primary 3 students.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>exam_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Exam_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -298,7 +298,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 <h1>3. R Graphics VS ggplot</h1>
 <p>First, let us compare how R Graphics, the core graphical functions of Base R and ggplot plot a simple histogram.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R Graphhics</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">ggplot2</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R Graphics</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">ggplot2</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
@@ -488,7 +488,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </div>
 </div>
 </div>
-<p>We can also plot two kernel density lines by using <em>colour</em> or <em>fill</em> argument of <em>aes()</em></p>
+<p>We can also plot two kernel density lines by using <em>colour</em> or <em>fill</em> argument of <em><code>aes()</code></em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> MATHS, </span>
@@ -503,9 +503,9 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </div>
 </div>
 </section>
-<section id="plotting-a-boxplots-geom_boxplot" class="level2">
-<h2 class="anchored" data-anchor-id="plotting-a-boxplots-geom_boxplot">4.5 Plotting a boxplots: geom_boxplot()</h2>
-<p>The code chunk below plots a boxplot which displays a continuous value list by visualising 5 summary statistics (the median, two hinges and two whispers), and all “outlying” points individually.</p>
+<section id="plotting-a-box-plot-geom_boxplot" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-a-box-plot-geom_boxplot">4.5 Plotting a box plot: geom_boxplot()</h2>
+<p>The code chunk below plots a box plot which displays a continuous value list by visualizing 5 summary statistics (the median, two hinges and two whispers), and all “outlying” points individually.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS,       </span>
@@ -519,8 +519,8 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </div>
 </div>
 </div>
-<section id="notches-in-boxplots" class="level3">
-<h3 class="anchored" data-anchor-id="notches-in-boxplots">4.5.1 Notches in boxplots</h3>
+<section id="notches-in-box-plots" class="level3">
+<h3 class="anchored" data-anchor-id="notches-in-box-plots">4.5.1 Notches in box plots</h3>
 <p>The code chunk below will show notches which are used in box plots to help visually assess whether the medians of distributions differ. If notches do not overlap, it is evidence that the medians are different.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
@@ -605,7 +605,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 <li><p>add a <code>geom_()</code> function and override the default stat.</p></li>
 </ul></li>
 </ul>
-<p>For the boxplots below, they are considered incomplete because the positions of the means were not shown</p>
+<p>For the box plots below, they are considered incomplete because the positions of the means were not shown</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, <span class="at">x=</span> GENDER)) <span class="sc">+</span></span>
@@ -620,7 +620,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </div>
 <section id="working-with-stat---the-stat_summary" class="level2">
 <h2 class="anchored" data-anchor-id="working-with-stat---the-stat_summary">5.1 Working with stat - the stat_summary()</h2>
-<p>The code chunk below adds mean values by using stat_summary() function and overriding the default geom</p>
+<p>The code chunk below adds mean values by using <code>stat_summary()</code> function and overriding the default geom</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, <span class="at">x=</span> GENDER)) <span class="sc">+</span></span>
@@ -640,7 +640,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </section>
 <section id="working-with-stat---the-geom-method" class="level2">
 <h2 class="anchored" data-anchor-id="working-with-stat---the-geom-method">5.2 Working with stat - the geom() method</h2>
-<p>The code chunk below adds mean values by using geom_() function and overriding the default stat.</p>
+<p>The code chunk below adds mean values by using <code>geom_()</code> function and overriding the default stat.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y =</span> MATHS, <span class="at">x=</span> GENDER)) <span class="sc">+</span></span>
@@ -660,7 +660,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </section>
 <section id="adding-a-best-fit-curve-on-a-scatterplot" class="level2">
 <h2 class="anchored" data-anchor-id="adding-a-best-fit-curve-on-a-scatterplot">5.3 Adding a best fit curve on a scatterplot</h2>
-<p>The code chunk below, geom_smooth() is used to plot a best fit curve on the scatter plot</p>
+<p>The code chunk below, <code>geom_smooth()</code> is used to plot a best fit curve on the scatter plot</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS, <span class="at">y=</span>ENGLISH)) <span class="sc">+</span></span>
@@ -725,7 +725,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </section>
 <section id="facet_grid-function" class="level2">
 <h2 class="anchored" data-anchor-id="facet_grid-function">6.2 facet_grid() function</h2>
-<p>facet_grid() forms a matrix of panels defined by row and column facetting variables. It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.</p>
+<p>facet_grid() forms a matrix of panels defined by row and column faceting variables. It is most useful when you have two discrete variables, and all combinations of the variables exist in the data.</p>
 <p>The code chunk below plots a trellis plot using <code>facet_grid().</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
@@ -865,7 +865,7 @@ dbl (3): ENGLISH, MATHS, SCIENCE
 </section>
 <section id="working-with-theme-theme_miminal" class="level2">
 <h2 class="anchored" data-anchor-id="working-with-theme-theme_miminal">8.3 Working with theme: theme_miminal()</h2>
-<p>A horizontal bar chart plotted using theme_minimal()</p>
+<p>A horizontal bar chart plotted using <code>theme_minimal()</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>RACE)) <span class="sc">+</span></span>
