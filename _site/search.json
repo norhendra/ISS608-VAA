@@ -4,14 +4,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ISSS608-VAA",
-    "section": "",
-    "text": "Welcome to ISSS608 Visual Analytics and Applications. In this website, you will find my coursework prepared for this course."
+    "text": "Hello there! Welcome to my Visual Analytics portfolio.\nI’m Nor Hendra, A Master of IT in Business student in Singapore Management University."
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
@@ -33,27 +26,6 @@
     "title": "Hands-on Exercise 1",
     "section": "2.2 Importing the data",
     "text": "2.2 Importing the data\nBelow code chunks imports the .csv file provided for this hands-on into R environment by using the read_csv() function. The data set contains examination grades scored for different subjects of Primary 3 students.\n\nexam_data &lt;- read_csv(\"data/Exam_data.csv\")\n\nRows: 322 Columns: 7\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (4): ID, CLASS, GENDER, RACE\ndbl (3): ENGLISH, MATHS, SCIENCE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
-  },
-  {
-    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#correcting-y-scale-of-above-dot-plot",
-    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#correcting-y-scale-of-above-dot-plot",
-    "title": "Hands-on Exercise 1",
-    "section": "3.2.1 Correcting y-scale of above dot plot",
-    "text": "3.2.1 Correcting y-scale of above dot plot\nBelow code chunk will perform 2 things:\n\nTurn off y-axis with scale_y_continuous()\nbinwidth argument is used to change the binwidth to 2.5\n\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot(binwidth=2.5,         \n               dotsize = 0.5) +      \n  scale_y_continuous(NULL,           \n                     breaks = NULL)  \n\n\n\n\n\n\n\n\n#3.3 Plotting a histogram: geom_histogram()\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_histogram()       \n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`."
-  },
-  {
-    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#modifying-bins-in-histogram",
-    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#modifying-bins-in-histogram",
-    "title": "Hands-on Exercise 1",
-    "section": "3.3.1 Modifying bins in histogram",
-    "text": "3.3.1 Modifying bins in histogram\nThe default bin is 30. The code chunk below aims to:\n\nbins argument is used to change the number of bins to 20\nfills argument is to shade the histogram with light blue color, and\ncolor argument is used to change the outline colour of the bars in black\n\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20,            \n                 color=\"black\",      \n                 fill=\"light blue\")"
-  },
-  {
-    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#further-providing-clarity-of-data-in-histogram",
-    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#further-providing-clarity-of-data-in-histogram",
-    "title": "Hands-on Exercise 1",
-    "section": "3.3.2 Further providing clarity of data in histogram",
-    "text": "3.3.2 Further providing clarity of data in histogram\nBelow code chunk aims to change the interior colour to clearly distinguish Math scores on the x-axis and uses different fill colors based on student’s gender. Furthermore, it creates a histogram with 20 bins and outlines each bar in grey for better visual distinction.\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           fill = GENDER)) +\n  geom_histogram(bins=20, \n                 color=\"grey30\")"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-bar-chart-geom_bar",
@@ -154,6 +126,13 @@
     "text": "7.1 Working with Coordinate\nThe code chunk below flips the horizontal bar chart into vertical bar chart by using coord_flip()\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip()"
   },
   {
+    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#changing-the-y--and-x-axis-range",
+    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#changing-the-y--and-x-axis-range",
+    "title": "Hands-on Exercise 1",
+    "section": "7.2 Changing the y- and x-axis range",
+    "text": "7.2 Changing the y- and x-axis range\nThe scatter plot on the below is slightly misleading because the y-axis and x-axis range are not equal.\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, size=0.5)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nThe code chunk below fixes both the y-axis and x-ais range from 0-100\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5) +  \n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))\n\n`geom_smooth()` using formula = 'y ~ x'"
+  },
+  {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#working-with-theme-theme_gray",
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#working-with-theme-theme_gray",
     "title": "Hands-on Exercise 1",
@@ -175,10 +154,17 @@
     "text": "8.3 Working with theme: theme_miminal()\nA horizontal bar chart plotted using theme_minimal()\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_minimal()"
   },
   {
-    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#changing-the-y--and-x-axis-range",
-    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#changing-the-y--and-x-axis-range",
-    "title": "Hands-on Exercise 1",
-    "section": "7.2 Changing the y- and x-axis range",
-    "text": "7.2 Changing the y- and x-axis range\nThe scatter plot on the below is slightly misleading because the y-axis and x-axis range are not equal.\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, size=0.5)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nThe code chunk below fixes both the y-axis and x-ais range from 0-100\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5) +  \n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))\n\n`geom_smooth()` using formula = 'y ~ x'"
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Visual Analytics and Applications",
+    "section": "",
+    "text": "Welcome to ISSS608 Visual Analytics and Applications. In this website, you will find my coursework prepared for this course."
+  },
+  {
+    "objectID": "index.html#hands-on-exercises",
+    "href": "index.html#hands-on-exercises",
+    "title": "Visual Analytics and Applications",
+    "section": "Hands-on Exercises",
+    "text": "Hands-on Exercises\n\n\n\n\n\n\n\n\n\nHands-on Exercise 1\n\n\n\nNor Hendra\n\n\n\n\n\n\n\n\nNo matching items"
   }
 ]

@@ -2,8 +2,6 @@
 title: "About"
 ---
 
-About this site
+Hello there! Welcome to my Visual Analytics portfolio.
 
-```{r}
-1 + 1
-```
+I'm Nor Hendra, A Master of IT in Business student in Singapore Management University.
