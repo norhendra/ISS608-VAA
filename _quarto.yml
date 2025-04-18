@@ -12,10 +12,10 @@ website:
     - text: "In-class Exercise"
       menu:
         - text: "In-class Exercise"
-          href: ""
+          href: "In-class_Ex"
       menu:
         - text: "Take-home Exercise"
-          href: ""
+          href: "Take-home_Ex"
     right:
       - href: index.qmd
         text: Home
