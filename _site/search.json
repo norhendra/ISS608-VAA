@@ -11,7 +11,7 @@
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
     "title": "Hands-on Exercise 1",
     "section": "",
-    "text": "In this hands-on exercise, I aim is to learn the basic principles and essential components of ggplot2. I will also be gaining hands-on experience on these components to plot statistical graphics based on the principle of Layered Grammar of Graphics. At the end of this hands-on, I hope to be able to apply the essential graphical elements provided by ggplot2 to create elegant and yet functional statistical graphics."
+    "text": "In this hands-on exercise, my aim is to learn the basic principles and essential components of ggplot2. I will also be gaining hands-on experience on these components to plot statistical graphics based on the principle of Layered Grammar of Graphics. At the end of this hands-on, I hope to be able to apply the essential graphical elements provided by ggplot2 to create elegant and yet functional statistical graphics."
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#install-and-launching-r-packages",
@@ -56,11 +56,11 @@
     "text": "4.4 Plotting kernel density estimate: geom_density()\nA kernel density estimate provides a smoothed version of the histogram for continuous data that comes from an underlying smooth distribution.\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_density()           \n\n\n\n\n\n\n\n\nWe can also plot two kernel density lines by using colour or fill argument of aes()\n\nggplot(data=exam_data, \n       aes(x = MATHS, \n           colour = GENDER)) +\n  geom_density()"
   },
   {
-    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-boxplots-geom_boxplot",
-    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-boxplots-geom_boxplot",
+    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-box-plot-geom_boxplot",
+    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-box-plot-geom_boxplot",
     "title": "Hands-on Exercise 1",
-    "section": "4.5 Plotting a boxplots: geom_boxplot()",
-    "text": "4.5 Plotting a boxplots: geom_boxplot()\nThe code chunk below plots a boxplot which displays a continuous value list by visualising 5 summary statistics (the median, two hinges and two whispers), and all “outlying” points individually.\n\nggplot(data=exam_data, \n       aes(y = MATHS,       \n           x= GENDER)) +    \n  geom_boxplot()            \n\n\n\n\n\n\n\n\n\n4.5.1 Notches in boxplots\nThe code chunk below will show notches which are used in box plots to help visually assess whether the medians of distributions differ. If notches do not overlap, it is evidence that the medians are different.\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot(notch=TRUE)"
+    "section": "4.5 Plotting a box plot: geom_boxplot()",
+    "text": "4.5 Plotting a box plot: geom_boxplot()\nThe code chunk below plots a box plot which displays a continuous value list by visualizing 5 summary statistics (the median, two hinges and two whispers), and all “outlying” points individually.\n\nggplot(data=exam_data, \n       aes(y = MATHS,       \n           x= GENDER)) +    \n  geom_boxplot()            \n\n\n\n\n\n\n\n\n\n4.5.1 Notches in box plots\nThe code chunk below will show notches which are used in box plots to help visually assess whether the medians of distributions differ. If notches do not overlap, it is evidence that the medians are different.\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot(notch=TRUE)"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-violin-plot-geom_violin",
@@ -154,6 +154,13 @@
     "text": "8.3 Working with theme: theme_miminal()\nA horizontal bar chart plotted using theme_minimal()\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_minimal()"
   },
   {
+    "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html",
+    "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html",
+    "title": "Hands-on_Ex02",
+    "section": "",
+    "text": "Getting Started 1.1 Installing and loading required libraries The code chunk below uses p_load"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Visual Analytics and Applications",
@@ -166,12 +173,5 @@
     "title": "Visual Analytics and Applications",
     "section": "Hands-on Exercises",
     "text": "Hands-on Exercises\n\n\n\n\n\n\n\n\n\nHands-on Exercise 1\n\n\n\nNor Hendra\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-box-plot-geom_boxplot",
-    "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-box-plot-geom_boxplot",
-    "title": "Hands-on Exercise 1",
-    "section": "4.5 Plotting a box plot: geom_boxplot()",
-    "text": "4.5 Plotting a box plot: geom_boxplot()\nThe code chunk below plots a box plot which displays a continuous value list by visualizing 5 summary statistics (the median, two hinges and two whispers), and all “outlying” points individually.\n\nggplot(data=exam_data, \n       aes(y = MATHS,       \n           x= GENDER)) +    \n  geom_boxplot()            \n\n\n\n\n\n\n\n\n\n4.5.1 Notches in box plots\nThe code chunk below will show notches which are used in box plots to help visually assess whether the medians of distributions differ. If notches do not overlap, it is evidence that the medians are different.\n\nggplot(data=exam_data, \n       aes(y = MATHS, \n           x= GENDER)) +\n  geom_boxplot(notch=TRUE)"
   }
 ]

@@ -5,12 +5,11 @@ listing:
 
   - id: Hands_on_Exercise
     contents:
-      - "Hands-on_Ex/*/*.qmd"
+      - "Hands-on_Ex/Hands-on_Ex01/*.qmd"
     sort:
       - "title"
     type: grid
     fields: [image, date, title, author]
-
 toc: false
 ---
 

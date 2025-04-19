@@ -1,0 +1,8 @@
+---
+title: "Hands-on_Ex02"
+format: html
+---
+
+1. Getting Started 
+1.1 Installing and loading required libraries
+The code chunk below uses p_load 
