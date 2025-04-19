@@ -5,7 +5,7 @@ author: "Nor Hendra"
 
 # 1. Learning Outcome
 
-In this hands-on exercise, I aim is to learn the basic principles and essential components of ggplot2. I will also be gaining hands-on experience on these components to plot statistical graphics based on the principle of Layered Grammar of Graphics. At the end of this hands-on, I hope to be able to apply the essential graphical elements provided by ggplot2 to create elegant and yet functional statistical graphics.
+In this hands-on exercise, my aim is to learn the basic principles and essential components of ggplot2. I will also be gaining hands-on experience on these components to plot statistical graphics based on the principle of Layered Grammar of Graphics. At the end of this hands-on, I hope to be able to apply the essential graphical elements provided by ggplot2 to create elegant and yet functional statistical graphics.
 
 # 2. Getting Started
 
