@@ -571,7 +571,7 @@ p3 <- ggplot(data=exam_data,
               size=0.5) +  
   coord_cartesian(xlim=c(0,100),
                   ylim=c(0,100)) +
-  ggtitle("English scores versus Maths scores for Primary 3")
+  ggtitle("English scores vs Maths for Primary 3") 
 
 print(p3)
 ```
@@ -588,7 +588,7 @@ p3 <- ggplot(data=exam_data,
               size=0.5) +  
   coord_cartesian(xlim=c(0,100),
                   ylim=c(0,100)) +
-  ggtitle("English scores versus Maths scores for Primary 3")
+  ggtitle("English scores vs Maths for Primary 3") 
 
 print(p3)
 ```
