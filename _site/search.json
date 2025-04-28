@@ -25,7 +25,7 @@
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#importing-the-data",
     "title": "Hands-on Exercise 1",
     "section": "2.2 Importing the data",
-    "text": "2.2 Importing the data\nBelow code chunks imports the .csv file provided for this hands-on into R environment by using the read_csv() function. The data set contains examination grades scored for different subjects of Primary 3 students.\n\nexam_data &lt;- read_csv(\"data/Exam_data.csv\")\n\nRows: 322 Columns: 7\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (4): ID, CLASS, GENDER, RACE\ndbl (3): ENGLISH, MATHS, SCIENCE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+    "text": "2.2 Importing the data\nBelow code chunks imports the .csv file provided for this hands-on into R environment by using the read_csv() function. The data set contains examination grades scored for different subjects of Primary 3 students.\n\nexam_data &lt;- read_csv(\"data/Exam_data.csv\")"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-bar-chart-geom_bar",
@@ -39,14 +39,14 @@
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-the-dot-plot-geom_dotplot",
     "title": "Hands-on Exercise 1",
     "section": "4.2 Plotting the dot plot: geom_dotplot",
-    "text": "4.2 Plotting the dot plot: geom_dotplot\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot(dotsize = 0.5)\n\nBin width defaults to 1/30 of the range of the data. Pick better value with\n`binwidth`.\n\n\n\n\n\n\n\n\n\n\n4.2.1 Correcting y-scale of above dot plot\nBelow code chunk will perform 2 things:\n\nTurn off y-axis with scale_y_continuous()\nbinwidth argument is used to change the binwidth to 2.5\n\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot(binwidth=2.5,         \n               dotsize = 0.5) +      \n  scale_y_continuous(NULL,           \n                     breaks = NULL)"
+    "text": "4.2 Plotting the dot plot: geom_dotplot\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot(dotsize = 0.5)\n\n\n\n\n\n\n\n\n\n4.2.1 Correcting y-scale of above dot plot\nBelow code chunk will perform 2 things:\n\nTurn off y-axis with scale_y_continuous()\nbinwidth argument is used to change the binwidth to 2.5\n\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot(binwidth=2.5,         \n               dotsize = 0.5) +      \n  scale_y_continuous(NULL,           \n                     breaks = NULL)"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-histogram-geom_histogram",
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-histogram-geom_histogram",
     "title": "Hands-on Exercise 1",
     "section": "4.3 Plotting a histogram: geom_histogram()",
-    "text": "4.3 Plotting a histogram: geom_histogram()\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_histogram()       \n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\n\n\n\n\n4.3.1 Modifying bins in histogram\nThe default bin is 30. The code chunk below aims to:\n\nbins argument is used to change the number of bins to 20\nfills argument is to shade the histogram with light blue color, and\ncolor argument is used to change the outline colour of the bars in black\n\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20,            \n                 color=\"black\",      \n                 fill=\"light blue\")  \n\n\n\n\n\n\n\n\n\n\n4.3.2 Providing clarity of data in histogram\nBelow code chunk aims to change the interior colour to clearly distinguish Math scores on the x-axis and uses different fill colors based on student’s gender. Furthermore, it creates a histogram with 20 bins and outlines each bar in grey for better visual distinction.\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           fill = GENDER)) +\n  geom_histogram(bins=20, \n                 color=\"grey30\")"
+    "text": "4.3 Plotting a histogram: geom_histogram()\n\nggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_histogram()       \n\n\n\n\n\n\n\n\n\n4.3.1 Modifying bins in histogram\nThe default bin is 30. The code chunk below aims to:\n\nbins argument is used to change the number of bins to 20\nfills argument is to shade the histogram with light blue color, and\ncolor argument is used to change the outline colour of the bars in black\n\n\nggplot(data=exam_data, \n       aes(x= MATHS)) +\n  geom_histogram(bins=20,            \n                 color=\"black\",      \n                 fill=\"light blue\")  \n\n\n\n\n\n\n\n\n\n\n4.3.2 Providing clarity of data in histogram\nBelow code chunk aims to change the interior colour to clearly distinguish Math scores on the x-axis and uses different fill colors based on student’s gender. Furthermore, it creates a histogram with 20 bins and outlines each bar in grey for better visual distinction.\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           fill = GENDER)) +\n  geom_histogram(bins=20, \n                 color=\"grey30\")"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#plotting-kernel-density-estimate-geom_density",
@@ -102,7 +102,7 @@
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#adding-a-best-fit-curve-on-a-scatterplot",
     "title": "Hands-on Exercise 1",
     "section": "5.3 Adding a best fit curve on a scatterplot",
-    "text": "5.3 Adding a best fit curve on a scatterplot\nThe code chunk below, geom_smooth() is used to plot a best fit curve on the scatter plot\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(size=0.5)\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n\n\n`geom_smooth()` using method = 'loess' and formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nThe default smoothing method used is loess and can be overridden as shown below.\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              linewidth=0.5)\n\n`geom_smooth()` using formula = 'y ~ x'"
+    "text": "5.3 Adding a best fit curve on a scatterplot\nThe code chunk below, geom_smooth() is used to plot a best fit curve on the scatter plot\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(size=0.5)\n\n\n\n\n\n\n\n\nThe default smoothing method used is loess and can be overridden as shown below.\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              linewidth=0.5)"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#working-with-facet_warp",
@@ -130,7 +130,7 @@
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#changing-the-y--and-x-axis-range",
     "title": "Hands-on Exercise 1",
     "section": "7.2 Changing the y- and x-axis range",
-    "text": "7.2 Changing the y- and x-axis range\nThe scatter plot on the below is slightly misleading because the y-axis and x-axis range are not equal.\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, size=0.5)\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\nThe code chunk below fixes both the y-axis and x-ais range from 0-100\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5) +  \n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))\n\n`geom_smooth()` using formula = 'y ~ x'"
+    "text": "7.2 Changing the y- and x-axis range\nThe scatter plot on the below is slightly misleading because the y-axis and x-axis range are not equal.\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, size=0.5)\n\n\n\n\n\n\n\n\nThe code chunk below fixes both the y-axis and x-ais range from 0-100\n\nggplot(data=exam_data, \n       aes(x= MATHS, y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5) +  \n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html#working-with-theme-theme_gray",
@@ -165,7 +165,7 @@
     "href": "index.html#hands-on-exercises",
     "title": "Visual Analytics and Applications",
     "section": "Hands-on Exercises",
-    "text": "Hands-on Exercises\n\n\n\n\n\n\n\n\n\nHands-on Exercise 1\n\n\n\nNor Hendra\n\n\n\n\n\n\n\n\n\n\n\n\nHands-on Exercise 2\n\n\n\n\n\n\nApr 23, 2025\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Hands-on Exercises\n\n\n\n\n\n\n\n\n\nHands-on Exercise 1\n\n\n\nNor Hendra\n\n\nApr 23, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nHands-on Exercise 2\n\n\n\nNor Hendra\n\n\nApr 23, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nHands-on Exercise 3A\n\n\n\nNor Hendra\n\n\nApr 28, 2023\n\n\n\n\n\n\n\n\n\n\n\n\nHands-on Exercise 3B\n\n\n\nNor Hendra\n\n\nApr 28, 2023\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html",
@@ -200,7 +200,7 @@
     "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-ggrepel",
     "title": "Hands-on Exercise 2",
     "section": "2.1 Working with ggrepel",
-    "text": "2.1 Working with ggrepel\n\nThe plotThe code\n\n\n\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\nWarning: ggrepel: 317 unlabeled data points (too many overlaps). Consider\nincreasing max.overlaps\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5) +  \n  geom_label_repel(aes(label = ID), \n                   fontface = \"bold\") +\n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100)) +\n  ggtitle(\"English scores versus Maths scores for Primary 3\")\n\n\n\n\n\n2.1.1 Labelling Outliers\n\n\n\n\n\n\nOutliers\n\n\n\nI was thinking, what if we only wanted to see students who are the outliers? I set the threshold to be &gt;20 to show students that have scores between English and Maths being more than 20. This can help focus on unusual cases where students excel in one subject, but struggle in the other.\n\n\n\nThe plotThe code\n\n\n\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\n\n\nexam_data$outlier &lt;- abs(exam_data$ENGLISH - exam_data$MATHS) &gt; 20\n\nggplot(data = exam_data, \n       aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", size = 0.5) +\n  geom_text_repel(data = subset(exam_data, outlier == TRUE),\n                  aes(label = ID),\n                  size = 3) +\n  coord_cartesian(xlim = c(0, 100), ylim = c(0, 100)) +\n  ggtitle(\"English scores versus Maths scores for Primary 3\")\n\n\n\n\n\n\n\n\n\n\nHigh-performing vs Underperforming students?\n\n\n\nWhat about students who deviate more than the general average? I applied the simple concept of mean and standard deviation. In below case, if student deviates more than 1 SD from the mean, they are labelled instead.\n\n\n\nThe plotThe code\n\n\n\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\nWarning: ggrepel: 50 unlabeled data points (too many overlaps). Consider\nincreasing max.overlaps\n\n\n\n\n\n\n\n\n\n\n\n\n# Score difference for each student\nexam_data$score_diff &lt;- exam_data$ENGLISH - exam_data$MATHS\n\n# Computing the mean and standard deviation of the differences\nmean_diff &lt;- mean(exam_data$score_diff)\nsd_diff &lt;- sd(exam_data$score_diff)\n\n# Flag as outlier if the score difference deviates more than 1 SD from mean\nexam_data$outlier &lt;- abs(exam_data$score_diff - mean_diff) &gt; sd_diff\n\n# Plot\nggplot(data = exam_data, \n       aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", size = 0.5) +\n  geom_text_repel(data = subset(exam_data, outlier == TRUE),\n                  aes(label = ID),\n                  size = 3) +\n  coord_cartesian(xlim = c(0, 100), ylim = c(0, 100)) +\n  ggtitle(\"English vs Maths: Highlighting Students Who Deviate from Class Average\")\n\n\n\n\n\n\n\n\n\n\nFindings\n\n\n\nIt looks like ggrepel is smart enough to know when there’s too many overlaps. In above example, it skipped 50 students to keep things readable. Interesting finding! This tells me that it is no different than the initial issue we had when not using ggrepel. I could perhaps increase overlaps by defining max.overlaps , but that would still clutter the plot."
+    "text": "2.1 Working with ggrepel\n\nThe plotThe code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(data=exam_data, \n       aes(x= MATHS, \n           y=ENGLISH)) +\n  geom_point() +\n  geom_smooth(method=lm, \n              size=0.5) +  \n  geom_label_repel(aes(label = ID), \n                   fontface = \"bold\") +\n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100)) +\n  ggtitle(\"English scores versus Maths scores for Primary 3\")\n\n\n\n\n\n2.1.1 Labelling Outliers\n\n\n\n\n\n\nOutliers\n\n\n\nI was thinking, what if we only wanted to see students who are the outliers? I set the threshold to be &gt;20 to show students that have scores between English and Maths being more than 20. This can help focus on unusual cases where students excel in one subject, but struggle in the other.\n\n\n\nThe plotThe code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nexam_data$outlier &lt;- abs(exam_data$ENGLISH - exam_data$MATHS) &gt; 20\n\nggplot(data = exam_data, \n       aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", size = 0.5) +\n  geom_text_repel(data = subset(exam_data, outlier == TRUE),\n                  aes(label = ID),\n                  size = 3) +\n  coord_cartesian(xlim = c(0, 100), ylim = c(0, 100)) +\n  ggtitle(\"English scores versus Maths scores for Primary 3\")\n\n\n\n\n\n\n\n\n\n\nHigh-performing vs Underperforming students?\n\n\n\nWhat about students who deviate more than the general average? I applied the simple concept of mean and standard deviation. In below case, if student deviates more than 1 SD from the mean, they are labelled instead.\n\n\n\nThe plotThe code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n# Score difference for each student\nexam_data$score_diff &lt;- exam_data$ENGLISH - exam_data$MATHS\n\n# Computing the mean and standard deviation of the differences\nmean_diff &lt;- mean(exam_data$score_diff)\nsd_diff &lt;- sd(exam_data$score_diff)\n\n# Flag as outlier if the score difference deviates more than 1 SD from mean\nexam_data$outlier &lt;- abs(exam_data$score_diff - mean_diff) &gt; sd_diff\n\n# Plot\nggplot(data = exam_data, \n       aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", size = 0.5) +\n  geom_text_repel(data = subset(exam_data, outlier == TRUE),\n                  aes(label = ID),\n                  size = 3) +\n  coord_cartesian(xlim = c(0, 100), ylim = c(0, 100)) +\n  ggtitle(\"English vs Maths: Highlighting Students Who Deviate from Class Average\")\n\n\n\n\n\n\n\n\n\n\nFindings\n\n\n\nIt looks like ggrepel is smart enough to know when there’s too many overlaps. In above example, it skipped 50 students to keep things readable. Interesting finding! This tells me that it is no different than the initial issue we had when not using ggrepel. I could perhaps increase overlaps by defining max.overlaps , but that would still clutter the plot."
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#working-with-ggtheme-package",
@@ -221,6 +221,181 @@
     "href": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html#creating-composite-graphics-pathwork-methods",
     "title": "Hands-on Exercise 2",
     "section": "4.1 Creating Composite Graphics: pathwork methods",
-    "text": "4.1 Creating Composite Graphics: pathwork methods\nPatchwork package has a very simple syntax where we can create layouts super easily. Here’s the general syntax that combines:\n\nTwo-Column Layout using the Plus Sign +.\nParenthesis () to create a subplot group.\nTwo-Row Layout using the Division Sign /\n\n\n4.1.1 Combining two ggplot2 graphs\n\nThe plotThe code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\np1 + p2\n\n\n\n\n\n\n4.1.2 Combining three ggplot2 graphs\nPlotting more complex composite using appropriate operations.\n\n“/” operator to stack two ggplot2 graphs,\n“|” operator to place the plots beside each other,\n“()” operator the define the sequence of the plotting.\n\n\nThe plotThe code\n\n\n\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\n\n\n(p1/p2) | p3\n\n\n\n\n\n\n4.1.3 Creating figure with insert\nUsing inset_element() of patchwork, we can place one or several plots or graphic elements freely on top or below another plot.\n\nThe plotThe code\n\n\n\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\n\n\np3 + inset_element(p2, \n                   left = 0.02, \n                   bottom = 0.7, \n                   right = 0.5, \n                   top = 1)\n\n\n\n\n\n\n4.1.4 Creating a composite figure by using patchwork and ggtheme\nFigure below is created by combining patchwork and theme-economist() of ggthemes package.\n\nThe plotThe code\n\n\n\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\n\n\n\n\npatchwork &lt;- (p1 / p2) | p3\npatchwork & theme_economist()"
+    "text": "4.1 Creating Composite Graphics: pathwork methods\nPatchwork package has a very simple syntax where we can create layouts super easily. Here’s the general syntax that combines:\n\nTwo-Column Layout using the Plus Sign +.\nParenthesis () to create a subplot group.\nTwo-Row Layout using the Division Sign /\n\n\n4.1.1 Combining two ggplot2 graphs\n\nThe plotThe code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\np1 + p2\n\n\n\n\n\n\n4.1.2 Combining three ggplot2 graphs\nPlotting more complex composite using appropriate operations.\n\n“/” operator to stack two ggplot2 graphs,\n“|” operator to place the plots beside each other,\n“()” operator the define the sequence of the plotting.\n\n\nThe plotThe code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(p1/p2) | p3\n\n\n\n\n\n\n4.1.3 Creating figure with insert\nUsing inset_element() of patchwork, we can place one or several plots or graphic elements freely on top or below another plot.\n\nThe plotThe code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\np3 + inset_element(p2, \n                   left = 0.02, \n                   bottom = 0.7, \n                   right = 0.5, \n                   top = 1)\n\n\n\n\n\n\n4.1.4 Creating a composite figure by using patchwork and ggtheme\nFigure below is created by combining patchwork and theme-economist() of ggthemes package.\n\nThe plotThe code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npatchwork &lt;- (p1 / p2) | p3\npatchwork & theme_economist()"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#installing-and-loading-packages",
+    "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#installing-and-loading-packages",
+    "title": "Hands on Exercise 4A",
+    "section": "1.1 Installing and Loading Packages",
+    "text": "1.1 Installing and Loading Packages\n\npacman::p_load(ggdist, ggridges, ggthemes,\n               colorspace, tidyverse)"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#data-import",
+    "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#data-import",
+    "title": "Hands on Exercise 4A",
+    "section": "1.2 Data Import",
+    "text": "1.2 Data Import\n\nexam &lt;- read_csv(\"data/Exam_data.csv\")\n\nRows: 322 Columns: 7\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (4): ID, CLASS, GENDER, RACE\ndbl (3): ENGLISH, MATHS, SCIENCE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#plotting-ridgeline-graph-ggridges-method",
+    "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#plotting-ridgeline-graph-ggridges-method",
+    "title": "Hands on Exercise 4A",
+    "section": "2.1 Plotting ridgeline graph: ggridges method",
+    "text": "2.1 Plotting ridgeline graph: ggridges method\nThere are several ways to plot ridgeline plot with R. In this section, you will learn how to plot ridgeline plot by using ggridges package.\nggridges package provides two main geom to plot gridgeline plots, they are: geom_ridgeline() and geom_density_ridges(). The former takes height values directly to draw the ridgelines, and the latter first estimates data densities and then draws those using ridgelines.\nThe ridgeline plot below is plotted by using geom_density_ridges().\n\nThe plotThe code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(exam, \n       aes(x = ENGLISH, \n           y = CLASS)) +\n  geom_density_ridges(\n    scale = 3,\n    rel_min_height = 0.01,\n    bandwidth = 3.4,\n    fill = lighten(\"#7097BB\", .3),\n    color = \"white\"\n  ) +\n  scale_x_continuous(\n    name = \"English grades\",\n    expand = c(0, 0)\n    ) +\n  scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +\n  theme_ridges()"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#varying-fill-colors-along-the-x-axis",
+    "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#varying-fill-colors-along-the-x-axis",
+    "title": "Hands on Exercise 4A",
+    "section": "2.2 Varying fill colors along the x axis",
+    "text": "2.2 Varying fill colors along the x axis\n\nThe plotThe code\n\n\n\n\nWarning: `stat(x)` was deprecated in ggplot2 3.4.0.\nℹ Please use `after_stat(x)` instead.\n\n\nPicking joint bandwidth of 3.18\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(exam, \n       aes(x = ENGLISH, \n           y = CLASS,\n           fill = stat(x))) +\n  geom_density_ridges_gradient(\n    scale = 3,\n    rel_min_height = 0.01) +\n  scale_fill_viridis_c(name = \"Temp. [F]\",\n                       option = \"C\") +\n  scale_x_continuous(\n    name = \"English grades\",\n    expand = c(0, 0)\n  ) +\n  scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +\n  theme_ridges()"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#mapping-the-probabilities-directly-onto-colour",
+    "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#mapping-the-probabilities-directly-onto-colour",
+    "title": "Hands on Exercise 4A",
+    "section": "2.3 Mapping the probabilities directly onto colour",
+    "text": "2.3 Mapping the probabilities directly onto colour\nBeside providing additional geom objects to support the need to plot ridgeline plot, ggridges package also provides a stat function called stat_density_ridges() that replaces stat_density() of ggplot2.\nFigure below is plotted by mapping the probabilities calculated by using stat(ecdf) which represent the empirical cumulative density function for the distribution of English score.\n\nThe plotThe code\n\n\n\n\nPicking joint bandwidth of 3.18\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(exam,\n       aes(x = ENGLISH, \n           y = CLASS, \n           fill = 0.5 - abs(0.5-stat(ecdf)))) +\n  stat_density_ridges(geom = \"density_ridges_gradient\", \n                      calc_ecdf = TRUE) +\n  scale_fill_viridis_c(name = \"Tail probability\",\n                       direction = -1) +\n  theme_ridges()\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\n\nIt is important include the argument calc_ecdf = TRUE in stat_density_ridges()."
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#ridgeline-plots-with-quantile-lines",
+    "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#ridgeline-plots-with-quantile-lines",
+    "title": "Hands on Exercise 4A",
+    "section": "2.4 Ridgeline plots with quantile lines",
+    "text": "2.4 Ridgeline plots with quantile lines\nBy using geom_density_ridges_gradient(), we can colour the ridgeline plot by quantile, via the calculated stat(quantile) aesthetic as shown in the figure below.\n\nThe plotThe code\n\n\n\n\nPicking joint bandwidth of 3.18\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(exam,\n       aes(x = ENGLISH, \n           y = CLASS, \n           fill = factor(stat(quantile))\n           )) +\n  stat_density_ridges(\n    geom = \"density_ridges_gradient\",\n    calc_ecdf = TRUE, \n    quantiles = 4,\n    quantile_lines = TRUE) +\n  scale_fill_viridis_d(name = \"Quartiles\") +\n  theme_ridges()\n\n\n\n\nInstead of using number to define the quantiles, we can also specify quantiles by cut points such as 2.5% and 97.5% tails to colour the ridgeline plot as shown in the figure below.\n\nThe plotThe code\n\n\n\n\nPicking joint bandwidth of 3.18\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(exam,\n       aes(x = ENGLISH, \n           y = CLASS, \n           fill = factor(stat(quantile))\n           )) +\n  stat_density_ridges(\n    geom = \"density_ridges_gradient\",\n    calc_ecdf = TRUE, \n    quantiles = c(0.025, 0.975)\n    ) +\n  scale_fill_manual(\n    name = \"Probability\",\n    values = c(\"#FF0000A0\", \"#A0A0A0A0\", \"#0000FFA0\"),\n    labels = c(\"(0, 0.025]\", \"(0.025, 0.975]\", \"(0.975, 1]\")\n  ) +\n  theme_ridges()"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#plotting-a-half-eye-graph",
+    "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#plotting-a-half-eye-graph",
+    "title": "Hands on Exercise 4A",
+    "section": "3.1 Plotting a Half Eye Graph",
+    "text": "3.1 Plotting a Half Eye Graph\nFirst, I will plot a Half-Eye graph by using stat_halfeye() of ggdist package.\nThis produces a Half Eye visualization, which is contains a half-density and a slab-interval.\n\nThe plotThe code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(exam, \n       aes(x = RACE, \n           y = ENGLISH)) +\n  stat_halfeye(adjust = 0.5,\n               justification = -0.2,\n               .width = 0,\n               point_colour = NA)\n\n\n\n\n\n\n\nThings to learn from the code chunk above\n\n\n\nWe remove the slab interval by setting .width = 0 and point_colour=NA"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#finishing-touch",
+    "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#finishing-touch",
+    "title": "Hands on Exercise 4A",
+    "section": "3.3 Finishing touch",
+    "text": "3.3 Finishing touch\nLastly, coord_flip() of ggplot2 package will be used to flip the raincloud chart horizontally to give it the raincloud appearance. At the same time, theme_economist() of ggthemes package is used to give the raincloud chart a professional publishing standard look.\n\nThe plotThe code\n\n\n\n\nWarning: The provided binwidth will cause dots to overflow the boundaries of the\ngeometry.\n→ Set `binwidth = NA` to automatically determine a binwidth that ensures dots\n  fit within the bounds,\n→ OR set `overflow = \"compress\"` to automatically reduce the spacing between\n  dots to ensure the dots fit within the bounds,\n→ OR set `overflow = \"keep\"` to allow dots to overflow the bounds of the\n  geometry without producing a warning.\nℹ For more information, see the documentation of the `binwidth` and `overflow`\n  arguments of `?ggdist::geom_dots()` or the section on constraining dot sizes\n  in vignette(\"dotsinterval\") (`vignette(ggdist::dotsinterval)`).\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(exam, \n       aes(x = RACE, \n           y = ENGLISH)) +\n  stat_halfeye(adjust = 0.5,\n               justification = -0.2,\n               .width = 0,\n               point_colour = NA) +\n  geom_boxplot(width = .20,\n               outlier.shape = NA) +\n  stat_dots(side = \"left\", \n            justification = 1.2, \n            binwidth = .5,\n            dotsize = 1.5) +\n  coord_flip() +\n  theme_economist()"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#imporing-data",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#imporing-data",
+    "title": "Hands-on Exercise 3A",
+    "section": "1.1 Imporing Data",
+    "text": "1.1 Imporing Data\nUsing the same data as hands-on exercise 01 and 02, exam_data.csv is used and will be imported using read_csv() of the readr package.\n\nexam_data &lt;- read_csv((\"data/Exam_data.csv\"), show_col_types = FALSE)\n\n\n\n\n\n\n\nChecking data\n\n\n\nSince it is the same data set as previous hands-on exercises, I will skip checking the data set."
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#tooltip-effect-with-tooltip-aesthetic",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#tooltip-effect-with-tooltip-aesthetic",
+    "title": "Hands-on Exercise 3A",
+    "section": "2.1 Tooltip effect with tooltip aesthetic",
+    "text": "2.1 Tooltip effect with tooltip aesthetic\nBelow shows a typical code chunk to plot an interactive statistical graph by using ggiraph package. Notice that the code chunk consists of two parts. First, an ggplot object will be created. Next, girafe() of ggiraph will be used to create an interactive svg object.\nBy hovering the mouse pointer on an data point of interest, the student’s ID will be displayed.\n\nInteractive PlotThe Code\n\n\n\n\n\n\n\n\n\n\n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(tooltip = ID),\n    stackgroups = TRUE, \n    binwidth = 1, \n    method = \"histodot\") +\n  scale_y_continuous(NULL, \n                     breaks = NULL)\ngirafe(\n  ggobj = p,\n  width_svg = 6,\n  height_svg = 6*0.618\n)\n\n\n\n\nNotice that two steps are involved. First, an interactive version of ggplot2 geom (i.e. geom_dotplot_interactive()) will be used to create the basic graph. Then, girafe() will be used to generate an svg object to be displayed on an html page"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#displaying-multiple-information-on-tooltip",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#displaying-multiple-information-on-tooltip",
+    "title": "Hands-on Exercise 3A",
+    "section": "2.2 Displaying multiple information on tooltip",
+    "text": "2.2 Displaying multiple information on tooltip\nThe first three lines of codes in the code chunk create a new field called tooltip. At the same time, it populates text in ID and CLASS fields into the newly created field. Next, this newly created field is used as tooltip field as shown in the code of line 7.\n\nInteractive PlotThe Code\n\n\n\n\n\n\n\n\n\n\n\nexam_data$tooltip &lt;- c(paste0(     \n  \"Name = \", exam_data$ID,         \n  \"\\n Class = \", exam_data$CLASS)) \n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    \n    # Below code line uses the newly created field as a tooltip field\n    aes(tooltip = exam_data$tooltip), \n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL,               \n                     breaks = NULL)\ngirafe(\n  ggobj = p,\n  width_svg = 8,\n  height_svg = 8*0.618\n)"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#data_id-aesthetic",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#data_id-aesthetic",
+    "title": "Hands-on Exercise 3A",
+    "section": "3.1 data_id aesthetic",
+    "text": "3.1 data_id aesthetic\nCode chunk below shows the second interactive feature of ggiraph, namely data_id.\nInteractivity: Elements associated with a data_id (i.e CLASS) will be highlighted upon mouse over.\n\n\n\n\n\n\nDefault colour of elements associated with a data_id\n\n\n\nNote that the default value of the hover css is hover_css = “fill:orange;”.\n\n\n\nInteractive PlotThe Code\n\n\n\n\n\n\n\n\n\n\n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(           \n    aes(data_id = CLASS),             \n    stackgroups = TRUE,               \n    binwidth = 1,                        \n    method = \"histodot\") +               \n  scale_y_continuous(NULL,               \n                     breaks = NULL)\ngirafe(                                  \n  ggobj = p,                             \n  width_svg = 6,                         \n  height_svg = 6*0.618                      \n)"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#styling-hover-effect",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#styling-hover-effect",
+    "title": "Hands-on Exercise 3A",
+    "section": "3.2 Styling hover effect",
+    "text": "3.2 Styling hover effect\nIn the code chunk below, css codes are used to change the highlighting effect.\nInteractivity: Elements associated with a data_id (i.e CLASS) will be highlighted upon mouse over.\n\n\n\n\n\n\nNote\n\n\n\nNote: Different from previous example, in this example the ccs customisation request are encoded directly.\n\n\n\nInteractive PlotThe Code\n\n\n\n\n\n\n\n\n\n\n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(              \n    aes(data_id = CLASS),              \n    stackgroups = TRUE,                  \n    binwidth = 1,                        \n    method = \"histodot\") +               \n  scale_y_continuous(NULL,               \n                     breaks = NULL)\ngirafe(                                  \n  ggobj = p,                             \n  width_svg = 6,                         \n  height_svg = 6*0.618,\n  options = list(                        \n    opts_hover(css = \"fill: #202020;\"),  \n    opts_hover_inv(css = \"opacity:0.2;\") \n  )                                        \n)"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#the-code-5",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#the-code-5",
+    "title": "Hands-on Exercise 3A",
+    "section": "The Code",
+    "text": "The Code\n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(              \n    aes(data_id = CLASS),              \n    stackgroups = TRUE,                  \n    binwidth = 1,                        \n    method = \"histodot\") +               \n  scale_y_continuous(NULL,               \n                     breaks = NULL)\ngirafe(                                  \n  ggobj = p,                             \n  width_svg = 6,                         \n  height_svg = 6*0.618,\n  options = list(                        \n    opts_hover(css = \"fill: #202020;\"),  \n    opts_hover_inv(css = \"opacity:0.2;\") \n  )                                        \n)"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#creating-an-interactive-scatter-plot-plot_ly-method",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#creating-an-interactive-scatter-plot-plot_ly-method",
+    "title": "Hands-on Exercise 3A",
+    "section": "6.1 Creating an interactive scatter plot: plot_ly() method",
+    "text": "6.1 Creating an interactive scatter plot: plot_ly() method\nThe tabset below shows an example a basic interactive plot created by using plot_ly().\n\nInteractive PlotThe Code\n\n\n\n\n\n\n\n\n\n\n\nplot_ly(data = exam_data, \n             x = ~MATHS, \n             y = ~ENGLISH)"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#working-with-visual-variable-plot_ly",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#working-with-visual-variable-plot_ly",
+    "title": "Hands-on Exercise 3A",
+    "section": "6.2 Working with visual variable: plot_ly()",
+    "text": "6.2 Working with visual variable: plot_ly()\nIn the code chunk below, color argument is mapped to a qualitative visual variable (i.e. RACE).\nInteractivity: Click the colour symbol on legend\n\nInteractive PlotThe Code\n\n\n\n\n\n\n\n\n\n\n\nplot_ly(data = exam_data, \n        x = ~ENGLISH, \n        y = ~MATHS, \n        color = ~RACE)"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#coordinated-multiple-views-with-plotly",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#coordinated-multiple-views-with-plotly",
+    "title": "Hands-on Exercise 3A",
+    "section": "7.1 Coordinated Multiple Views with plotly",
+    "text": "7.1 Coordinated Multiple Views with plotly\nThe creation of a coordinated linked plot by using plotly involves three steps:\n\nhighlight_key() of plotly package is used as shared data.\ntwo scatterplots will be created by using ggplot2 functions.\nlastly, subplot() of plotly package is used to place them next to each other side-by-side.\n\nThing to learn from the code chunk:\nhighlight_key() simply creates an object of class crosstalk::SharedData. Visit this link to learn more about crosstalk,\n\nInteractive PlotThe Code\n\n\n\n\n\n\n\n\nClick on a data point of one of the scatter plot and see how corresponding point on the other scatterplot is selected.\n\n\n\nd &lt;- highlight_key(exam_data)\np1 &lt;- ggplot(data=d, \n            aes(x = MATHS,\n                y = ENGLISH)) +\n  geom_point(size=1) +\n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))\n\np2 &lt;- ggplot(data=d, \n            aes(x = MATHS,\n                y = SCIENCE)) +\n  geom_point(size=1) +\n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))\nsubplot(ggplotly(p1),\n        ggplotly(p2))"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#interactive-data-table-dt-package",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#interactive-data-table-dt-package",
+    "title": "Hands-on Exercise 3A",
+    "section": "8.1 Interactive Data Table: DT package",
+    "text": "8.1 Interactive Data Table: DT package\n\nA wrapper of the JavaScript Library DataTables\nData objects in R can be rendered as HTML tables using the JavaScript library ‘DataTables’ (typically via R Markdown or Shiny).\n\n\nDT::datatable(exam_data, class= \"compact\")"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#linked-brushing-crosstalk-method",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#linked-brushing-crosstalk-method",
+    "title": "Hands-on Exercise 3A",
+    "section": "8.2 Linked brushing: crosstalk method",
+    "text": "8.2 Linked brushing: crosstalk method\n\nInteractive PlotThe Code\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nd &lt;- highlight_key(exam_data) \np &lt;- ggplot(d, \n            aes(ENGLISH, \n                MATHS)) + \n  geom_point(size=1) +\n  coord_cartesian(xlim=c(0,100),\n                  ylim=c(0,100))\n\ngg &lt;- highlight(ggplotly(p),        \n                \"plotly_selected\")  \n\ncrosstalk::bscols(gg,               \n                  DT::datatable(d), \n                  widths = 5)   \n\nThings to learn from the code chunk:\nhighlight() is a function of plotly package. It sets a variety of options for brushing (i.e., highlighting) multiple plots. These options are primarily designed for linking multiple plotly graphs, and may not behave as expected when linking plotly to another htmlwidget package via crosstalk. In some cases, other htmlwidgets will respect these options, such as persistent selection in leaflet.\nbscols() is a helper function of crosstalk package. It makes it easy to put HTML elements side by side. It can be called directly from the console but is especially designed to work in an R Markdown document. Warning: This will bring in all of Bootstrap!."
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html#loading-the-r-packages",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html#loading-the-r-packages",
+    "title": "Hands-on Exercise 3B",
+    "section": "1.1 Loading the R packages",
+    "text": "1.1 Loading the R packages\nWe will need below R packages:\n\nplotly, R library for plotting interactive statistical graphs.\ngganimate, an ggplot extension for creating animated statistical graphs.\ngifski converts video frames to GIF animations using pngquant’s fancy features for efficient cross-frame palettes and temporal dithering. It produces animated GIFs that use thousands of colors per frame.\ngapminder: An excerpt of the data available at Gapminder.org. We just want to use its country_colors scheme.\ntidyverse, a family of modern R packages specially designed to support data science, analysis and communication task including creating static statistical graphs.\n\n\npacman::p_load(readxl, gifski, gapminder,\n               plotly, gganimate, tidyverse)"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html#importing-the-data",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html#importing-the-data",
+    "title": "Hands-on Exercise 3B",
+    "section": "1.2 Importing the data",
+    "text": "1.2 Importing the data\nThe Data worksheet from GlobalPopulation Excel workbook will be used.\n\ncol &lt;- c(\"Country\", \"Continent\")\nglobalPop &lt;- read_xls(\"data/GlobalPopulation.xls\",\n                      sheet=\"Data\") %&gt;%\n  mutate_each_(funs(factor(.)), col) %&gt;%\n  mutate(Year = as.integer(Year))\n\n\n\n\n\n\n\nThings to learn fro the code chunk above\n\n\n\n\nread_xls() of readxl package is used to import the Excel worksheet.\nmutate_each_() of dplyr package is used to convert all character data type into factor.\nmutate of dplyr package is used to convert data values of Year field into integer.\n\n\n\nUnfortunately, mutate_each_() was deprecated in dplyr 0.7.0. and funs() was deprecated in dplyr 0.8.0. In view of this, we will re-write the code by using mutate_at() as shown in the code chunk below.\n\ncol &lt;- c(\"Country\", \"Continent\")\nglobalPop &lt;- read_xls(\"data/GlobalPopulation.xls\",\n                      sheet=\"Data\") %&gt;%\n  mutate_at(col, as.factor) %&gt;%\n  mutate(Year = as.integer(Year))\n\nInstead of using mutate_at(), across() can be used to derive the same outputs.\n\ncol &lt;- c(\"Country\", \"Continent\")\nglobalPop &lt;- read_xls(\"data/GlobalPopulation.xls\",\n                      sheet=\"Data\") %&gt;%\n  mutate(across(col, as.factor)) %&gt;%\n  mutate(Year = as.integer(Year))"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html#building-a-static-population-bubble-plot",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html#building-a-static-population-bubble-plot",
+    "title": "Hands-on Exercise 3B",
+    "section": "4.1 Building a static population bubble plot",
+    "text": "4.1 Building a static population bubble plot\nIn the code chunk below, the basic ggplot2 functions are used to create a static bubble plot.\n\nggplot(globalPop, aes(x = Old, y = Young, \n                      size = Population, \n                      colour = Country)) +\n  geom_point(alpha = 0.7, \n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(title = 'Year: {frame_time}', \n       x = '% Aged', \n       y = '% Young')"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html#building-the-animated-bubble-plot",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html#building-the-animated-bubble-plot",
+    "title": "Hands-on Exercise 3B",
+    "section": "4.2 Building the animated bubble plot",
+    "text": "4.2 Building the animated bubble plot\nIn the code chunk below,\n\ntransition_time() of gganimate is used to create transition through distinct states in time (i.e. Year).\nease_aes() is used to control easing of aesthetics. The default is linear. Other methods are: quadratic, cubic, quartic, quintic, sine, circular, exponential, elastic, back, and bounce.\n\n\nggplot(globalPop, aes(x = Old, y = Young, \n                      size = Population, \n                      colour = Country)) +\n  geom_point(alpha = 0.7, \n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(title = 'Year: {frame_time}', \n       x = '% Aged', \n       y = '% Young') +\n  transition_time(Year) +       \n  ease_aes('linear')"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#importing-data",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#importing-data",
+    "title": "Hands-on Exercise 3A",
+    "section": "1.1 Importing Data",
+    "text": "1.1 Importing Data\nUsing the same data as hands-on exercise 01 and 02, exam_data.csv is used and will be imported using read_csv() of the readr package.\n\nexam_data &lt;- read_csv((\"data/Exam_data.csv\"), show_col_types = FALSE)\n\n\n\n\n\n\n\nChecking data\n\n\n\nSince it is the same data set as previous hands-on exercises, I will skip checking the data set."
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#combining-tooltip-and-hover-effect",
+    "href": "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html#combining-tooltip-and-hover-effect",
+    "title": "Hands-on Exercise 3A",
+    "section": "3.3 Combining tooltip and hover effect",
+    "text": "3.3 Combining tooltip and hover effect\nThere are time that we want to combine tooltip and hover effect on the interactive statistical graph as shown in the code chunk below.\nInteractivity: Elements associated with a data_id (i.e CLASS) will be highlighted upon mouse over. At the same time, the tooltip will show the CLASS.\n\nInteractive PlotThe code\n\n\n\n\n\n\n\n\n\n\n\np &lt;- ggplot(data=exam_data, \n       aes(x = MATHS)) +\n  geom_dotplot_interactive(              \n    aes(tooltip = CLASS, \n        data_id = CLASS),              \n    stackgroups = TRUE,                  \n    binwidth = 1,                        \n    method = \"histodot\") +               \n  scale_y_continuous(NULL,               \n                     breaks = NULL)\ngirafe(                                  \n  ggobj = p,                             \n  width_svg = 6,                         \n  height_svg = 6*0.618,\n  options = list(                        \n    opts_hover(css = \"fill: #202020;\"),  \n    opts_hover_inv(css = \"opacity:0.2;\") \n  )                                        \n)"
   }
 ]
