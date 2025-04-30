@@ -1,5 +1,442 @@
 ---
-title: "Take-home_Ex01"
+title: "Take Home Assignment 1"
+author: "Nor Hendra"
+date: "30 April 2023"
+date-modified: "last-modified"
 format: html
+editor: visual
+freeze: true
+execute:
+  eval: true
+  echo: true
+  warning: false
 ---
 
+# Demographic structures and distribution of Singapore in 2024
+
+# 1 Importing Packages
+
+```{r}
+pacman::p_load(tidyverse, ggthemes,viridis,ggridges,ggrepel,patchwork, readr, dplyr, Hmisc)
+```
+
+# 2 Importing Data
+
+```{r}
+# 3.1 Import
+sgdemo2024 <- read_csv(("data/respopagesex2024.csv"), show_col_types = FALSE)
+```
+
+## 2.1 Quick check of data
+
+```{r}
+glimpse(sgdemo2024)
+```
+
+# 3 Data Cleaning and Quality Checks
+
+## 3.1 Converting Sex to a factor with the correct order
+
+By coercing Sex into a factor with a known level order to give full, explicit control over how it's displayed in every plot and keeps the downstream code faster and more robust.
+
+```{r}
+sgdemo2024 <- sgdemo2024 %>%
+  mutate(
+    Sex = factor(Sex, levels = c("Males", "Females"))
+  )
+```
+
+## 3.1 Count missing values by column
+
+```{r}
+# 4.1 Check for missing values and confirm none
+missing_counts <- sgdemo2024 %>% 
+  summarise_all(~ sum(is.na(.)))
+
+if (all(unlist(missing_counts) == 0)) {
+  cat("✅ No missing values, proceed to the next check\n")
+} else {
+  warning("⚠️ Missing values detected:")
+  print(missing_counts)
+}
+
+```
+
+## 3.2 Checking for any duplicates
+
+```{r}
+dup_count <- sum(duplicated(sgdemo2024))
+
+if (dup_count == 0) {
+  cat("✅ No duplicates, on to the next!\n")
+} else {
+  warning("⚠️ Found duplicate rows:")
+  print(sgdemo2024[duplicated(sgdemo2024), ])
+}
+```
+
+## 3.3 Ensure population is strictly positive
+
+::: callout-important
+## Why we have to remove zero population rows
+
+Scrolling through the data, I found zero-population rows which simply means that no one of that age and sex lives in that subzone. If we add these to the plot, it will
+
+1.  Add unnecessary clutter of showing up thousands of empty bars or tiles that distract from where people actually live. More importantly,
+
+<!-- -->
+
+2.  It obscures the story I am trying to tell - the audience cares about real population, not the zero-density grid.
+:::
+
+```{r}
+# 1. Check for zero-population rows
+zero_rows <- sgdemo2024 %>% 
+  filter(Pop == 0)
+
+if (nrow(zero_rows) > 0) {
+  cat("⚠️ Found", nrow(zero_rows), "rows with Pop == 0 (empty demographic cells):\n")
+  print(head(zero_rows))    # show a few examples
+} else {
+  cat("✅ No zero‐population rows found.\n")
+}
+
+```
+
+```{r}
+# 2. Remove all zero‐population rows
+sgdemo2024 <- sgdemo2024 %>% 
+  filter(Pop > 0)
+```
+
+```{r}
+# 3. Confirm removal
+if (sum(sgdemo2024$Pop == 0) == 0) {
+  cat("✅ All zero‐population rows removed. Data is now focused on actual residents.\n")
+}
+```
+
+## 3.4 Check Age Range & Filter to Plausible Values
+
+::: callout-important
+## Converting entry "90 & Over" in Age Column
+
+I will be converting this to a numeric value to plot my graphs. Afterwards, I will be labeling it during the plot. This is to ensure
+
+1.  **Analytics Integrity:** Internally keeping Age=90 for all labelled "90 & Over" which allows me to do sums, means and such.
+2.  **Visual Clarity:** On the axis or legend, the readers we see "90+" so there's no confusion that the final bar or ridge covers all ages above 90.
+:::
+
+```{r}
+# 1. Inspect column names to confirm they match expectations
+print(colnames(sgdemo2024))
+
+# 2. Convert "Age" → numeric, mapping "90 & Over" → 90
+sgdemo2024 <- sgdemo2024 %>%
+  mutate(
+    Age = parse_number(as.character(Age)),  
+    Age = as.integer(Age)                   
+  )
+
+# 3. Verify the transformation
+age_stats <- sgdemo2024 %>%
+  summarise(
+    min_age = min(Age, na.rm = TRUE),
+    max_age = max(Age, na.rm = TRUE)
+  )
+
+cat(sprintf(
+  "✅ Age conversion complete: now an integer from %d to %d.\n",
+  age_stats$min_age, age_stats$max_age
+))
+
+```
+
+Final confirmation there are no more "90 & Over" entries in my data and Age column converted into integer.
+
+```{r}
+sum(sgdemo2024$Age == "90 & Over")
+```
+
+```{r}
+cat("Age column type:", class(sgdemo2024$Age), "\n")
+```
+
+```{r}
+na_count <- sum(is.na(sgdemo2024$Age))
+cat("Number of NA in Age after parsing:", na_count, "\n")
+```
+
+## 3.5 Confirm Sex Factor Levels
+
+::: callout-important
+## Inspecting Sex column in data
+
+The below code chunk will aim to ensure that there is plot consistency and reproducibility.
+:::
+
+```{r}
+# 1. Count subzone‐level totals (SZ == "Total")
+n_sz_total <- sum(sgdemo2024$SZ == "Total", na.rm = TRUE)
+cat("Rows with SZ == \"Total\":", n_sz_total, "\n")
+
+# 2. Count any Age == NA (originally "Total")
+n_age_na <- sum(is.na(sgdemo2024$Age))
+cat("Rows with Age == NA (was \"Total\"):", n_age_na, "\n")
+
+# 3. Count any Sex == "Total"
+n_sex_total <- sum(as.character(sgdemo2024$Sex) == "Total", na.rm = TRUE)
+cat("Rows with Sex == \"Total\":", n_sex_total, "\n\n")
+
+# 4. If any totals remain, peek at them
+if (n_sz_total + n_age_na + n_sex_total > 0) {
+  cat("⚠️ Example summary‐row(s):\n")
+  sgdemo2024 %>%
+    filter(
+      SZ == "Total" |
+      is.na(Age)    |
+      as.character(Sex) == "Total"
+    ) %>%
+    slice_head(n = 5) %>%
+    print()
+} else {
+  cat("✅ No summary‐row entries remain. You’re all set.\n")
+}
+```
+
+```{r}
+# Define the expected order
+expected_levels <- c("Males", "Females")
+
+# Inspect the current factor levels
+actual_levels <- levels(sgdemo2024$Sex)
+cat("Current Sex levels:", paste(actual_levels, collapse = ", "), "\n")
+
+# Compare and act
+if (identical(actual_levels, expected_levels)) {
+  cat("✅ Sex factor levels are already correct (Males, Females).\n")
+} else {
+  warning("⚠️ Sex factor levels are not as expected. Resetting to Males, Females.")
+  sgdemo2024 <- sgdemo2024 %>%
+    mutate(Sex = factor(Sex, levels = expected_levels))
+  cat("✅ Sex factor levels have been reset to:", 
+      paste(levels(sgdemo2024$Sex), collapse = ", "), "\n")
+}
+```
+
+## 3.5 Checking for any 'Total' in Columns
+
+::: callout-important
+## Final check and summary
+
+Let's confirm that there are no values 'Total' in any of our columns so that we know our dataset is purely the granular, inhabited cells. It is not only for housekeeping, but to safeguard my visualisations and summary statistics to truly reflect Singapore's lived population in 2024.
+:::
+
+```{r}
+# 1. Count subzone‐level totals (SZ == "Total")
+n_sz_total <- sum(sgdemo2024$SZ == "Total", na.rm = TRUE)
+cat("Rows with SZ == \"Total\":", n_sz_total, "\n")
+
+# 2. Count any Age == NA (originally "Total")
+n_age_na <- sum(is.na(sgdemo2024$Age))
+cat("Rows with Age == NA (was \"Total\"):", n_age_na, "\n")
+
+# 3. Count any Sex == "Total"
+n_sex_total <- sum(as.character(sgdemo2024$Sex) == "Total", na.rm = TRUE)
+cat("Rows with Sex == \"Total\":", n_sex_total, "\n\n")
+
+# 4. If any totals remain, peek at them
+if (n_sz_total + n_age_na + n_sex_total > 0) {
+  cat("⚠️ Example summary‐row(s):\n")
+  sgdemo2024 %>%
+    filter(
+      SZ == "Total" |
+      is.na(Age)    |
+      as.character(Sex) == "Total"
+    ) %>%
+    slice_head(n = 5) %>%
+    print()
+} else {
+  cat("✅ No summary‐row entries remain. You’re all set.\n")
+}
+```
+
+## 3.6 Final Summary
+
+We are finally done with cleaning the data and converting what's needed to provide truthful and accurate data. Below is a quick summary of our freshly cleaned data!
+
+```{r}
+# High‐Level Summary of Cleaned Data
+
+summary_tbl <- sgdemo2024 %>%
+  summarise(
+    total_records    = n(),
+    total_population = sum(Pop),
+    n_PAs            = n_distinct(PA),
+    n_SZs            = n_distinct(SZ)
+  )
+
+# Print the summary table
+print(summary_tbl)
+
+# Confirmation message
+cat(sprintf(
+  "✅ Data summary complete: %d records, total population %d, across %d PAs and %d subzones.\n",
+  summary_tbl$total_records,
+  summary_tbl$total_population,
+  summary_tbl$n_PAs,
+  summary_tbl$n_SZs
+))
+
+# Show random rows
+set.seed(2025)
+sgdemo2024 %>% 
+  slice_sample(prop = 0.01)
+```
+
+# 4 Population Pyramid
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+
+age_breaks <- c(-1, seq(4, 89, 5), Inf)
+age_labels <- c(paste0(seq(0, 85, 5), "-", seq(4, 89, 5)), "90+")
+
+bar_df <- sgdemo2024 %>%
+  mutate(
+    AgeGroup = cut(
+      Age,
+      breaks = age_breaks,
+      labels = age_labels,
+      right = TRUE
+    )
+  ) %>%
+  group_by(AgeGroup, Sex) %>%
+  summarise(Pop = sum(Pop), .groups = "drop") %>%
+  mutate(PopK = Pop / 1000)  # convert to '000
+
+# 2. Plot with centered title and new header
+ggplot(bar_df, aes(x = AgeGroup, y = PopK, fill = Sex)) +
+  geom_col(
+    position = position_dodge2(width = 1, padding = 0),
+    width    = 0.8
+  ) +
+  scale_y_continuous(
+    name   = "Population ('000)",
+    limits = c(0, 180),
+    breaks = seq(0, 180, by = 10),
+    expand = c(0, 0)
+  ) +
+  scale_fill_manual(
+    values = c("Males"   = "#067FD0",
+               "Females" = "#E63B60")
+  ) +
+  labs(
+    title = "Age and Gender Distribution of Singapore’s Population (2024)",
+    x     = "Age Group",
+    fill  = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title           = element_text(size = 18, face = "bold", hjust = 0.5),
+    axis.text.x          = element_text(angle = 45, hjust = 1),
+    panel.grid.major.x   = element_blank(),
+    panel.grid.major.y   = element_line(color = "grey80"),
+    legend.position      = "bottom"
+  )
+```
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+# 1. Summarise total population by PA
+pa_pop <- sgdemo2024 %>%
+  group_by(PA) %>%
+  summarise(TotalPop = sum(Pop), .groups = "drop") %>%
+  arrange(TotalPop)
+
+# 2. Plot horizontal bars
+ggplot(pa_pop, aes(x = TotalPop, y = fct_reorder(PA, TotalPop))) +
+  geom_col(fill = "#067FD0") +
+  scale_x_continuous(labels = scales::comma) +
+  labs(
+    title = "Total Population by Planning Area, Singapore 2024",
+    x     = "Population",
+    y     = NULL
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title         = element_text(size = 16, face = "bold"),
+    axis.text.y        = element_text(size = 8),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank()
+  )
+```
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+# 1. Define Planning Areas by Region
+central      <- c("Bishan","Bukit Merah","Bukit Timah","Downtown Core","Geylang",
+                  "Kallang","Marina East","Marina South","Marine Parade","Museum",
+                  "Newton","Novena","Orchard","Outram","Queenstown","River Valley",
+                  "Rochor","Singapore River","Southern Islands","Straits View",
+                  "Tanglin","Toa Payoh")
+east         <- c("Bedok","Changi","Changi Bay","Pasir Ris","Paya Lebar","Tampines")
+north        <- c("Central Water Catchment","Lim Chu Kang","Mandai","Sembawang",
+                  "Simpang","Sungei Kadut","Woodlands","Yishun")
+north_east   <- c("Ang Mo Kio","Hougang","North-Eastern Islands","Punggol",
+                  "Seletar","Sengkang","Serangoon")
+west         <- c("Boon Lay","Bukit Batok","Bukit Panjang","Choa Chu Kang",
+                  "Clementi","Jurong East","Jurong West","Pioneer","Tengah",
+                  "Tuas","Western Islands","Western Water Catchment")
+
+# 2. Tag each PA with its region
+sgdemo2024 <- sgdemo2024 %>%
+  mutate(
+    Region = case_when(
+      PA %in% central    ~ "Central",
+      PA %in% east       ~ "East",
+      PA %in% north      ~ "North",
+      PA %in% north_east ~ "North-East",
+      PA %in% west       ~ "West",
+      TRUE               ~ NA_character_
+    )
+  )
+
+# 3. Summarise and convert to thousands
+region_pop <- sgdemo2024 %>%
+  filter(!is.na(Region)) %>%
+  group_by(Region) %>%
+  summarise(TotalPop = sum(Pop), .groups = "drop") %>%
+  mutate(TotalPopK = TotalPop / 1000) %>%
+  arrange(TotalPopK)
+
+# 4. Compute max_k and breaks
+max_k    <- ceiling(max(region_pop$TotalPopK) / 50) * 50
+breaks_k <- seq(0, max_k, by = 50)
+labels_k <- as.character(breaks_k)  # force "1000" instead of "100"
+
+# 5. Plot
+ggplot(region_pop, aes(x = TotalPopK, y = fct_reorder(Region, TotalPopK))) +
+  geom_col(fill = "#067FD0", width = 0.7) +
+  scale_x_continuous(
+    name   = "Population ('000)",
+    limits = c(0, max_k),
+    breaks = breaks_k,
+    labels = labels_k,
+    expand = c(0, 0)
+  ) +
+  labs(
+    title = "Population by Region, Singapore 2024",
+    y     = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title         = element_text(size = 16, face = "bold", hjust = 0.5),
+    axis.text.y        = element_text(size = 10),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank()
+  )
+```
