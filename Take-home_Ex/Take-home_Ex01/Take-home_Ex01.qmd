@@ -17,7 +17,7 @@ execute:
 # 1 Importing Packages
 
 ```{r}
-pacman::p_load(tidyverse, ggthemes,viridis,ggridges,ggrepel,patchwork, readr, dplyr, Hmisc)
+pacman::p_load(tidyverse, ggthemes,viridis,ggridges,ggrepel,patchwork, readr, dplyr, forcats)
 ```
 
 # 2 Importing Data
@@ -347,32 +347,7 @@ ggplot(bar_df, aes(x = AgeGroup, y = PopK, fill = Sex)) +
   )
 ```
 
-```{r}
-#| fig-width: 12
-#| fig-height: 8
-# 1. Summarise total population by PA
-pa_pop <- sgdemo2024 %>%
-  group_by(PA) %>%
-  summarise(TotalPop = sum(Pop), .groups = "drop") %>%
-  arrange(TotalPop)
 
-# 2. Plot horizontal bars
-ggplot(pa_pop, aes(x = TotalPop, y = fct_reorder(PA, TotalPop))) +
-  geom_col(fill = "#067FD0") +
-  scale_x_continuous(labels = scales::comma) +
-  labs(
-    title = "Total Population by Planning Area, Singapore 2024",
-    x     = "Population",
-    y     = NULL
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(
-    plot.title         = element_text(size = 16, face = "bold"),
-    axis.text.y        = element_text(size = 8),
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor   = element_blank()
-  )
-```
 
 ```{r}
 #| fig-width: 12
@@ -413,20 +388,28 @@ region_pop <- sgdemo2024 %>%
   mutate(TotalPopK = TotalPop / 1000) %>%
   arrange(TotalPopK)
 
-# 4. Compute max_k and breaks
+# 4. Compute max_k and breaks every 50 (’000)
 max_k    <- ceiling(max(region_pop$TotalPopK) / 50) * 50
 breaks_k <- seq(0, max_k, by = 50)
-labels_k <- as.character(breaks_k)  # force "1000" instead of "100"
 
-# 5. Plot
-ggplot(region_pop, aes(x = TotalPopK, y = fct_reorder(Region, TotalPopK))) +
-  geom_col(fill = "#067FD0", width = 0.7) +
+# 5. Plot, forcing the labels to exact integers
+ggplot(region_pop, aes(x = TotalPopK, y = fct_reorder(Region, TotalPopK), fill = Region)) +
+  geom_col(width = 0.7) +
   scale_x_continuous(
     name   = "Population ('000)",
     limits = c(0, max_k),
     breaks = breaks_k,
-    labels = labels_k,
+    labels = as.character(breaks_k),  # exact labels: "0","50","100",...,"1000"
     expand = c(0, 0)
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Central"    = "#1f78b4",
+      "East"       = "#33a02c",
+      "North"      = "#e31a1c",
+      "North-East" = "#ff7f00",
+      "West"       = "#6a3d9a"
+    )
   ) +
   labs(
     title = "Population by Region, Singapore 2024",
@@ -437,6 +420,73 @@ ggplot(region_pop, aes(x = TotalPopK, y = fct_reorder(Region, TotalPopK))) +
     plot.title         = element_text(size = 16, face = "bold", hjust = 0.5),
     axis.text.y        = element_text(size = 10),
     panel.grid.major.y = element_blank(),
-    panel.grid.minor   = element_blank()
+    panel.grid.minor   = element_blank(),
+    legend.position    = "right"
   )
 ```
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+# 1. Define Planning Areas by Region
+central    <- c("Bishan","Bukit Merah","Bukit Timah","Downtown Core","Geylang",
+                "Kallang","Marina East","Marina South","Marine Parade","Museum",
+                "Newton","Novena","Orchard","Outram","Queenstown","River Valley",
+                "Rochor","Singapore River","Southern Islands","Straits View",
+                "Tanglin","Toa Payoh")
+east       <- c("Bedok","Changi","Changi Bay","Pasir Ris","Paya Lebar","Tampines")
+north      <- c("Central Water Catchment","Lim Chu Kang","Mandai","Sembawang",
+                "Simpang","Sungei Kadut","Woodlands","Yishun")
+north_east <- c("Ang Mo Kio","Hougang","North-Eastern Islands","Punggol",
+                "Seletar","Sengkang","Serangoon")
+west       <- c("Boon Lay","Bukit Batok","Bukit Panjang","Choa Chu Kang",
+                "Clementi","Jurong East","Jurong West","Pioneer","Tengah",
+                "Tuas","Western Islands","Western Water Catchment")
+
+# 2. Summarise total population by PA, then tag Region
+pa_pop <- sgdemo2024 %>%
+  group_by(PA) %>%
+  summarise(TotalPop = sum(Pop), .groups = "drop") %>%
+  mutate(
+    Region = case_when(
+      PA %in% central    ~ "Central",
+      PA %in% east       ~ "East",
+      PA %in% north      ~ "North",
+      PA %in% north_east ~ "North-East",
+      PA %in% west       ~ "West",
+      TRUE               ~ "Other"
+    )
+  ) %>%
+  arrange(TotalPop)
+
+# 3. Plot horizontal bars colored by Region
+ggplot(pa_pop, aes(x = TotalPop, y = fct_reorder(PA, TotalPop), fill = Region)) +
+  geom_col() +
+  scale_fill_manual(
+    values = c(
+      "Central"    = "#1f78b4",
+      "East"       = "#33a02c",
+      "North"      = "#e31a1c",
+      "North-East" = "#ff7f00",
+      "West"       = "#6a3d9a",
+      "Other"      = "grey70"
+    )
+  ) +
+  scale_x_continuous(labels = scales::comma) +
+  labs(
+    title = "Total Population by Planning Area, Singapore 2024",
+    subtitle = "Bars colored by region",
+    x     = "Population",
+    y     = NULL,
+    fill  = "Region"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title         = element_text(size = 16, face = "bold", hjust = 0.5),
+    plot.subtitle      = element_text(size = 12, hjust = 0.5),
+    axis.text.y        = element_text(size = 8),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    legend.position    = "right"
+  )
+```
+
