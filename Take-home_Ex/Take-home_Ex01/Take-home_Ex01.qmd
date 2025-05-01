@@ -12,15 +12,18 @@ execute:
   warning: false
 ---
 
-# Demographic structures and distribution of Singapore in 2024
+# Singapore's 2024 Demographic Landscape: A Closer Look at Age, Gender and Geographic Distribution
+# 1. Background
 
-# 1 Importing Packages
+
+
+# i. Importing Packages
 
 ```{r}
-pacman::p_load(tidyverse, ggthemes,viridis,ggridges,ggrepel,patchwork, readr, dplyr, forcats)
+pacman::p_load(tidyverse, ggthemes,viridis,ggridges,ggrepel,patchwork, readr, dplyr, forcats, scales, cowplot, ggtext, ggbump, matrixStats,ggalt,plotly)
 ```
 
-# 2 Importing Data
+# ii. Importing Data
 
 ```{r}
 # 3.1 Import
@@ -300,134 +303,175 @@ sgdemo2024 %>%
 #| fig-width: 12
 #| fig-height: 8
 
-age_breaks <- c(-1, seq(4, 89, 5), Inf)
-age_labels <- c(paste0(seq(0, 85, 5), "-", seq(4, 89, 5)), "90+")
-
-bar_df <- sgdemo2024 %>%
+# 1. Prepare pyramid data with percentages
+pyr_df <- sgdemo2024 %>%
   mutate(
     AgeGroup = cut(
       Age,
-      breaks = age_breaks,
-      labels = age_labels,
-      right = TRUE
+      breaks = c(-1, seq(4, 89, 5), Inf),
+      labels = c(paste0(seq(0, 85, 5), "-", seq(4, 89, 5)), "90+"),
+      right  = TRUE
     )
   ) %>%
   group_by(AgeGroup, Sex) %>%
   summarise(Pop = sum(Pop), .groups = "drop") %>%
-  mutate(PopK = Pop / 1000)  # convert to '000
-
-# 2. Plot with centered title and new header
-ggplot(bar_df, aes(x = AgeGroup, y = PopK, fill = Sex)) +
-  geom_col(
-    position = position_dodge2(width = 1, padding = 0),
-    width    = 0.8
-  ) +
-  scale_y_continuous(
-    name   = "Population ('000)",
-    limits = c(0, 180),
-    breaks = seq(0, 180, by = 10),
-    expand = c(0, 0)
-  ) +
-  scale_fill_manual(
-    values = c("Males"   = "#067FD0",
-               "Females" = "#E63B60")
-  ) +
-  labs(
-    title = "Age and Gender Distribution of Singapore’s Population (2024)",
-    x     = "Age Group",
-    fill  = NULL
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(
-    plot.title           = element_text(size = 18, face = "bold", hjust = 0.5),
-    axis.text.x          = element_text(angle = 45, hjust = 1),
-    panel.grid.major.x   = element_blank(),
-    panel.grid.major.y   = element_line(color = "grey80"),
-    legend.position      = "bottom"
-  )
-```
-
-
-
-```{r}
-#| fig-width: 12
-#| fig-height: 8
-# 1. Define Planning Areas by Region
-central      <- c("Bishan","Bukit Merah","Bukit Timah","Downtown Core","Geylang",
-                  "Kallang","Marina East","Marina South","Marine Parade","Museum",
-                  "Newton","Novena","Orchard","Outram","Queenstown","River Valley",
-                  "Rochor","Singapore River","Southern Islands","Straits View",
-                  "Tanglin","Toa Payoh")
-east         <- c("Bedok","Changi","Changi Bay","Pasir Ris","Paya Lebar","Tampines")
-north        <- c("Central Water Catchment","Lim Chu Kang","Mandai","Sembawang",
-                  "Simpang","Sungei Kadut","Woodlands","Yishun")
-north_east   <- c("Ang Mo Kio","Hougang","North-Eastern Islands","Punggol",
-                  "Seletar","Sengkang","Serangoon")
-west         <- c("Boon Lay","Bukit Batok","Bukit Panjang","Choa Chu Kang",
-                  "Clementi","Jurong East","Jurong West","Pioneer","Tengah",
-                  "Tuas","Western Islands","Western Water Catchment")
-
-# 2. Tag each PA with its region
-sgdemo2024 <- sgdemo2024 %>%
+  group_by(Sex) %>%
   mutate(
-    Region = case_when(
-      PA %in% central    ~ "Central",
-      PA %in% east       ~ "East",
-      PA %in% north      ~ "North",
-      PA %in% north_east ~ "North-East",
-      PA %in% west       ~ "West",
-      TRUE               ~ NA_character_
-    )
-  )
+    SexTotal   = sum(Pop),
+    Perc       = Pop / SexTotal * 100,
+    LabelPerc  = sprintf("%.1f%%", Perc),
+    PopK       = Pop / 1000,
+    PopSignK   = if_else(Sex == "Males", -PopK, PopK)
+  ) %>%
+  ungroup()
 
-# 3. Summarise and convert to thousands
-region_pop <- sgdemo2024 %>%
-  filter(!is.na(Region)) %>%
-  group_by(Region) %>%
-  summarise(TotalPop = sum(Pop), .groups = "drop") %>%
-  mutate(TotalPopK = TotalPop / 1000) %>%
-  arrange(TotalPopK)
+# 2. Compute subtitle text with grand totals and percentages
+total_all     <- sum(pyr_df$Pop)
+total_males   <- sum(pyr_df$Pop[pyr_df$Sex == "Males"])
+total_females <- sum(pyr_df$Pop[pyr_df$Sex == "Females"])
+pct_males     <- total_males   / total_all * 100
+pct_females   <- total_females / total_all * 100
 
-# 4. Compute max_k and breaks every 50 (’000)
-max_k    <- ceiling(max(region_pop$TotalPopK) / 50) * 50
-breaks_k <- seq(0, max_k, by = 50)
+subtitle_text <- paste0(
+  "Total population: ", scales::comma(total_all), "\n",
+  "Males: ", scales::comma(total_males), " (", sprintf("%.1f%%", pct_males), ")  |  ",
+  "Females: ", scales::comma(total_females), " (", sprintf("%.1f%%", pct_females), ")"
+)
 
-# 5. Plot, forcing the labels to exact integers
-ggplot(region_pop, aes(x = TotalPopK, y = fct_reorder(Region, TotalPopK), fill = Region)) +
-  geom_col(width = 0.7) +
+# 3. Fixed axis limits
+lim    <- 180
+breaks <- seq(-lim, lim, by = 10)
+
+# 4. Plot
+ggplot(pyr_df, aes(x = PopSignK, y = AgeGroup, fill = Sex)) +
+  geom_col(width = 0.8) +
+  # Male % labels
+  geom_text(
+    data    = filter(pyr_df, Sex == "Males"),
+    aes(label = LabelPerc),
+    hjust   = 1.1, nudge_x = -1.5,
+    size    = 3.5, color = "black"
+  ) +
+  # Female % labels
+  geom_text(
+    data    = filter(pyr_df, Sex == "Females"),
+    aes(label = LabelPerc),
+    hjust   = 0, nudge_x = 1.5,
+    size    = 3.5, color = "black"
+  ) +
+  scale_fill_manual(values = c("Males" = "#00C2A1", "Females" = "#9E00E3")) +
   scale_x_continuous(
-    name   = "Population ('000)",
-    limits = c(0, max_k),
-    breaks = breaks_k,
-    labels = as.character(breaks_k),  # exact labels: "0","50","100",...,"1000"
+    breaks = breaks,
+    labels = function(x) abs(x),
+    limits = c(-lim, lim),
     expand = c(0, 0)
   ) +
-  scale_fill_manual(
-    values = c(
-      "Central"    = "#1f78b4",
-      "East"       = "#33a02c",
-      "North"      = "#e31a1c",
-      "North-East" = "#ff7f00",
-      "West"       = "#6a3d9a"
-    )
-  ) +
+  geom_vline(xintercept = 0, color = "grey50", size = 0.3) +
+  coord_cartesian(clip = "off") +
   labs(
-    title = "Population by Region, Singapore 2024",
-    y     = NULL
+    title    = "Singapore Population by Age Group, 2024",
+    subtitle = subtitle_text,
+    x        = "Population (’000)",
+    y        = "Age Group",
+    fill     = NULL
   ) +
   theme_minimal(base_size = 14) +
   theme(
-    plot.title         = element_text(size = 16, face = "bold", hjust = 0.5),
-    axis.text.y        = element_text(size = 10),
+    panel.border       = element_rect(color = "black", fill = NA, size = 0.2),
+    plot.title         = element_text(size = 18, face = "bold", hjust = 0.5),
+    plot.subtitle      = element_text(size = 12, hjust = 0.5, margin = margin(b = 10)),
+    axis.text.y        = element_text(size = 10, color = "black"),
+    axis.text.x        = element_text(size = 10, color = "black"),
     panel.grid.major.y = element_blank(),
     panel.grid.minor   = element_blank(),
-    legend.position    = "right"
+    legend.position    = "bottom",
+    plot.margin        = margin(5, 40, 5, 5)
   )
-```
+``` 
 ```{r}
 #| fig-width: 12
 #| fig-height: 8
-# 1. Define Planning Areas by Region
+cohort_df <- sgdemo2024 %>%
+  mutate(
+    CohortKey = case_when(
+      Age <= 19            ~ "young",
+      Age >= 65            ~ "elderly",
+      TRUE                 ~ "labour"
+    )
+  ) %>%
+  group_by(CohortKey) %>%
+  summarise(TotalPop = sum(Pop), .groups = "drop") %>%
+  mutate(
+    TotalK    = TotalPop / 1000,
+    Perc      = TotalPop / sum(TotalPop) * 100,
+    LabelFull = paste0(
+      sprintf("%.1f%%", Perc),
+      "\n(",
+      scales::comma(TotalPop),
+      ")"
+    ),
+    CohortLabel = case_when(
+      CohortKey == "young"   ~ "**Young Dependents**<br>Age: 0 to 19",
+      CohortKey == "labour"  ~ "**Labour Force**<br>Age: 20 to 64",
+      CohortKey == "elderly" ~ "**Elderly Dependents**<br>Age: 65+"
+    ) %>%
+      factor(levels = c(
+        "**Young Dependents**<br>Age: 0 to 19",
+        "**Labour Force**<br>Age: 20 to 64",
+        "**Elderly Dependents**<br>Age: 65+"
+      ))
+  )
+
+# Computing grand total
+grand_total <- sum(cohort_df$TotalPop)
+
+# Adjust the x-axis limit so that values don't get cut off
+max_k     <- 3000
+nudge_amt <- max_k * 0.02  
+
+# Removing grid for minimalist approach
+ggplot(cohort_df, aes(x = TotalK, y = CohortLabel)) +
+  geom_col(fill = "#ACE1AF", width = 0.6) +
+  geom_text(aes(label = LabelFull),
+            hjust      = 0,
+            nudge_x    = nudge_amt,
+            size       = 5,
+            lineheight = 0.9,
+            color      = "black") +
+  scale_x_continuous(
+    name   = "Population (’000)",
+    breaks = seq(0, max_k, by = 250),
+    limits = c(0, max_k),
+    expand = expansion(mult = c(0, 0.05)),
+    labels = function(x) x
+  ) +
+  labs(
+    title    = "Population by Dependency Category, Singapore 2024",
+    subtitle = paste0("Total population: ", scales::comma(grand_total)),
+    x        = NULL,
+    y        = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.text.y      = element_markdown(size = 12, color = "black"),
+    axis.text.x      = element_text(size = 12, color = "black"),
+    plot.title       = element_text(size = 18, face = "bold", hjust = 0.5),
+    plot.subtitle    = element_text(size = 12, hjust = 0.5, margin = margin(b = 10)),
+    legend.position  = "none",
+    plot.margin      = margin(10, 40, 10, 10)
+  )
+
+```
+
+
+
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+
+# 1. Define PA → Region lookup lists
 central    <- c("Bishan","Bukit Merah","Bukit Timah","Downtown Core","Geylang",
                 "Kallang","Marina East","Marina South","Marine Parade","Museum",
                 "Newton","Novena","Orchard","Outram","Queenstown","River Valley",
@@ -442,10 +486,61 @@ west       <- c("Boon Lay","Bukit Batok","Bukit Panjang","Choa Chu Kang",
                 "Clementi","Jurong East","Jurong West","Pioneer","Tengah",
                 "Tuas","Western Islands","Western Water Catchment")
 
-# 2. Summarise total population by PA, then tag Region
-pa_pop <- sgdemo2024 %>%
-  group_by(PA) %>%
-  summarise(TotalPop = sum(Pop), .groups = "drop") %>%
+# 2. Build heatmap data
+tile_df <- sgdemo2024 %>%
+  mutate(
+    Region = case_when(
+      PA %in% central    ~ "Central",
+      PA %in% east       ~ "East",
+      PA %in% north      ~ "North",
+      PA %in% north_east ~ "North-East",
+      PA %in% west       ~ "West",
+      TRUE               ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(Region)) %>%
+  mutate(
+    AgeBand = cut(
+      Age,
+      breaks = c(seq(0, 90, by = 5), Inf),
+      right  = FALSE,
+      labels = c(paste0(seq(0,85,5), "-", seq(4,89,5)), "90+")
+    )
+  ) %>%
+  group_by(Region, AgeBand) %>%
+  summarise(Pop = sum(Pop), .groups = "drop") %>%
+  mutate(
+    Region  = factor(Region, levels = c("Central","East","North","North-East","West")),
+    AgeBand = factor(AgeBand, levels = c(paste0(seq(0,85,5), "-", seq(4,89,5)), "90+"))
+  )
+
+# 3. Plot
+ggplot(tile_df, aes(x = Region, y = AgeBand, fill = Pop)) +
+  geom_tile(color = "white") +
+  scale_fill_viridis_c(name = "Population", option = "C", labels = comma) +
+  labs(
+    title = "Heatmap of Age Population by Region, Singapore 2024",
+    x     = "Region",
+    y     = "Age Band"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x      = element_text(face="bold", size = 12, color = "black"),
+    axis.text.y      = element_text(size = 14, color = "black"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position  = "right",
+    plot.title       = element_text(size = 16, face="bold", hjust = 0.5),
+    axis.ticks       = element_blank(),
+    panel.border     = element_blank()
+  )
+```
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+
+# 2. Assign each PA → Region (your lookup vectors must be defined)
+ridge_region <- sgdemo2024 %>%
   mutate(
     Region = case_when(
       PA %in% central    ~ "Central",
@@ -454,39 +549,173 @@ pa_pop <- sgdemo2024 %>%
       PA %in% north_east ~ "North-East",
       PA %in% west       ~ "West",
       TRUE               ~ "Other"
-    )
+    ),
+    Region = factor(Region, levels = c("Central","East","North-East","North","West","Other"))
   ) %>%
-  arrange(TotalPop)
+  select(Age, Pop, Region)
 
-# 3. Plot horizontal bars colored by Region
-ggplot(pa_pop, aes(x = TotalPop, y = fct_reorder(PA, TotalPop), fill = Region)) +
-  geom_col() +
-  scale_fill_manual(
-    values = c(
-      "Central"    = "#1f78b4",
-      "East"       = "#33a02c",
-      "North"      = "#e31a1c",
-      "North-East" = "#ff7f00",
-      "West"       = "#6a3d9a",
-      "Other"      = "grey70"
-    )
+# 3. Plot with ridges starting at the axis
+ggplot(ridge_region, aes(x = Age, y = Region, weight = Pop, fill = Region)) +
+  geom_density_ridges(
+    scale           = 1.2,
+    rel_min_height  = 0.01,
+    color           = NA,
+    alpha           = 0.8
   ) +
-  scale_x_continuous(labels = scales::comma) +
+  scale_x_continuous(
+    breaks = seq(0, 90, 10),
+    expand = c(0, 0)
+  ) +
+  scale_y_discrete(
+    expand = c(0, 0)       
+  ) +
+  scale_fill_manual(values = c(
+    Central      = "#1f77b4",
+    East         = "#ff7f0e",
+    `North-East` = "#2ca02c",
+    North        = "#d62728",
+    West         = "#9467bd",
+    Other        = "#8c564b"
+  )) +
   labs(
-    title = "Total Population by Planning Area, Singapore 2024",
-    subtitle = "Bars colored by region",
-    x     = "Population",
-    y     = NULL,
-    fill  = "Region"
+    title    = "Age Distribution by Region, Singapore 2024",
+    subtitle = "Each ridge is weighted by subzone population",
+    x        = "Age (years)",
+    y        = NULL
   ) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
-    plot.title         = element_text(size = 16, face = "bold", hjust = 0.5),
-    plot.subtitle      = element_text(size = 12, hjust = 0.5),
-    axis.text.y        = element_text(size = 8),
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor   = element_blank(),
-    legend.position    = "right"
+    legend.position  = "none",
+    plot.title       = element_text(face = "bold", hjust = 0.5),
+    plot.subtitle    = element_text(hjust = 0.5),
+    axis.text.x         = element_text(color = "black", size = 13),
+    axis.text.y         = element_text(color = "black", size = 13),
+  )
+```
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+
+# 1. Define PA → Region lookup
+central    <- c("Bishan","Bukit Merah","Bukit Timah","Downtown Core","Geylang",
+                "Kallang","Marina East","Marina South","Marine Parade","Museum",
+                "Newton","Novena","Orchard","Outram","Queenstown","River Valley",
+                "Rochor","Singapore River","Southern Islands","Straits View",
+                "Tanglin","Toa Payoh")
+east       <- c("Bedok","Changi","Changi Bay","Pasir Ris","Paya Lebar","Tampines")
+north      <- c("Central Water Catchment","Lim Chu Kang","Mandai","Sembawang",
+                "Simpang","Sungei Kadut","Woodlands","Yishun")
+north_east <- c("Ang Mo Kio","Hougang","North-Eastern Islands","Punggol",
+                "Seletar","Sengkang","Serangoon")
+west       <- c("Boon Lay","Bukit Batok","Bukit Panjang","Choa Chu Kang",
+                "Clementi","Jurong East","Jurong West","Pioneer","Tengah",
+                "Tuas","Western Islands","Western Water Catchment")
+
+# 2. Compute weighted median age by Region & Sex
+region_med <- sgdemo2024 %>%
+  mutate(
+    Region = case_when(
+      PA %in% central    ~ "Central",
+      PA %in% east       ~ "East",
+      PA %in% north      ~ "North",
+      PA %in% north_east ~ "North-East",
+      PA %in% west       ~ "West",
+      TRUE               ~ "Other"
+    ),
+    Region = factor(Region, levels = c("Central","East","North-East","North","West","Other"))
+  ) %>%
+  group_by(Region, Sex) %>%
+  summarise(
+    MedAge = matrixStats::weightedMedian(Age, w = Pop),
+    .groups = "drop"
+  )
+
+# 3. Plot grouped bar chart with no gap, 5-year bins, no grid lines
+ggplot(region_med, aes(x = Region, y = MedAge, fill = Sex)) +
+  geom_col(
+    position = position_dodge(width = 0.6), 
+    width = 0.6
+  ) +
+  scale_fill_manual(values = c("Males" = "#00C2A1", "Females" = "#9E00E3")) +
+  scale_y_continuous(
+    breaks = seq(0, 50, by = 5),
+    limits = c(0, 50),
+    expand = c(0, 0)
+  ) +
+  labs(
+    title = "Median Age by Sex and Region, Singapore 2024",
+    x     = NULL,
+    y     = "Median Age (years)",
+    fill  = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title          = element_text(hjust = 0.5, face = "bold", size = 20),
+    axis.text.x         = element_text(color = "black", size = 13),
+    axis.text.y         = element_text(color = "black", size = 13),
+    panel.grid.major    = element_blank(),
+    panel.grid.minor    = element_blank(),
+    legend.position     = "bottom"
+  )
+```
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+
+# 1. Compute weighted median age by PA & sex
+med_age <- sgdemo2024 %>%
+  group_by(PA, Sex) %>%
+  summarise(
+    MedAge = matrixStats::weightedMedian(Age, w = Pop),
+    .groups = "drop"
+  ) %>%
+  pivot_wider(
+    names_from  = Sex,
+    values_from = MedAge
+  ) %>%
+  rename(Male = Males, Female = Females) %>%
+  arrange((Male + Female) / 2) %>%
+  mutate(PA = factor(PA, levels = PA))
+
+# 2. Plot static dumbbell-like chart with legend on the right
+ggplot(med_age, aes(y = PA)) +
+  # a) connecting lines
+  geom_segment(aes(x = Male, xend = Female, yend = PA),
+               color = "black", size = 0.5) +
+  # b) male points
+  geom_point(aes(x = Male, color = "Male"), size = 4) +
+  # c) female points
+  geom_point(aes(x = Female, color = "Female"), size = 4) +
+  # 3. Scale and legend
+  scale_color_manual(
+    name   = "Sex",
+    values = c("Male" = "#00C2A1", "Female" = "#9E00E3")
+  ) +
+  scale_x_continuous(
+    breaks = seq(0, 55, by = 5),
+    labels = seq(0, 55, by = 5),
+    limits = c(0, 55),
+    expand = c(0, 0)
+  ) +
+  labs(
+    title = "Median Age by Sex and Planning Area, Singapore 2024",
+    x     = "Median Age (years)",
+    y     = NULL,
+    color = NULL
+  ) +
+  theme_classic(base_size = 14) +
+  theme(
+    plot.title           = element_text(hjust = 0.5, face = "bold"),
+    axis.text.x          = element_text(color = "black", size = 14),
+    axis.title.x         = element_text(size = 14),
+    axis.text.y          = element_text(color = "black", size = 12),
+    panel.grid.major.x   = element_line(color = "grey90", size = 0.2),
+    panel.grid.minor.x   = element_line(color = "grey90", size = 0.2),
+    panel.grid.major.y   = element_line(color = "grey90", size = 0.2),
+    panel.grid.minor.y   = element_line(color = "grey90", size = 0.2),
+    legend.position      = "bottom",
+    legend.justification = "top",
+    legend.text          = element_text(size = 12)
   )
 ```
 
