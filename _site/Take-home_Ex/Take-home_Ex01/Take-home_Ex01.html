@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Nor Hendra">
-<meta name="dcterms.date" content="2023-04-30">
+<meta name="dcterms.date" content="2025-04-30">
 
 <title>Take Home Assignment 1 – ISSS608</title>
 <style>
@@ -145,17 +145,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html">
  <span class="dropdown-text">Hands-on Exercise 3B</span></a>
   </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Take-home Exercise</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
-        <li>
-    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html">
- <span class="dropdown-text">Take-home Exercise 1</span></a>
-  </li>  
+        <li class="dropdown-header">Take-home Exercise 1</li>
     </ul>
   </li>
 </ul>
@@ -228,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 30, 2023</p>
+      <p class="date">April 30, 2025</p>
     </div>
   </div>
   
@@ -890,7 +880,7 @@ Final check and summary
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign each PA to its region</span></span>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Assign each PA to its region (only the five defined)</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>ridge_region <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region =</span> <span class="fu">case_when</span>(</span>
@@ -904,7 +894,7 @@ Final check and summary
 <span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Age, Pop, Region)</span>
 <span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ridgelines without trimming and starting at the axis</span></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Plot ridgelines starting at the axis</span></span>
 <span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ridge_region, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Region, <span class="at">weight =</span> Pop, <span class="at">fill =</span> Region)) <span class="sc">+</span></span>
 <span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(</span>
 <span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale           =</span> <span class="fl">1.2</span>,</span>
@@ -915,31 +905,32 @@ Final check and summary
 <span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
 <span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">name   =</span> <span class="st">"Age (years)"</span>,</span>
 <span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="dv">10</span>),</span>
-<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">90</span>),</span>
-<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">Central      =</span> <span class="st">"#1f77b4"</span>,</span>
-<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">East         =</span> <span class="st">"#ff7f0e"</span>,</span>
-<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">North-East</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"#2ca02c"</span>,</span>
-<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">North        =</span> <span class="st">"#d62728"</span>,</span>
-<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">West         =</span> <span class="st">"#9467bd"</span></span>
-<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">"Age Distribution by Region, Singapore 2024"</span>,</span>
-<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Each ridge is weighted by subzone population"</span></span>
-<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position   =</span> <span class="st">"none"</span>,</span>
-<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title        =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle     =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
-<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x       =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
-<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y       =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
-<span id="cb54-48"><a href="#cb54-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major  =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb54-49"><a href="#cb54-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor  =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb54-50"><a href="#cb54-50" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">Central      =</span> <span class="st">"#1f77b4"</span>,</span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">East         =</span> <span class="st">"#ff7f0e"</span>,</span>
+<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">North-East</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"#2ca02c"</span>,</span>
+<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">North        =</span> <span class="st">"#d62728"</span>,</span>
+<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">West         =</span> <span class="st">"#9467bd"</span></span>
+<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">"Age Distribution by Region, Singapore 2024"</span>,</span>
+<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Each ridge is weighted by subzone population"</span>,</span>
+<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">x        =</span> <span class="cn">NULL</span>,</span>
+<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">y        =</span> <span class="cn">NULL</span></span>
+<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position  =</span> <span class="st">"none"</span>,</span>
+<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title       =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle    =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
+<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x      =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb54-48"><a href="#cb54-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y      =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb54-49"><a href="#cb54-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb54-50"><a href="#cb54-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb54-51"><a href="#cb54-51" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -950,65 +941,64 @@ Final check and summary
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Define PA → Region lookup</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>central    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bishan"</span>,<span class="st">"Bukit Merah"</span>,<span class="st">"Bukit Timah"</span>,<span class="st">"Downtown Core"</span>,<span class="st">"Geylang"</span>,</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Kallang"</span>,<span class="st">"Marina East"</span>,<span class="st">"Marina South"</span>,<span class="st">"Marine Parade"</span>,<span class="st">"Museum"</span>,</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Newton"</span>,<span class="st">"Novena"</span>,<span class="st">"Orchard"</span>,<span class="st">"Outram"</span>,<span class="st">"Queenstown"</span>,<span class="st">"River Valley"</span>,</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Rochor"</span>,<span class="st">"Singapore River"</span>,<span class="st">"Southern Islands"</span>,<span class="st">"Straits View"</span>,</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Tanglin"</span>,<span class="st">"Toa Payoh"</span>)</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>east       <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bedok"</span>,<span class="st">"Changi"</span>,<span class="st">"Changi Bay"</span>,<span class="st">"Pasir Ris"</span>,<span class="st">"Paya Lebar"</span>,<span class="st">"Tampines"</span>)</span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>north      <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Central Water Catchment"</span>,<span class="st">"Lim Chu Kang"</span>,<span class="st">"Mandai"</span>,<span class="st">"Sembawang"</span>,</span>
-<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Simpang"</span>,<span class="st">"Sungei Kadut"</span>,<span class="st">"Woodlands"</span>,<span class="st">"Yishun"</span>)</span>
-<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>north_east <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ang Mo Kio"</span>,<span class="st">"Hougang"</span>,<span class="st">"North-Eastern Islands"</span>,<span class="st">"Punggol"</span>,</span>
-<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Seletar"</span>,<span class="st">"Sengkang"</span>,<span class="st">"Serangoon"</span>)</span>
-<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>west       <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Boon Lay"</span>,<span class="st">"Bukit Batok"</span>,<span class="st">"Bukit Panjang"</span>,<span class="st">"Choa Chu Kang"</span>,</span>
-<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Clementi"</span>,<span class="st">"Jurong East"</span>,<span class="st">"Jurong West"</span>,<span class="st">"Pioneer"</span>,<span class="st">"Tengah"</span>,</span>
-<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Tuas"</span>,<span class="st">"Western Islands"</span>,<span class="st">"Western Water Catchment"</span>)</span>
-<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Compute weighted median age by Region &amp; Sex</span></span>
-<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>region_med <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
-<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region =</span> <span class="fu">case_when</span>(</span>
-<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> central    <span class="sc">~</span> <span class="st">"Central"</span>,</span>
-<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> east       <span class="sc">~</span> <span class="st">"East"</span>,</span>
-<span id="cb55-22"><a href="#cb55-22" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north      <span class="sc">~</span> <span class="st">"North"</span>,</span>
-<span id="cb55-23"><a href="#cb55-23" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north_east <span class="sc">~</span> <span class="st">"North-East"</span>,</span>
-<span id="cb55-24"><a href="#cb55-24" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> west       <span class="sc">~</span> <span class="st">"West"</span>,</span>
-<span id="cb55-25"><a href="#cb55-25" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb55-26"><a href="#cb55-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region =</span> <span class="fu">factor</span>(Region, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Central"</span>,<span class="st">"East"</span>,<span class="st">"North-East"</span>,<span class="st">"North"</span>,<span class="st">"West"</span>))</span>
-<span id="cb55-27"><a href="#cb55-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb55-28"><a href="#cb55-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb55-29"><a href="#cb55-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb55-30"><a href="#cb55-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">MedAge =</span> matrixStats<span class="sc">::</span><span class="fu">weightedMedian</span>(Age, <span class="at">w =</span> Pop),</span>
-<span id="cb55-31"><a href="#cb55-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb55-32"><a href="#cb55-32" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb55-33"><a href="#cb55-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-34"><a href="#cb55-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Plot grouped bar chart with no gap, 5-year bins, no grid lines</span></span>
-<span id="cb55-35"><a href="#cb55-35" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(region_med, <span class="fu">aes</span>(<span class="at">x =</span> Region, <span class="at">y =</span> MedAge, <span class="at">fill =</span> Sex)) <span class="sc">+</span></span>
-<span id="cb55-36"><a href="#cb55-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(</span>
-<span id="cb55-37"><a href="#cb55-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>), </span>
-<span id="cb55-38"><a href="#cb55-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.6</span></span>
-<span id="cb55-39"><a href="#cb55-39" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb55-40"><a href="#cb55-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Males"</span> <span class="ot">=</span> <span class="st">"#00C2A1"</span>, <span class="st">"Females"</span> <span class="ot">=</span> <span class="st">"#9E00E3"</span>)) <span class="sc">+</span></span>
-<span id="cb55-41"><a href="#cb55-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb55-42"><a href="#cb55-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="at">by =</span> <span class="dv">5</span>),</span>
-<span id="cb55-43"><a href="#cb55-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>),</span>
-<span id="cb55-44"><a href="#cb55-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb55-45"><a href="#cb55-45" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb55-46"><a href="#cb55-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb55-47"><a href="#cb55-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Median Age by Sex and Region, Singapore 2024"</span>,</span>
-<span id="cb55-48"><a href="#cb55-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="cn">NULL</span>,</span>
-<span id="cb55-49"><a href="#cb55-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Median Age (years)"</span>,</span>
-<span id="cb55-50"><a href="#cb55-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill  =</span> <span class="cn">NULL</span></span>
-<span id="cb55-51"><a href="#cb55-51" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb55-52"><a href="#cb55-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb55-53"><a href="#cb55-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb55-54"><a href="#cb55-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title          =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">20</span>),</span>
-<span id="cb55-55"><a href="#cb55-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x         =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
-<span id="cb55-56"><a href="#cb55-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y         =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
-<span id="cb55-57"><a href="#cb55-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major    =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb55-58"><a href="#cb55-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor    =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb55-59"><a href="#cb55-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position     =</span> <span class="st">"bottom"</span></span>
-<span id="cb55-60"><a href="#cb55-60" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>ridge_region <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region =</span> <span class="fu">case_when</span>(</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> central    <span class="sc">~</span> <span class="st">"Central"</span>,</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> east       <span class="sc">~</span> <span class="st">"East"</span>,</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north      <span class="sc">~</span> <span class="st">"North"</span>,</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north_east <span class="sc">~</span> <span class="st">"North-East"</span>,</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> west       <span class="sc">~</span> <span class="st">"West"</span></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region =</span> <span class="fu">factor</span>(Region, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Central"</span>,<span class="st">"East"</span>,<span class="st">"North-East"</span>,<span class="st">"North"</span>,<span class="st">"West"</span>))</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Age, Pop, Region)</span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Compute weighted median age by Region &amp; Sex</span></span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>region_med <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region =</span> <span class="fu">case_when</span>(</span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> central    <span class="sc">~</span> <span class="st">"Central"</span>,</span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> east       <span class="sc">~</span> <span class="st">"East"</span>,</span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north      <span class="sc">~</span> <span class="st">"North"</span>,</span>
+<span id="cb55-22"><a href="#cb55-22" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north_east <span class="sc">~</span> <span class="st">"North-East"</span>,</span>
+<span id="cb55-23"><a href="#cb55-23" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> west       <span class="sc">~</span> <span class="st">"West"</span>,</span>
+<span id="cb55-24"><a href="#cb55-24" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb55-25"><a href="#cb55-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region =</span> <span class="fu">factor</span>(Region, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Central"</span>,<span class="st">"East"</span>,<span class="st">"North-East"</span>,<span class="st">"North"</span>,<span class="st">"West"</span>))</span>
+<span id="cb55-26"><a href="#cb55-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb55-27"><a href="#cb55-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb55-28"><a href="#cb55-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb55-29"><a href="#cb55-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">MedAge =</span> matrixStats<span class="sc">::</span><span class="fu">weightedMedian</span>(Age, <span class="at">w =</span> Pop),</span>
+<span id="cb55-30"><a href="#cb55-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb55-31"><a href="#cb55-31" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb55-32"><a href="#cb55-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-33"><a href="#cb55-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Plot grouped bar chart with no gap, 5-year bins, no grid lines</span></span>
+<span id="cb55-34"><a href="#cb55-34" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(region_med, <span class="fu">aes</span>(<span class="at">x =</span> Region, <span class="at">y =</span> MedAge, <span class="at">fill =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb55-35"><a href="#cb55-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(</span>
+<span id="cb55-36"><a href="#cb55-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>), </span>
+<span id="cb55-37"><a href="#cb55-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.6</span></span>
+<span id="cb55-38"><a href="#cb55-38" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb55-39"><a href="#cb55-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Males"</span> <span class="ot">=</span> <span class="st">"#00C2A1"</span>, <span class="st">"Females"</span> <span class="ot">=</span> <span class="st">"#9E00E3"</span>)) <span class="sc">+</span></span>
+<span id="cb55-40"><a href="#cb55-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb55-41"><a href="#cb55-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="at">by =</span> <span class="dv">5</span>),</span>
+<span id="cb55-42"><a href="#cb55-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>),</span>
+<span id="cb55-43"><a href="#cb55-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb55-44"><a href="#cb55-44" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb55-45"><a href="#cb55-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb55-46"><a href="#cb55-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Median Age by Sex and Region, Singapore 2024"</span>,</span>
+<span id="cb55-47"><a href="#cb55-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="cn">NULL</span>,</span>
+<span id="cb55-48"><a href="#cb55-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Median Age (years)"</span>,</span>
+<span id="cb55-49"><a href="#cb55-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill  =</span> <span class="cn">NULL</span></span>
+<span id="cb55-50"><a href="#cb55-50" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb55-51"><a href="#cb55-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb55-52"><a href="#cb55-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb55-53"><a href="#cb55-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title          =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb55-54"><a href="#cb55-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x         =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb55-55"><a href="#cb55-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y         =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb55-56"><a href="#cb55-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major    =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb55-57"><a href="#cb55-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor    =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb55-58"><a href="#cb55-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position     =</span> <span class="st">"bottom"</span></span>
+<span id="cb55-59"><a href="#cb55-59" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1083,99 +1073,96 @@ Final check and summary
 </div>
 <p>`</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Install / load</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"gt"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"gt"</span>)</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"matrixStats"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"matrixStats"</span>)</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(matrixStats)  <span class="co"># for weightedMedian()</span></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Define Region lookup</span></span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>central    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bishan"</span>,<span class="st">"Bukit Merah"</span>,<span class="st">"Bukit Timah"</span>,<span class="st">"Downtown Core"</span>,<span class="st">"Geylang"</span>,</span>
-<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Kallang"</span>,<span class="st">"Marina East"</span>,<span class="st">"Marina South"</span>,<span class="st">"Marine Parade"</span>,<span class="st">"Museum"</span>,</span>
-<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Newton"</span>,<span class="st">"Novena"</span>,<span class="st">"Orchard"</span>,<span class="st">"Outram"</span>,<span class="st">"Queenstown"</span>,<span class="st">"River Valley"</span>,</span>
-<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Rochor"</span>,<span class="st">"Singapore River"</span>,<span class="st">"Southern Islands"</span>,<span class="st">"Straits View"</span>,</span>
-<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Tanglin"</span>,<span class="st">"Toa Payoh"</span>)</span>
-<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>east       <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bedok"</span>,<span class="st">"Changi"</span>,<span class="st">"Changi Bay"</span>,<span class="st">"Pasir Ris"</span>,<span class="st">"Paya Lebar"</span>,<span class="st">"Tampines"</span>)</span>
-<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>north      <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Central Water Catchment"</span>,<span class="st">"Lim Chu Kang"</span>,<span class="st">"Mandai"</span>,<span class="st">"Sembawang"</span>,</span>
-<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Simpang"</span>,<span class="st">"Sungei Kadut"</span>,<span class="st">"Woodlands"</span>,<span class="st">"Yishun"</span>)</span>
-<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>north_east <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ang Mo Kio"</span>,<span class="st">"Hougang"</span>,<span class="st">"North-Eastern Islands"</span>,<span class="st">"Punggol"</span>,</span>
-<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Seletar"</span>,<span class="st">"Sengkang"</span>,<span class="st">"Serangoon"</span>)</span>
-<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a>west       <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Boon Lay"</span>,<span class="st">"Bukit Batok"</span>,<span class="st">"Bukit Panjang"</span>,<span class="st">"Choa Chu Kang"</span>,</span>
-<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Clementi"</span>,<span class="st">"Jurong East"</span>,<span class="st">"Jurong West"</span>,<span class="st">"Pioneer"</span>,<span class="st">"Tengah"</span>,</span>
-<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Tuas"</span>,<span class="st">"Western Islands"</span>,<span class="st">"Western Water Catchment"</span>)</span>
-<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Summarise at PA‐level, tagging Region</span></span>
-<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>pa_summary <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
-<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region =</span> <span class="fu">case_when</span>(</span>
-<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> central    <span class="sc">~</span> <span class="st">"Central"</span>,</span>
-<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> east       <span class="sc">~</span> <span class="st">"East"</span>,</span>
-<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north      <span class="sc">~</span> <span class="st">"North"</span>,</span>
-<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north_east <span class="sc">~</span> <span class="st">"North-East"</span>,</span>
-<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> west       <span class="sc">~</span> <span class="st">"West"</span></span>
-<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, PA) <span class="sc">%&gt;%</span></span>
-<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalPop =</span> <span class="fu">sum</span>(Pop),</span>
-<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">MedAge   =</span> matrixStats<span class="sc">::</span><span class="fu">weightedMedian</span>(Age, <span class="at">w =</span> Pop),</span>
-<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups  =</span> <span class="st">"drop"</span></span>
-<span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">factor</span>(Region, <span class="fu">c</span>(<span class="st">"Central"</span>,<span class="st">"East"</span>,<span class="st">"North-East"</span>,<span class="st">"North"</span>,<span class="st">"West"</span>)), PA)</span>
-<span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Define color‐blind safe palette (only actual regions)</span></span>
-<span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a>region_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">Central     =</span> <span class="st">"#1f77b4"</span>,</span>
-<span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">East        =</span> <span class="st">"#ff7f0e"</span>,</span>
-<span id="cb57-48"><a href="#cb57-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">North-East</span><span class="st">`</span><span class="ot">=</span> <span class="st">"#2ca02c"</span>,</span>
-<span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">North       =</span> <span class="st">"#d62728"</span>,</span>
-<span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">West        =</span> <span class="st">"#9467bd"</span></span>
-<span id="cb57-51"><a href="#cb57-51" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb57-52"><a href="#cb57-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-53"><a href="#cb57-53" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Render gt table</span></span>
-<span id="cb57-54"><a href="#cb57-54" aria-hidden="true" tabindex="-1"></a>pa_summary <span class="sc">%&gt;%</span></span>
-<span id="cb57-55"><a href="#cb57-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>(</span>
-<span id="cb57-56"><a href="#cb57-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">rowname_col   =</span> <span class="st">"PA"</span>,</span>
-<span id="cb57-57"><a href="#cb57-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">groupname_col =</span> <span class="st">"Region"</span></span>
-<span id="cb57-58"><a href="#cb57-58" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb57-59"><a href="#cb57-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb57-60"><a href="#cb57-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Singapore 2024 &amp;mdash; Planning Area Summary**"</span>)</span>
-<span id="cb57-61"><a href="#cb57-61" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb57-62"><a href="#cb57-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(</span>
-<span id="cb57-63"><a href="#cb57-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">vars</span>(TotalPop),</span>
-<span id="cb57-64"><a href="#cb57-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">0</span>,</span>
-<span id="cb57-65"><a href="#cb57-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">suffixing =</span> <span class="cn">FALSE</span></span>
-<span id="cb57-66"><a href="#cb57-66" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb57-67"><a href="#cb57-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(</span>
-<span id="cb57-68"><a href="#cb57-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">vars</span>(MedAge),</span>
-<span id="cb57-69"><a href="#cb57-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">decimals =</span> <span class="dv">1</span></span>
-<span id="cb57-70"><a href="#cb57-70" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb57-71"><a href="#cb57-71" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb57-72"><a href="#cb57-72" aria-hidden="true" tabindex="-1"></a>    tbl <span class="ot">&lt;-</span> .</span>
-<span id="cb57-73"><a href="#cb57-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(reg <span class="cf">in</span> <span class="fu">names</span>(region_colors)) {</span>
-<span id="cb57-74"><a href="#cb57-74" aria-hidden="true" tabindex="-1"></a>      tbl <span class="ot">&lt;-</span> tbl <span class="sc">%&gt;%</span></span>
-<span id="cb57-75"><a href="#cb57-75" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tab_style</span>(</span>
-<span id="cb57-76"><a href="#cb57-76" aria-hidden="true" tabindex="-1"></a>          <span class="at">style =</span> <span class="fu">list</span>(</span>
-<span id="cb57-77"><a href="#cb57-77" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cell_fill</span>(<span class="at">color =</span> region_colors[[reg]]),</span>
-<span id="cb57-78"><a href="#cb57-78" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"white"</span>)</span>
-<span id="cb57-79"><a href="#cb57-79" aria-hidden="true" tabindex="-1"></a>          ),</span>
-<span id="cb57-80"><a href="#cb57-80" aria-hidden="true" tabindex="-1"></a>          <span class="at">locations =</span> <span class="fu">cells_row_groups</span>(<span class="at">groups =</span> reg)</span>
-<span id="cb57-81"><a href="#cb57-81" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb57-82"><a href="#cb57-82" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb57-83"><a href="#cb57-83" aria-hidden="true" tabindex="-1"></a>    tbl</span>
-<span id="cb57-84"><a href="#cb57-84" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">%&gt;%</span></span>
-<span id="cb57-85"><a href="#cb57-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
-<span id="cb57-86"><a href="#cb57-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">TotalPop =</span> <span class="st">"Total Population"</span>,</span>
-<span id="cb57-87"><a href="#cb57-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">MedAge   =</span> <span class="st">"Median Age"</span></span>
-<span id="cb57-88"><a href="#cb57-88" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb57-89"><a href="#cb57-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_options</span>(</span>
-<span id="cb57-90"><a href="#cb57-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.font.size      =</span> <span class="fu">px</span>(<span class="dv">12</span>),</span>
-<span id="cb57-91"><a href="#cb57-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">row_group.font.weight =</span> <span class="st">"bold"</span>,</span>
-<span id="cb57-92"><a href="#cb57-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">row_group.padding     =</span> <span class="fu">px</span>(<span class="dv">4</span>)</span>
-<span id="cb57-93"><a href="#cb57-93" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Install/load</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"gt"</span>, <span class="at">quietly=</span><span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"gt"</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Define the five region vectors</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>central    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bishan"</span>,<span class="st">"Bukit Merah"</span>,<span class="st">"Bukit Timah"</span>,<span class="st">"Downtown Core"</span>,<span class="st">"Geylang"</span>,</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Kallang"</span>,<span class="st">"Marina East"</span>,<span class="st">"Marina South"</span>,<span class="st">"Marine Parade"</span>,<span class="st">"Museum"</span>,</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Newton"</span>,<span class="st">"Novena"</span>,<span class="st">"Orchard"</span>,<span class="st">"Outram"</span>,<span class="st">"Queenstown"</span>,<span class="st">"River Valley"</span>,</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Rochor"</span>,<span class="st">"Singapore River"</span>,<span class="st">"Southern Islands"</span>,<span class="st">"Straits View"</span>,</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Tanglin"</span>,<span class="st">"Toa Payoh"</span>)</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>east       <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bedok"</span>,<span class="st">"Changi"</span>,<span class="st">"Changi Bay"</span>,<span class="st">"Pasir Ris"</span>,<span class="st">"Paya Lebar"</span>,<span class="st">"Tampines"</span>)</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>north      <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Central Water Catchment"</span>,<span class="st">"Lim Chu Kang"</span>,<span class="st">"Mandai"</span>,<span class="st">"Sembawang"</span>,</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Simpang"</span>,<span class="st">"Sungei Kadut"</span>,<span class="st">"Woodlands"</span>,<span class="st">"Yishun"</span>)</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>north_east <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ang Mo Kio"</span>,<span class="st">"Hougang"</span>,<span class="st">"North-Eastern Islands"</span>,<span class="st">"Punggol"</span>,</span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Seletar"</span>,<span class="st">"Sengkang"</span>,<span class="st">"Serangoon"</span>)</span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>west       <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Boon Lay"</span>,<span class="st">"Bukit Batok"</span>,<span class="st">"Bukit Panjang"</span>,<span class="st">"Choa Chu Kang"</span>,</span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Clementi"</span>,<span class="st">"Jurong East"</span>,<span class="st">"Jurong West"</span>,<span class="st">"Pioneer"</span>,<span class="st">"Tengah"</span>,</span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Tuas"</span>,<span class="st">"Western Islands"</span>,<span class="st">"Western Water Catchment"</span>)</span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Build region_df</span></span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>max_len <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">length</span>(central), <span class="fu">length</span>(east), <span class="fu">length</span>(north_east), <span class="fu">length</span>(north), <span class="fu">length</span>(west))</span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>region_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">Central     =</span> <span class="fu">c</span>(central,     <span class="fu">rep</span>(<span class="cn">NA_character_</span>, max_len <span class="sc">-</span> <span class="fu">length</span>(central))),</span>
+<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">East        =</span> <span class="fu">c</span>(east,        <span class="fu">rep</span>(<span class="cn">NA_character_</span>, max_len <span class="sc">-</span> <span class="fu">length</span>(east))),</span>
+<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">North-East</span><span class="st">`</span><span class="ot">=</span> <span class="fu">c</span>(north_east,  <span class="fu">rep</span>(<span class="cn">NA_character_</span>, max_len <span class="sc">-</span> <span class="fu">length</span>(north_east))),</span>
+<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">North       =</span> <span class="fu">c</span>(north,       <span class="fu">rep</span>(<span class="cn">NA_character_</span>, max_len <span class="sc">-</span> <span class="fu">length</span>(north))),</span>
+<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">West        =</span> <span class="fu">c</span>(west,        <span class="fu">rep</span>(<span class="cn">NA_character_</span>, max_len <span class="sc">-</span> <span class="fu">length</span>(west)))</span>
+<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Palette</span></span>
+<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a>region_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">Central      =</span> <span class="st">"#1f77b4"</span>,</span>
+<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">East         =</span> <span class="st">"#ff7f0e"</span>,</span>
+<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">North-East</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"#2ca02c"</span>,</span>
+<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">North        =</span> <span class="st">"#d62728"</span>,</span>
+<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">West         =</span> <span class="st">"#9467bd"</span></span>
+<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. gt with vertical borders</span></span>
+<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a>region_df <span class="sc">%&gt;%</span></span>
+<span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_missing</span>(</span>
+<span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns      =</span> <span class="fu">everything</span>(),</span>
+<span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">missing_text =</span> <span class="st">""</span></span>
+<span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb57-48"><a href="#cb57-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Planning Areas by Region**"</span>)</span>
+<span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb57-51"><a href="#cb57-51" aria-hidden="true" tabindex="-1"></a>  { tbl <span class="ot">&lt;-</span> .</span>
+<span id="cb57-52"><a href="#cb57-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (reg <span class="cf">in</span> <span class="fu">names</span>(region_colors)) {</span>
+<span id="cb57-53"><a href="#cb57-53" aria-hidden="true" tabindex="-1"></a>      tbl <span class="ot">&lt;-</span> tbl <span class="sc">%&gt;%</span></span>
+<span id="cb57-54"><a href="#cb57-54" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tab_style</span>(</span>
+<span id="cb57-55"><a href="#cb57-55" aria-hidden="true" tabindex="-1"></a>          <span class="at">style =</span> <span class="fu">list</span>(</span>
+<span id="cb57-56"><a href="#cb57-56" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cell_fill</span>(<span class="at">color =</span> region_colors[[reg]]),</span>
+<span id="cb57-57"><a href="#cb57-57" aria-hidden="true" tabindex="-1"></a>            <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"white"</span>)</span>
+<span id="cb57-58"><a href="#cb57-58" aria-hidden="true" tabindex="-1"></a>          ),</span>
+<span id="cb57-59"><a href="#cb57-59" aria-hidden="true" tabindex="-1"></a>          <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">all_of</span>(reg))</span>
+<span id="cb57-60"><a href="#cb57-60" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb57-61"><a href="#cb57-61" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb57-62"><a href="#cb57-62" aria-hidden="true" tabindex="-1"></a>    tbl</span>
+<span id="cb57-63"><a href="#cb57-63" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">%&gt;%</span></span>
+<span id="cb57-64"><a href="#cb57-64" aria-hidden="true" tabindex="-1"></a>  <span class="co"># vertical lines between columns</span></span>
+<span id="cb57-65"><a href="#cb57-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb57-66"><a href="#cb57-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_borders</span>(<span class="at">sides =</span> <span class="st">"right"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">weight =</span> <span class="fu">px</span>(<span class="dv">1</span>)),</span>
+<span id="cb57-67"><a href="#cb57-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_body</span>(<span class="at">columns =</span> <span class="fu">everything</span>())</span>
+<span id="cb57-68"><a href="#cb57-68" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb57-69"><a href="#cb57-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb57-70"><a href="#cb57-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_borders</span>(<span class="at">sides =</span> <span class="st">"right"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">weight =</span> <span class="fu">px</span>(<span class="dv">1</span>)),</span>
+<span id="cb57-71"><a href="#cb57-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">everything</span>())</span>
+<span id="cb57-72"><a href="#cb57-72" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb57-73"><a href="#cb57-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb57-74"><a href="#cb57-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">Central      =</span> <span class="st">"Central"</span>,</span>
+<span id="cb57-75"><a href="#cb57-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">East         =</span> <span class="st">"East"</span>,</span>
+<span id="cb57-76"><a href="#cb57-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">North-East</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"North-East"</span>,</span>
+<span id="cb57-77"><a href="#cb57-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">North        =</span> <span class="st">"North"</span>,</span>
+<span id="cb57-78"><a href="#cb57-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">West         =</span> <span class="st">"West"</span></span>
+<span id="cb57-79"><a href="#cb57-79" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb57-80"><a href="#cb57-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_options</span>(</span>
+<span id="cb57-81"><a href="#cb57-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.border.top.color    =</span> <span class="st">"black"</span>,</span>
+<span id="cb57-82"><a href="#cb57-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.border.top.width    =</span> <span class="fu">px</span>(<span class="dv">2</span>),</span>
+<span id="cb57-83"><a href="#cb57-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.border.bottom.color =</span> <span class="st">"black"</span>,</span>
+<span id="cb57-84"><a href="#cb57-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.border.bottom.width =</span> <span class="fu">px</span>(<span class="dv">2</span>),</span>
+<span id="cb57-85"><a href="#cb57-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.border.left.color   =</span> <span class="st">"black"</span>,</span>
+<span id="cb57-86"><a href="#cb57-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.border.left.width   =</span> <span class="fu">px</span>(<span class="dv">2</span>),</span>
+<span id="cb57-87"><a href="#cb57-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.border.right.color  =</span> <span class="st">"black"</span>,</span>
+<span id="cb57-88"><a href="#cb57-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">table.border.right.width  =</span> <span class="fu">px</span>(<span class="dv">2</span>),</span>
+<span id="cb57-89"><a href="#cb57-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_row.padding          =</span> <span class="fu">px</span>(<span class="dv">3</span>)</span>
+<span id="cb57-90"><a href="#cb57-90" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="pbqzjesfsb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#pbqzjesfsb table {
@@ -1200,23 +1187,23 @@ Final check and summary
   margin-left: auto;
   margin-right: auto;
   color: #333333;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: normal;
   font-style: normal;
   background-color: #FFFFFF;
   width: auto;
   border-top-style: solid;
   border-top-width: 2px;
-  border-top-color: #A8A8A8;
+  border-top-color: #000000;
   border-right-style: none;
   border-right-width: 2px;
-  border-right-color: #D3D3D3;
+  border-right-color: #000000;
   border-bottom-style: solid;
   border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
+  border-bottom-color: #000000;
   border-left-style: none;
   border-left-width: 2px;
-  border-left-color: #D3D3D3;
+  border-left-color: #000000;
 }
 
 #pbqzjesfsb .gt_caption {
@@ -1338,14 +1325,14 @@ Final check and summary
 }
 
 #pbqzjesfsb .gt_group_heading {
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   padding-left: 5px;
   padding-right: 5px;
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
-  font-weight: bold;
+  font-weight: initial;
   text-transform: inherit;
   border-top-style: solid;
   border-top-width: 2px;
@@ -1368,7 +1355,7 @@ Final check and summary
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
-  font-weight: bold;
+  font-weight: initial;
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1387,8 +1374,8 @@ Final check and summary
 }
 
 #pbqzjesfsb .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   padding-left: 5px;
   padding-right: 5px;
   margin: 10px;
@@ -1628,241 +1615,234 @@ Final check and summary
 </style>
 
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
 <thead>
 <tr class="header gt_heading">
-<th colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border"><strong>Singapore 2024 — Planning Area Summary</strong></th>
+<th colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border"><strong>Planning Areas by Region</strong></th>
 </tr>
 <tr class="odd gt_col_headings">
-<th id="a::stub" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"></th>
-<th id="TotalPop" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Total Population</th>
-<th id="MedAge" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Median Age</th>
+<th id="Central" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #1F77B4; color: #FFFFFF; font-weight: bold; border-right-width: 1px; border-right-style: solid; border-right-color: black" scope="col">Central</th>
+<th id="East" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #FF7F0E; color: #FFFFFF; font-weight: bold; border-right-width: 1px; border-right-style: solid; border-right-color: black" scope="col">East</th>
+<th id="North-East" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #2CA02C; color: #FFFFFF; font-weight: bold; border-right-width: 1px; border-right-style: solid; border-right-color: black" scope="col">North-East</th>
+<th id="North" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #D62728; color: #FFFFFF; font-weight: bold; border-right-width: 1px; border-right-style: solid; border-right-color: black" scope="col">North</th>
+<th id="West" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" style="background-color: #9467BD; color: #FFFFFF; font-weight: bold; border-right-width: 1px; border-right-style: solid; border-right-color: black" scope="col">West</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
-<tr class="odd gt_group_heading_row">
-<td colspan="3" id="Central" class="gt_group_heading" data-quarto-table-cell-role="th" style="background-color: #1F77B4; color: #FFFFFF; font-weight: bold" scope="colgroup">Central</td>
-</tr>
-<tr class="even gt_row_group_first">
-<td id="stub_1_1" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Bishan</td>
-<td class="gt_row gt_right" headers="Central stub_1_1 TotalPop">88,210</td>
-<td class="gt_row gt_right" headers="Central stub_1_1 MedAge">45.0</td>
-</tr>
 <tr class="odd">
-<td id="stub_1_2" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Bukit Merah</td>
-<td class="gt_row gt_right" headers="Central stub_1_2 TotalPop">149,390</td>
-<td class="gt_row gt_right" headers="Central stub_1_2 MedAge">47.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Bishan</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Bedok</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Ang Mo Kio</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Central Water Catchment</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Boon Lay</td>
 </tr>
 <tr class="even">
-<td id="stub_1_3" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Bukit Timah</td>
-<td class="gt_row gt_right" headers="Central stub_1_3 TotalPop">84,250</td>
-<td class="gt_row gt_right" headers="Central stub_1_3 MedAge">42.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Bukit Merah</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Changi</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Hougang</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Lim Chu Kang</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Bukit Batok</td>
 </tr>
 <tr class="odd">
-<td id="stub_1_4" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Downtown Core</td>
-<td class="gt_row gt_right" headers="Central stub_1_4 TotalPop">4,170</td>
-<td class="gt_row gt_right" headers="Central stub_1_4 MedAge">41.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Bukit Timah</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Changi Bay</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">North-Eastern Islands</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Mandai</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Bukit Panjang</td>
 </tr>
 <tr class="even">
-<td id="stub_1_5" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Geylang</td>
-<td class="gt_row gt_right" headers="Central stub_1_5 TotalPop">116,820</td>
-<td class="gt_row gt_right" headers="Central stub_1_5 MedAge">44.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Downtown Core</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Pasir Ris</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Punggol</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Sembawang</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Choa Chu Kang</td>
 </tr>
 <tr class="odd">
-<td id="stub_1_6" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Kallang</td>
-<td class="gt_row gt_right" headers="Central stub_1_6 TotalPop">101,190</td>
-<td class="gt_row gt_right" headers="Central stub_1_6 MedAge">47.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Geylang</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Paya Lebar</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Seletar</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Simpang</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Clementi</td>
 </tr>
 <tr class="even">
-<td id="stub_1_7" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Marine Parade</td>
-<td class="gt_row gt_right" headers="Central stub_1_7 TotalPop">46,950</td>
-<td class="gt_row gt_right" headers="Central stub_1_7 MedAge">45.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Kallang</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Tampines</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Sengkang</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Sungei Kadut</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Jurong East</td>
 </tr>
 <tr class="odd">
-<td id="stub_1_8" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Museum</td>
-<td class="gt_row gt_right" headers="Central stub_1_8 TotalPop">530</td>
-<td class="gt_row gt_right" headers="Central stub_1_8 MedAge">42.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Marina East</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Serangoon</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Woodlands</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Jurong West</td>
 </tr>
 <tr class="even">
-<td id="stub_1_9" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Newton</td>
-<td class="gt_row gt_right" headers="Central stub_1_9 TotalPop">9,910</td>
-<td class="gt_row gt_right" headers="Central stub_1_9 MedAge">42.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Marina South</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Yishun</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Pioneer</td>
 </tr>
 <tr class="odd">
-<td id="stub_1_10" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Novena</td>
-<td class="gt_row gt_right" headers="Central stub_1_10 TotalPop">52,150</td>
-<td class="gt_row gt_right" headers="Central stub_1_10 MedAge">43.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Marine Parade</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Tengah</td>
 </tr>
 <tr class="even">
-<td id="stub_1_11" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Orchard</td>
-<td class="gt_row gt_right" headers="Central stub_1_11 TotalPop">870</td>
-<td class="gt_row gt_right" headers="Central stub_1_11 MedAge">46.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Museum</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Tuas</td>
 </tr>
 <tr class="odd">
-<td id="stub_1_12" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Outram</td>
-<td class="gt_row gt_right" headers="Central stub_1_12 TotalPop">16,740</td>
-<td class="gt_row gt_right" headers="Central stub_1_12 MedAge">50.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Newton</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Western Islands</td>
 </tr>
 <tr class="even">
-<td id="stub_1_13" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Queenstown</td>
-<td class="gt_row gt_right" headers="Central stub_1_13 TotalPop">102,040</td>
-<td class="gt_row gt_right" headers="Central stub_1_13 MedAge">45.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Novena</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Western Water Catchment</td>
 </tr>
 <tr class="odd">
-<td id="stub_1_14" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">River Valley</td>
-<td class="gt_row gt_right" headers="Central stub_1_14 TotalPop">11,970</td>
-<td class="gt_row gt_right" headers="Central stub_1_14 MedAge">42.9</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Orchard</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
 </tr>
 <tr class="even">
-<td id="stub_1_15" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Rochor</td>
-<td class="gt_row gt_right" headers="Central stub_1_15 TotalPop">13,040</td>
-<td class="gt_row gt_right" headers="Central stub_1_15 MedAge">47.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Outram</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
 </tr>
 <tr class="odd">
-<td id="stub_1_16" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Singapore River</td>
-<td class="gt_row gt_right" headers="Central stub_1_16 TotalPop">4,200</td>
-<td class="gt_row gt_right" headers="Central stub_1_16 MedAge">40.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Queenstown</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
 </tr>
 <tr class="even">
-<td id="stub_1_17" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Southern Islands</td>
-<td class="gt_row gt_right" headers="Central stub_1_17 TotalPop">2,580</td>
-<td class="gt_row gt_right" headers="Central stub_1_17 MedAge">42.6</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">River Valley</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
 </tr>
 <tr class="odd">
-<td id="stub_1_18" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Tanglin</td>
-<td class="gt_row gt_right" headers="Central stub_1_18 TotalPop">24,540</td>
-<td class="gt_row gt_right" headers="Central stub_1_18 MedAge">42.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Rochor</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
 </tr>
 <tr class="even">
-<td id="stub_1_19" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Toa Payoh</td>
-<td class="gt_row gt_right" headers="Central stub_1_19 TotalPop">140,030</td>
-<td class="gt_row gt_right" headers="Central stub_1_19 MedAge">44.0</td>
-</tr>
-<tr class="odd gt_group_heading_row">
-<td colspan="3" id="East" class="gt_group_heading" data-quarto-table-cell-role="th" style="background-color: #FF7F0E; color: #FFFFFF; font-weight: bold" scope="colgroup">East</td>
-</tr>
-<tr class="even gt_row_group_first">
-<td id="stub_1_20" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Bedok</td>
-<td class="gt_row gt_right" headers="East stub_1_20 TotalPop">277,660</td>
-<td class="gt_row gt_right" headers="East stub_1_20 MedAge">46.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Singapore River</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
 </tr>
 <tr class="odd">
-<td id="stub_1_21" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Changi</td>
-<td class="gt_row gt_right" headers="East stub_1_21 TotalPop">1,830</td>
-<td class="gt_row gt_right" headers="East stub_1_21 MedAge">37.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Southern Islands</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
 </tr>
 <tr class="even">
-<td id="stub_1_22" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Pasir Ris</td>
-<td class="gt_row gt_right" headers="East stub_1_22 TotalPop">145,480</td>
-<td class="gt_row gt_right" headers="East stub_1_22 MedAge">42.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Straits View</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
 </tr>
 <tr class="odd">
-<td id="stub_1_23" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Tampines</td>
-<td class="gt_row gt_right" headers="East stub_1_23 TotalPop">284,950</td>
-<td class="gt_row gt_right" headers="East stub_1_23 MedAge">40.0</td>
-</tr>
-<tr class="even gt_group_heading_row">
-<td colspan="3" id="North-East" class="gt_group_heading" data-quarto-table-cell-role="th" style="background-color: #2CA02C; color: #FFFFFF; font-weight: bold" scope="colgroup">North-East</td>
-</tr>
-<tr class="odd gt_row_group_first">
-<td id="stub_1_24" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Ang Mo Kio</td>
-<td class="gt_row gt_right" headers="North-East stub_1_24 TotalPop">160,450</td>
-<td class="gt_row gt_right" headers="North-East stub_1_24 MedAge">48.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Tanglin</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
 </tr>
 <tr class="even">
-<td id="stub_1_25" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Hougang</td>
-<td class="gt_row gt_right" headers="North-East stub_1_25 TotalPop">228,780</td>
-<td class="gt_row gt_right" headers="North-East stub_1_25 MedAge">44.0</td>
-</tr>
-<tr class="odd">
-<td id="stub_1_26" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Punggol</td>
-<td class="gt_row gt_right" headers="North-East stub_1_26 TotalPop">199,880</td>
-<td class="gt_row gt_right" headers="North-East stub_1_26 MedAge">37.0</td>
-</tr>
-<tr class="even">
-<td id="stub_1_27" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Seletar</td>
-<td class="gt_row gt_right" headers="North-East stub_1_27 TotalPop">140</td>
-<td class="gt_row gt_right" headers="North-East stub_1_27 MedAge">51.0</td>
-</tr>
-<tr class="odd">
-<td id="stub_1_28" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Sengkang</td>
-<td class="gt_row gt_right" headers="North-East stub_1_28 TotalPop">265,550</td>
-<td class="gt_row gt_right" headers="North-East stub_1_28 MedAge">39.0</td>
-</tr>
-<tr class="even">
-<td id="stub_1_29" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Serangoon</td>
-<td class="gt_row gt_right" headers="North-East stub_1_29 TotalPop">118,250</td>
-<td class="gt_row gt_right" headers="North-East stub_1_29 MedAge">45.0</td>
-</tr>
-<tr class="odd gt_group_heading_row">
-<td colspan="3" id="North" class="gt_group_heading" data-quarto-table-cell-role="th" style="background-color: #D62728; color: #FFFFFF; font-weight: bold" scope="colgroup">North</td>
-</tr>
-<tr class="even gt_row_group_first">
-<td id="stub_1_30" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Mandai</td>
-<td class="gt_row gt_right" headers="North stub_1_30 TotalPop">2,130</td>
-<td class="gt_row gt_right" headers="North stub_1_30 MedAge">42.0</td>
-</tr>
-<tr class="odd">
-<td id="stub_1_31" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Sembawang</td>
-<td class="gt_row gt_right" headers="North stub_1_31 TotalPop">110,670</td>
-<td class="gt_row gt_right" headers="North stub_1_31 MedAge">38.0</td>
-</tr>
-<tr class="even">
-<td id="stub_1_32" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Sungei Kadut</td>
-<td class="gt_row gt_right" headers="North stub_1_32 TotalPop">600</td>
-<td class="gt_row gt_right" headers="North stub_1_32 MedAge">49.5</td>
-</tr>
-<tr class="odd">
-<td id="stub_1_33" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Woodlands</td>
-<td class="gt_row gt_right" headers="North stub_1_33 TotalPop">255,510</td>
-<td class="gt_row gt_right" headers="North stub_1_33 MedAge">39.0</td>
-</tr>
-<tr class="even">
-<td id="stub_1_34" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Yishun</td>
-<td class="gt_row gt_right" headers="North stub_1_34 TotalPop">230,320</td>
-<td class="gt_row gt_right" headers="North stub_1_34 MedAge">41.0</td>
-</tr>
-<tr class="odd gt_group_heading_row">
-<td colspan="3" id="West" class="gt_group_heading" data-quarto-table-cell-role="th" style="background-color: #9467BD; color: #FFFFFF; font-weight: bold" scope="colgroup">West</td>
-</tr>
-<tr class="even gt_row_group_first">
-<td id="stub_1_35" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Bukit Batok</td>
-<td class="gt_row gt_right" headers="West stub_1_35 TotalPop">168,390</td>
-<td class="gt_row gt_right" headers="West stub_1_35 MedAge">41.3</td>
-</tr>
-<tr class="odd">
-<td id="stub_1_36" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Bukit Panjang</td>
-<td class="gt_row gt_right" headers="West stub_1_36 TotalPop">138,730</td>
-<td class="gt_row gt_right" headers="West stub_1_36 MedAge">42.0</td>
-</tr>
-<tr class="even">
-<td id="stub_1_37" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Choa Chu Kang</td>
-<td class="gt_row gt_right" headers="West stub_1_37 TotalPop">190,640</td>
-<td class="gt_row gt_right" headers="West stub_1_37 MedAge">40.0</td>
-</tr>
-<tr class="odd">
-<td id="stub_1_38" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Clementi</td>
-<td class="gt_row gt_right" headers="West stub_1_38 TotalPop">102,960</td>
-<td class="gt_row gt_right" headers="West stub_1_38 MedAge">44.0</td>
-</tr>
-<tr class="even">
-<td id="stub_1_39" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Jurong East</td>
-<td class="gt_row gt_right" headers="West stub_1_39 TotalPop">74,590</td>
-<td class="gt_row gt_right" headers="West stub_1_39 MedAge">47.0</td>
-</tr>
-<tr class="odd">
-<td id="stub_1_40" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Jurong West</td>
-<td class="gt_row gt_right" headers="West stub_1_40 TotalPop">257,910</td>
-<td class="gt_row gt_right" headers="West stub_1_40 MedAge">42.0</td>
-</tr>
-<tr class="even">
-<td id="stub_1_41" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Tengah</td>
-<td class="gt_row gt_right" headers="West stub_1_41 TotalPop">7,940</td>
-<td class="gt_row gt_right" headers="West stub_1_41 MedAge">32.9</td>
-</tr>
-<tr class="odd">
-<td id="stub_1_42" class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th" scope="row">Western Water Catchment</td>
-<td class="gt_row gt_right" headers="West stub_1_42 TotalPop">590</td>
-<td class="gt_row gt_right" headers="West stub_1_42 MedAge">30.0</td>
+<td class="gt_row gt_left" headers="Central" style="border-right-width: 1px; border-right-style: solid; border-right-color: black">Toa Payoh</td>
+<td class="gt_row gt_left" headers="East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North-East" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="North" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
+<td class="gt_row gt_left" headers="West" style="border-right-width: 1px; border-right-style: solid; border-right-color: black"><br>
+</td>
 </tr>
 </tbody>
 </table>

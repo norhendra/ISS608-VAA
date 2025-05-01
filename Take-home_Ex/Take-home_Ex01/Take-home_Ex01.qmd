@@ -1,7 +1,7 @@
 ---
 title: "Take Home Assignment 1"
 author: "Nor Hendra"
-date: "30 April 2023"
+date: "30 April 2025"
 date-modified: "last-modified"
 format: html
 editor: visual
@@ -719,19 +719,16 @@ ggplot(med_age, aes(y = PA)) +
 ```
 `
 ```{r}
-#| fig-width: 8
-#| fig-height: 6
+#| fig-width: 12
+#| fig-height: 8
 
-# 1. Install / load
-if (!requireNamespace("gt", quietly = TRUE)) install.packages("gt")
-if (!requireNamespace("matrixStats", quietly = TRUE)) install.packages("matrixStats")
 
+# 1. Install/load
+if (!requireNamespace("gt", quietly=TRUE)) install.packages("gt")
 library(dplyr)
-library(matrixStats)  # for weightedMedian()
 library(gt)
-library(scales)
 
-# 2. Define Region lookup
+# 2. Define the five region vectors
 central    <- c("Bishan","Bukit Merah","Bukit Timah","Downtown Core","Geylang",
                 "Kallang","Marina East","Marina South","Marine Parade","Museum",
                 "Newton","Novena","Orchard","Outram","Queenstown","River Valley",
@@ -746,75 +743,78 @@ west       <- c("Boon Lay","Bukit Batok","Bukit Panjang","Choa Chu Kang",
                 "Clementi","Jurong East","Jurong West","Pioneer","Tengah",
                 "Tuas","Western Islands","Western Water Catchment")
 
-# 3. Summarise at PA‐level, tagging Region
-pa_summary <- sgdemo2024 %>%
-  mutate(
-    Region = case_when(
-      PA %in% central    ~ "Central",
-      PA %in% east       ~ "East",
-      PA %in% north      ~ "North",
-      PA %in% north_east ~ "North-East",
-      PA %in% west       ~ "West"
-    )
-  ) %>%
-  group_by(Region, PA) %>%
-  summarise(
-    TotalPop = sum(Pop),
-    MedAge   = matrixStats::weightedMedian(Age, w = Pop),
-    .groups  = "drop"
-  ) %>%
-  arrange(factor(Region, c("Central","East","North-East","North","West")), PA)
+# 3. Build region_df
+max_len <- max(length(central), length(east), length(north_east), length(north), length(west))
 
-# 4. Define color‐blind safe palette (only actual regions)
-region_colors <- c(
-  Central     = "#1f77b4",
-  East        = "#ff7f0e",
-  `North-East`= "#2ca02c",
-  North       = "#d62728",
-  West        = "#9467bd"
+region_df <- tibble(
+  Central     = c(central,     rep(NA_character_, max_len - length(central))),
+  East        = c(east,        rep(NA_character_, max_len - length(east))),
+  `North-East`= c(north_east,  rep(NA_character_, max_len - length(north_east))),
+  North       = c(north,       rep(NA_character_, max_len - length(north))),
+  West        = c(west,        rep(NA_character_, max_len - length(west)))
 )
 
-# 5. Render gt table
-pa_summary %>%
-  gt(
-    rowname_col   = "PA",
-    groupname_col = "Region"
+# 4. Palette
+region_colors <- c(
+  Central      = "#1f77b4",
+  East         = "#ff7f0e",
+  `North-East` = "#2ca02c",
+  North        = "#d62728",
+  West         = "#9467bd"
+)
+
+# 5. gt with vertical borders
+region_df %>%
+  gt() %>%
+  fmt_missing(
+    columns      = everything(),
+    missing_text = ""
   ) %>%
   tab_header(
-    title = md("**Singapore 2024 &mdash; Planning Area Summary**")
+    title = md("**Planning Areas by Region**")
   ) %>%
-  fmt_number(
-    columns = vars(TotalPop),
-    decimals = 0,
-    suffixing = FALSE
-  ) %>%
-  fmt_number(
-    columns = vars(MedAge),
-    decimals = 1
-  ) %>%
-  {
-    tbl <- .
-    for(reg in names(region_colors)) {
+  { tbl <- .
+    for (reg in names(region_colors)) {
       tbl <- tbl %>%
         tab_style(
           style = list(
             cell_fill(color = region_colors[[reg]]),
             cell_text(weight = "bold", color = "white")
           ),
-          locations = cells_row_groups(groups = reg)
+          locations = cells_column_labels(columns = all_of(reg))
         )
     }
     tbl
   } %>%
+  # vertical lines between columns
+  tab_style(
+    style = cell_borders(sides = "right", color = "black", weight = px(1)),
+    locations = cells_body(columns = everything())
+  ) %>%
+  tab_style(
+    style = cell_borders(sides = "right", color = "black", weight = px(1)),
+    locations = cells_column_labels(columns = everything())
+  ) %>%
   cols_label(
-    TotalPop = "Total Population",
-    MedAge   = "Median Age"
+    Central      = "Central",
+    East         = "East",
+    `North-East` = "North-East",
+    North        = "North",
+    West         = "West"
   ) %>%
   tab_options(
-    table.font.size      = px(12),
-    row_group.font.weight = "bold",
-    row_group.padding     = px(4)
+    table.border.top.color    = "black",
+    table.border.top.width    = px(2),
+    table.border.bottom.color = "black",
+    table.border.bottom.width = px(2),
+    table.border.left.color   = "black",
+    table.border.left.width   = px(2),
+    table.border.right.color  = "black",
+    table.border.right.width  = px(2),
+    data_row.padding          = px(3)
   )
+
+
 
 
 ```
