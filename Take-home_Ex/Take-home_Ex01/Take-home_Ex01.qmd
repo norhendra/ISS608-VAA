@@ -540,7 +540,7 @@ ggplot(tile_df, aes(x = Region, y = AgeBand, fill = Pop)) +
 #| fig-height: 8
 
 
-# Assign each PA to its region
+# 2. Assign each PA to its region (only the five defined)
 ridge_region <- sgdemo2024 %>%
   mutate(
     Region = case_when(
@@ -554,7 +554,7 @@ ridge_region <- sgdemo2024 %>%
   ) %>%
   select(Age, Pop, Region)
 
-# Plot ridgelines without trimming and starting at the axis
+# 3. Plot ridgelines starting at the axis
 ggplot(ridge_region, aes(x = Age, y = Region, weight = Pop, fill = Region)) +
   geom_density_ridges(
     scale           = 1.2,
@@ -565,7 +565,6 @@ ggplot(ridge_region, aes(x = Age, y = Region, weight = Pop, fill = Region)) +
   scale_x_continuous(
     name   = "Age (years)",
     breaks = seq(0, 90, 10),
-    limits = c(0, 90),
     expand = c(0, 0)
   ) +
   scale_y_discrete(expand = c(0, 0)) +
@@ -578,17 +577,19 @@ ggplot(ridge_region, aes(x = Age, y = Region, weight = Pop, fill = Region)) +
   )) +
   labs(
     title    = "Age Distribution by Region, Singapore 2024",
-    subtitle = "Each ridge is weighted by subzone population"
+    subtitle = "Each ridge is weighted by subzone population",
+    x        = NULL,
+    y        = NULL
   ) +
   theme_minimal(base_size = 14) +
   theme(
-    legend.position   = "none",
-    plot.title        = element_text(face = "bold", hjust = 0.5),
-    plot.subtitle     = element_text(hjust = 0.5, margin = margin(b = 10)),
-    axis.text.x       = element_text(color = "black", size = 13),
-    axis.text.y       = element_text(color = "black", size = 13),
-    panel.grid.major  = element_blank(),
-    panel.grid.minor  = element_blank()
+    legend.position  = "none",
+    plot.title       = element_text(face = "bold", hjust = 0.5),
+    plot.subtitle    = element_text(hjust = 0.5, margin = margin(b = 10)),
+    axis.text.x      = element_text(color = "black", size = 13),
+    axis.text.y      = element_text(color = "black", size = 13),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
   )
 
 ```
@@ -597,19 +598,18 @@ ggplot(ridge_region, aes(x = Age, y = Region, weight = Pop, fill = Region)) +
 #| fig-height: 8
 
 # 1. Define PA → Region lookup
-central    <- c("Bishan","Bukit Merah","Bukit Timah","Downtown Core","Geylang",
-                "Kallang","Marina East","Marina South","Marine Parade","Museum",
-                "Newton","Novena","Orchard","Outram","Queenstown","River Valley",
-                "Rochor","Singapore River","Southern Islands","Straits View",
-                "Tanglin","Toa Payoh")
-east       <- c("Bedok","Changi","Changi Bay","Pasir Ris","Paya Lebar","Tampines")
-north      <- c("Central Water Catchment","Lim Chu Kang","Mandai","Sembawang",
-                "Simpang","Sungei Kadut","Woodlands","Yishun")
-north_east <- c("Ang Mo Kio","Hougang","North-Eastern Islands","Punggol",
-                "Seletar","Sengkang","Serangoon")
-west       <- c("Boon Lay","Bukit Batok","Bukit Panjang","Choa Chu Kang",
-                "Clementi","Jurong East","Jurong West","Pioneer","Tengah",
-                "Tuas","Western Islands","Western Water Catchment")
+ridge_region <- sgdemo2024 %>%
+  mutate(
+    Region = case_when(
+      PA %in% central    ~ "Central",
+      PA %in% east       ~ "East",
+      PA %in% north      ~ "North",
+      PA %in% north_east ~ "North-East",
+      PA %in% west       ~ "West"
+    ),
+    Region = factor(Region, levels = c("Central","East","North-East","North","West"))
+  ) %>%
+  select(Age, Pop, Region)
 
 # 2. Compute weighted median age by Region & Sex
 region_med <- sgdemo2024 %>%
