@@ -20,7 +20,7 @@ execute:
 # i. Importing Packages
 
 ```{r}
-pacman::p_load(tidyverse, ggthemes,viridis,ggridges,ggrepel,patchwork, readr, dplyr, forcats, scales, cowplot, ggtext, ggbump, matrixStats,ggalt,plotly)
+pacman::p_load(tidyverse, ggthemes,viridis,ggridges,ggrepel,patchwork, readr, dplyr, forcats, scales, ggtext, matrixStats)
 ```
 
 # ii. Importing Data
@@ -539,7 +539,8 @@ ggplot(tile_df, aes(x = Region, y = AgeBand, fill = Pop)) +
 #| fig-width: 12
 #| fig-height: 8
 
-# 2. Assign each PA → Region (your lookup vectors must be defined)
+
+# Assign each PA to its region
 ridge_region <- sgdemo2024 %>%
   mutate(
     Region = case_when(
@@ -547,14 +548,13 @@ ridge_region <- sgdemo2024 %>%
       PA %in% east       ~ "East",
       PA %in% north      ~ "North",
       PA %in% north_east ~ "North-East",
-      PA %in% west       ~ "West",
-      TRUE               ~ "Other"
+      PA %in% west       ~ "West"
     ),
-    Region = factor(Region, levels = c("Central","East","North-East","North","West","Other"))
+    Region = factor(Region, levels = c("Central","East","North-East","North","West"))
   ) %>%
   select(Age, Pop, Region)
 
-# 3. Plot with ridges starting at the axis
+# Plot ridgelines without trimming and starting at the axis
 ggplot(ridge_region, aes(x = Age, y = Region, weight = Pop, fill = Region)) +
   geom_density_ridges(
     scale           = 1.2,
@@ -563,34 +563,34 @@ ggplot(ridge_region, aes(x = Age, y = Region, weight = Pop, fill = Region)) +
     alpha           = 0.8
   ) +
   scale_x_continuous(
+    name   = "Age (years)",
     breaks = seq(0, 90, 10),
+    limits = c(0, 90),
     expand = c(0, 0)
   ) +
-  scale_y_discrete(
-    expand = c(0, 0)       
-  ) +
+  scale_y_discrete(expand = c(0, 0)) +
   scale_fill_manual(values = c(
     Central      = "#1f77b4",
     East         = "#ff7f0e",
     `North-East` = "#2ca02c",
     North        = "#d62728",
-    West         = "#9467bd",
-    Other        = "#8c564b"
+    West         = "#9467bd"
   )) +
   labs(
     title    = "Age Distribution by Region, Singapore 2024",
-    subtitle = "Each ridge is weighted by subzone population",
-    x        = "Age (years)",
-    y        = NULL
+    subtitle = "Each ridge is weighted by subzone population"
   ) +
   theme_minimal(base_size = 14) +
   theme(
-    legend.position  = "none",
-    plot.title       = element_text(face = "bold", hjust = 0.5),
-    plot.subtitle    = element_text(hjust = 0.5),
-    axis.text.x         = element_text(color = "black", size = 13),
-    axis.text.y         = element_text(color = "black", size = 13),
+    legend.position   = "none",
+    plot.title        = element_text(face = "bold", hjust = 0.5),
+    plot.subtitle     = element_text(hjust = 0.5, margin = margin(b = 10)),
+    axis.text.x       = element_text(color = "black", size = 13),
+    axis.text.y       = element_text(color = "black", size = 13),
+    panel.grid.major  = element_blank(),
+    panel.grid.minor  = element_blank()
   )
+
 ```
 ```{r}
 #| fig-width: 12
@@ -620,9 +620,8 @@ region_med <- sgdemo2024 %>%
       PA %in% north      ~ "North",
       PA %in% north_east ~ "North-East",
       PA %in% west       ~ "West",
-      TRUE               ~ "Other"
     ),
-    Region = factor(Region, levels = c("Central","East","North-East","North","West","Other"))
+    Region = factor(Region, levels = c("Central","East","North-East","North","West"))
   ) %>%
   group_by(Region, Sex) %>%
   summarise(
@@ -718,4 +717,104 @@ ggplot(med_age, aes(y = PA)) +
     legend.text          = element_text(size = 12)
   )
 ```
+`
+```{r}
+#| fig-width: 8
+#| fig-height: 6
 
+# 1. Install / load
+if (!requireNamespace("gt", quietly = TRUE)) install.packages("gt")
+if (!requireNamespace("matrixStats", quietly = TRUE)) install.packages("matrixStats")
+
+library(dplyr)
+library(matrixStats)  # for weightedMedian()
+library(gt)
+library(scales)
+
+# 2. Define Region lookup
+central    <- c("Bishan","Bukit Merah","Bukit Timah","Downtown Core","Geylang",
+                "Kallang","Marina East","Marina South","Marine Parade","Museum",
+                "Newton","Novena","Orchard","Outram","Queenstown","River Valley",
+                "Rochor","Singapore River","Southern Islands","Straits View",
+                "Tanglin","Toa Payoh")
+east       <- c("Bedok","Changi","Changi Bay","Pasir Ris","Paya Lebar","Tampines")
+north      <- c("Central Water Catchment","Lim Chu Kang","Mandai","Sembawang",
+                "Simpang","Sungei Kadut","Woodlands","Yishun")
+north_east <- c("Ang Mo Kio","Hougang","North-Eastern Islands","Punggol",
+                "Seletar","Sengkang","Serangoon")
+west       <- c("Boon Lay","Bukit Batok","Bukit Panjang","Choa Chu Kang",
+                "Clementi","Jurong East","Jurong West","Pioneer","Tengah",
+                "Tuas","Western Islands","Western Water Catchment")
+
+# 3. Summarise at PA‐level, tagging Region
+pa_summary <- sgdemo2024 %>%
+  mutate(
+    Region = case_when(
+      PA %in% central    ~ "Central",
+      PA %in% east       ~ "East",
+      PA %in% north      ~ "North",
+      PA %in% north_east ~ "North-East",
+      PA %in% west       ~ "West"
+    )
+  ) %>%
+  group_by(Region, PA) %>%
+  summarise(
+    TotalPop = sum(Pop),
+    MedAge   = matrixStats::weightedMedian(Age, w = Pop),
+    .groups  = "drop"
+  ) %>%
+  arrange(factor(Region, c("Central","East","North-East","North","West")), PA)
+
+# 4. Define color‐blind safe palette (only actual regions)
+region_colors <- c(
+  Central     = "#1f77b4",
+  East        = "#ff7f0e",
+  `North-East`= "#2ca02c",
+  North       = "#d62728",
+  West        = "#9467bd"
+)
+
+# 5. Render gt table
+pa_summary %>%
+  gt(
+    rowname_col   = "PA",
+    groupname_col = "Region"
+  ) %>%
+  tab_header(
+    title = md("**Singapore 2024 &mdash; Planning Area Summary**")
+  ) %>%
+  fmt_number(
+    columns = vars(TotalPop),
+    decimals = 0,
+    suffixing = FALSE
+  ) %>%
+  fmt_number(
+    columns = vars(MedAge),
+    decimals = 1
+  ) %>%
+  {
+    tbl <- .
+    for(reg in names(region_colors)) {
+      tbl <- tbl %>%
+        tab_style(
+          style = list(
+            cell_fill(color = region_colors[[reg]]),
+            cell_text(weight = "bold", color = "white")
+          ),
+          locations = cells_row_groups(groups = reg)
+        )
+    }
+    tbl
+  } %>%
+  cols_label(
+    TotalPop = "Total Population",
+    MedAge   = "Median Age"
+  ) %>%
+  tab_options(
+    table.font.size      = px(12),
+    row_group.font.weight = "bold",
+    row_group.padding     = px(4)
+  )
+
+
+```
