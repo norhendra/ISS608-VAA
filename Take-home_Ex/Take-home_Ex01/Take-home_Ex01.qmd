@@ -366,8 +366,6 @@ sgdemo2024 %>%
 
 In the heart of Singapore, a quiet transformation is unfolding. Across our island, fewer children are filling playgrounds even as more elders fill community centres, a reflection of smaller birth cohorts and longer lifespans. The signs are everywhere, from merged primary schools making way for new community spaces to classrooms with dwindling enrollments. For many families, the rhythm of daily life now balances the laughter of young ones with the care of ageing parents. Neighbourhoods once bustling with young professionals now host their former residents in well‑worn flats, while newly built towns welcome bright‑eyed families beginning their Singapore story.
 
-Our journey begins with the shape of this change: a population structure that has slimmed at the base and swelled at the top. From there, we follow the footsteps of the “sandwich generation,” where working‑age adults bear the combined responsibilities of childcare and eldercare, and see how that burden plays out from the Central Core to the island’s quieter corners. Finally, we walk the streets of each planning area to discover the median age that defines its character, whether it’s a youthful promise in Punggol or a seasoned community in Queenstown. Along the way, these insights reveal not just numbers on a page but the evolving stories of homes, families and the future Singapore we are building together.
-
 ## Generational Imbalance: Shrinking Young Cohorts and Growing Elderhood
 
 ::: callout-note
@@ -471,7 +469,7 @@ ggplot(pyr_df, aes(x = PopSignK, y = AgeGroup, fill = Sex)) +
   )
 ```
 
-The 2024 population pyramid, when viewed using Singapore’s statutory retirement age of 63 as the cutoff, shows children and adolescents (ages 0–18) making up just under 19% of residents, while those aged 64 and above account for about 26%. This leaves roughly 55% of Singaporeans in the working‑age bracket (ages 20–63), a majority tasked with supporting both younger and older dependents. These redefined age bands underscore growing pressures on public healthcare and social services, as well as the demands placed on the “sandwich generation” juggling childcare and eldercare.
+Using Singapore’s statutory retirement age of 63 as the cutoff, shows children and adolescents (ages 0–18) making up just under 19% of residents, while those aged 64 and above account for about 26%. This leaves roughly 55% of Singaporeans in the working‑age bracket (ages 20–63), a majority tasked with supporting both younger and older dependents. This underscores growing pressures on public healthcare and social services, as well as the demands placed on the “sandwich generation” juggling childcare and eldercare.
 
 Let’s turn our attention to the prime working‑age cohort, those between 20 and 54 years olds who make up nearly half of Singapore’s population (about 49%). This group remains the engine of our economy, with the largest concentrations clustered in the 30–44 bands, reflecting a strong mid‑career presence. Yet their growth has begun to plateau, a sign that fresh labour supply won’t keep expanding at the same pace. As this segment shoulders the financial weight of both children and older relatives, policymakers must look beyond merely filling jobs such as investing instead in skills development, flexible work arrangements and productivity enhancements to sustain economic momentum even as the pool of prime‑age workers levels off.
 
