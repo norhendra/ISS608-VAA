@@ -471,7 +471,9 @@ ggplot(pyr_df, aes(x = PopSignK, y = AgeGroup, fill = Sex)) +
   )
 ```
 
-The 2024 population pyramid lays bare a society in transition: its base has thinned while its summit has swelled, reflecting both falling birth rates and rising longevity. Children and adolescents (ages 0–18) now comprise just under 19% of residents while the prime working‑age group (20–54) still represents the largest share at roughly 48%, though its growth has begun to taper. Meanwhile, those aged 55 and over make up about 33% of the population which underscores the urgent need to expand healthcare capacity and elder‑support services.
+The 2024 population pyramid, when viewed using Singapore’s statutory retirement age of 63 as the cutoff, shows children and adolescents (ages 0–18) making up just under 19% of residents, while those aged 64 and above account for about 26%. This leaves roughly 55% of Singaporeans in the working‑age bracket (ages 20–63), a majority tasked with supporting both younger and older dependents. These redefined age bands underscore growing pressures on public healthcare and social services, as well as the demands placed on the “sandwich generation” juggling childcare and eldercare.
+
+Let’s turn our attention to the prime working‑age cohort, those between 20 and 54 years olds who make up nearly half of Singapore’s population (about 49%). This group remains the engine of our economy, with the largest concentrations clustered in the 30–44 bands, reflecting a strong mid‑career presence. Yet their growth has begun to plateau, a sign that fresh labour supply won’t keep expanding at the same pace. As this segment shoulders the financial weight of both children and older relatives, policymakers must look beyond merely filling jobs such as investing instead in skills development, flexible work arrangements and productivity enhancements to sustain economic momentum even as the pool of prime‑age workers levels off.
 
 ## Balancing Act: Singapore’s Workforce Dynamics and Regional Age Hotspots
 
@@ -479,12 +481,13 @@ The 2024 population pyramid lays bare a society in transition: its base has thin
 ## Plot Approach
 
 [**Technical Approach**]{.underline}
-Using the patchwork package, I assembled a composite figure that combines our national dependency‑cohort bar chart with a regional age‑by‑region heatmap. First, I mapped each Planning Area to its broader region (per the government’s official classification [here](https://www.newlaunchesreview.com/regions-of-singapore/)), which allowed me to group and districts. With those region labels in place, I plotted the heatmap to visualise age‑group concentrations across the island. Defining regions upfront not only streamlined the heatmap’s construction but also sets us up for cleaner, more flexible plotting in subsequent analyses.
+
+Using the patchwork package, I assembled a composite figure that combines our national dependency‑cohort bar chart with a regional age‑by‑region heatmap. First, I mapped each Planning Area to its broader region (per the government’s official classification [here](https://www.newlaunchesreview.com/regions-of-singapore/)), which allowed me to group and districts. With those region labels in place, I plotted the heatmap to visualise age‑group concentrations across the island. Defining regions upfront not only streamlined the heatmap’s construction but also sets us up for cleaner, more flexible plotting in subsequent analyses.
 
 
 [**Visual Rationale**]{.underline}
 
-Building on the insights from our population pyramid, I wanted to drill down further **granularity** into the so‑called “Sandwich Generation,” whose members juggle childcare and eldercare. The dependency‑cohort chart quantifies exactly how many young and elderly dependents each 20–64 age bracket supports, while the regional heatmap reveals where those age groups cluster regionally. Recalling Lesson 2: Practical Guides for Using Colour in Charts, I’ve kept the dependency‑cohort bars in the same soft colour palette to maintain visual harmony and avoid overloading the viewer. Together, these visuals highlight both the scale of intergenerational care pressures and the specific districts where urban planners and policymakers must prioritise childcare facilities, eldercare services, and family‑friendly infrastructure.
+Building on the insights from our population pyramid, I wanted to drill down further **granularity** into the so‑called “Sandwich Generation,” whose members juggle childcare and eldercare. The dependency‑cohort chart quantifies exactly how many young and elderly dependents each 20–64 age bracket supports, while the regional heatmap reveals where those age groups cluster regionally. Recalling Lesson 2: Practical Guides for Using Colour in Charts, I’ve kept the dependency‑cohort bars in the same soft colour palette to maintain visual harmony and avoid overloading the viewer. Together, these visuals highlight both the scale of intergenerational care pressures and the specific districts where urban planners and policymakers must prioritise childcare facilities, eldercare services, and family‑friendly infrastructure.
 :::
 
 ```{r}
