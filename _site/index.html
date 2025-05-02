@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-Hands_on_Exercise .list');
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
@@ -84,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-Hands_on_Exercise'] = new List('listing-Hands_on_Exercise', options);
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -169,6 +169,7 @@ window.Quarto = {
     <a class="dropdown-item" href="./Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html">
  <span class="dropdown-text">Hands-on Exercise 3B</span></a>
   </li>  
+        <li class="dropdown-header">Take-home Exercise 1</li>
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -227,55 +228,39 @@ window.Quarto = {
 
 
 <p>Welcome to <strong>ISSS608 Visual Analytics and Applications</strong>. In this website, you will find my coursework prepared for this course.</p>
-<section id="overview" class="level1">
-<h1>Overview:</h1>
-<div class="content-container">
-<section id="hands-on-exercises" class="level2 listing-block">
-<h2 class="anchored" data-anchor-id="hands-on-exercises">Hands-on Exercises</h2>
-<p></p>
-<div id="listing-Hands_on_Exercise" class="quarto-listing quarto-listing-container-grid">
+<section id="latest-posts" class="level2">
+<h2 class="anchored" data-anchor-id="latest-posts">Latest Posts</h2>
+<div class="listing-block">
+
+</div>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-listing-date-sort="1681142400000" data-listing-file-modified-sort="1745840320031" data-listing-date-modified-sort="1745840320000" data-listing-reading-time-sort="12" data-listing-word-count-sort="2204">
-<a href="./Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="0" data-listing-date-sort="1745942400000" data-listing-file-modified-sort="1746203092582" data-listing-date-modified-sort="1746203092000" data-listing-reading-time-sort="24" data-listing-word-count-sort="4688">
+<a href="./Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01_files/figure-html/unnamed-chunk-3-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
+<p class="card-img-top"><img src="Take-home_Ex/Take-home_Ex01/Take-home_Ex01_files/figure-html/unnamed-chunk-18-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-Hands-on Exercise 1
+Take-home Exercise 1
 </h5>
 <div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Nor Hendra
 </div>
 <div class="listing-date">
-Apr 11, 2023
+Apr 30, 2025
 </div>
 </div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-listing-date-sort="1682179200000" data-listing-file-modified-sort="1745839566842" data-listing-date-modified-sort="1745839566000" data-listing-reading-time-sort="19" data-listing-word-count-sort="3611">
-<a href="./Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02_files/figure-html/unnamed-chunk-7-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Hands-on Exercise 2
-</h5>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Nor Hendra
-</div>
-<div class="listing-date">
-Apr 23, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-listing-date-sort="1682611200000" data-listing-file-modified-sort="1745840069353" data-listing-date-modified-sort="1745840069000" data-listing-reading-time-sort="37" data-listing-word-count-sort="7321">
+<div class="g-col-1" data-index="1" data-listing-date-sort="1682611200000" data-listing-file-modified-sort="1745840069353" data-listing-date-modified-sort="1745840069000" data-listing-reading-time-sort="37" data-listing-word-count-sort="7321">
 <a href="./Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
@@ -295,7 +280,7 @@ Apr 28, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="3" data-listing-date-sort="1682611200000" data-listing-file-modified-sort="1745840272021" data-listing-date-modified-sort="1745840272000" data-listing-reading-time-sort="9" data-listing-word-count-sort="1760">
+<div class="g-col-1" data-index="2" data-listing-date-sort="1682611200000" data-listing-file-modified-sort="1745840272021" data-listing-date-modified-sort="1745840272000" data-listing-reading-time-sort="9" data-listing-word-count-sort="1760">
 <a href="./Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top"><img src="Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b_files/figure-html/unnamed-chunk-5-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
@@ -319,15 +304,7 @@ Apr 28, 2023
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div>
-</section>
-</div>
-
-
-
-</section>
-
-</main> <!-- /main -->
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

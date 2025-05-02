@@ -1,32 +1,22 @@
 ---
 title: "Visual Analytics and Applications"
 
-listing: 
-
-  - id: Hands_on_Exercise
-    contents:
-      - "Hands-on_Ex/Hands-on_Ex01/*.qmd"
-      - "Hands-on_Ex/Hands-on_Ex02/*.qmd"
-      - "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03a.qmd"
-      - "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03b.qmd"
-    sort:
-      - "title"
-    type: grid
-    fields: [image, date, title, author]
+listing:
+  type: grid
+  max-items: 3
+  contents:
+    - "Hands-on_Ex/*/*.qmd"
+    - "Take-home_Ex/*/*.qmd"
+    - "In-class_Ex/*/*.qmd"
+  sort: "date desc"
+  fields: [image, date, title, author]
 toc: false
 ---
 
 Welcome to **ISSS608 Visual Analytics and Applications**. In this website, you will find my coursework prepared for this course.
 
-# Overview:
-
-::::: content-container
+## Latest Posts
 :::: listing-block
-## Hands-on Exercises
 
-</a>
 
-::: {#Hands_on_Exercise}
-:::
 ::::
-:::::

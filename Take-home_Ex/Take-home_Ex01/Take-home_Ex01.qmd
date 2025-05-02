@@ -1,44 +1,87 @@
 ---
-title: "Take Home Assignment 1"
+title: "Take-home Exercise 1"
 author: "Nor Hendra"
 date: "30 April 2025"
 date-modified: "last-modified"
 format: html
+code-fold: true
+code-summary: "Show code"
 editor: visual
 freeze: true
 execute:
   eval: true
   echo: true
   warning: false
+
 ---
 
-# Singapore's 2024 Demographic Landscape: A Closer Look at Age, Gender and Geographic Distribution
-# 1. Background
+<style>
+p {
+  text-align: justify;
+}
+body, 
+body p, 
+body h1, 
+body h2, 
+body h3, 
+body h4, 
+body h5, 
+body h6, 
+body li {
+  color: #000 !important;
+}
+</style>
 
+# Foreword
 
+In this take‑home exercise, I’m assuming the role of graphical editor at a local online media outlet that publishes daily across digital platforms. I’ll employ a range of charts to illuminate Singapore’s 2024 demographic landscape, guiding you through my data‑cleaning process and my “Plot Approach” notes for each visualization. More than simply presenting figures, **my overarching aim is to shape these charts and their accompanying narratives into a seamless, story‑driven article**, just as you would see in a professional feature where every plot advances the data story and keeps readers engaged.
 
-# i. Importing Packages
+Use below links to skip ahead.
+
+::: callout-tip
+## Content
+
+-   [Getting Started (Importing Packages and Data)](#importing)
+
+-   [Data Cleaning and Quality Checks](#datacleanqc)
+
+-   [Article - Of Roots and Horizons: Singapore’s Generational Odyssey in 2024](#article)
+:::
+
+# 1. Getting Started
+
+Let's first import packages and data for this article.
+
+## 1.1 Importing Packages {#importingpackages}
 
 ```{r}
 pacman::p_load(tidyverse, ggthemes,viridis,ggridges,ggrepel,patchwork, readr, dplyr, forcats, scales, ggtext, matrixStats)
 ```
 
-# ii. Importing Data
+## 1.2 Importing Data
+
+I have attained this data as per the handout's requirement.
+
+**Source:** [Singstat](https://www.singstat.gov.sg/find-data/search-by-theme/population/geographic-distribution/latest-data)
+
+It would be under the 'Population Trends' tab titled *Singapore Residents by Planning Area / Subzone, Single Year of Age and Sex, June 2024*
 
 ```{r}
 # 3.1 Import
 sgdemo2024 <- read_csv(("data/respopagesex2024.csv"), show_col_types = FALSE)
 ```
 
-## 2.1 Quick check of data
+### 1.3 Quick check of data
 
 ```{r}
 glimpse(sgdemo2024)
 ```
 
-# 3 Data Cleaning and Quality Checks
+# 2. Data Cleaning and Quality Checks {#datacleaningqc}
 
-## 3.1 Converting Sex to a factor with the correct order
+Before we proceed with plotting, we will first need to ensure data is clean to ensure accurate plots.
+
+## 2.1 Converting Sex to a factor with the correct order
 
 By coercing Sex into a factor with a known level order to give full, explicit control over how it's displayed in every plot and keeps the downstream code faster and more robust.
 
@@ -49,7 +92,7 @@ sgdemo2024 <- sgdemo2024 %>%
   )
 ```
 
-## 3.1 Count missing values by column
+## 2.2 Count missing values by column
 
 ```{r}
 # 4.1 Check for missing values and confirm none
@@ -65,7 +108,7 @@ if (all(unlist(missing_counts) == 0)) {
 
 ```
 
-## 3.2 Checking for any duplicates
+## 2.3 Checking for any duplicates
 
 ```{r}
 dup_count <- sum(duplicated(sgdemo2024))
@@ -78,19 +121,23 @@ if (dup_count == 0) {
 }
 ```
 
-## 3.3 Ensure population is strictly positive
+## 2.4 Ensure population is strictly positive
 
 ::: callout-important
-## Why we have to remove zero population rows
+## Removing zero population rows
 
-Scrolling through the data, I found zero-population rows which simply means that no one of that age and sex lives in that subzone. If we add these to the plot, it will
+Scrolling through the data, I found zero-population rows which simply means that no one of that age and sex lives in that subzone. If we add these to the plot, it will -
 
 1.  Add unnecessary clutter of showing up thousands of empty bars or tiles that distract from where people actually live. More importantly,
 
 <!-- -->
 
 2.  It obscures the story I am trying to tell - the audience cares about real population, not the zero-density grid.
+
+Hence, it is crucial to remove these rows
 :::
+
+**Step 1: Checking for zero-population rows.**
 
 ```{r}
 # 1. Check for zero-population rows
@@ -106,11 +153,21 @@ if (nrow(zero_rows) > 0) {
 
 ```
 
+::: callout-important
+## Zero-populations Rows Found
+
+In below code, we will remove the zero population rows and confirm the removal of those rows in the following code.
+:::
+
+**Step 2: Removing those zero-population rows.**
+
 ```{r}
 # 2. Remove all zero‐population rows
 sgdemo2024 <- sgdemo2024 %>% 
   filter(Pop > 0)
 ```
+
+**Step 3: Confirm that all rows with zero-population has been removed.**
 
 ```{r}
 # 3. Confirm removal
@@ -119,7 +176,7 @@ if (sum(sgdemo2024$Pop == 0) == 0) {
 }
 ```
 
-## 3.4 Check Age Range & Filter to Plausible Values
+## 2.5 Check Age Range & Filter to Plausible Values
 
 ::: callout-important
 ## Converting entry "90 & Over" in Age Column
@@ -127,8 +184,10 @@ if (sum(sgdemo2024$Pop == 0) == 0) {
 I will be converting this to a numeric value to plot my graphs. Afterwards, I will be labeling it during the plot. This is to ensure
 
 1.  **Analytics Integrity:** Internally keeping Age=90 for all labelled "90 & Over" which allows me to do sums, means and such.
-2.  **Visual Clarity:** On the axis or legend, the readers we see "90+" so there's no confusion that the final bar or ridge covers all ages above 90.
+2.  **Visual Clarity:** On the axis or legend, the readers we see "90+" so there's no confusion that the final plots cover all ages above 90.
 :::
+
+**Step 1: Convert the '90 & Over' to integers.**
 
 ```{r}
 # 1. Inspect column names to confirm they match expectations
@@ -155,25 +214,29 @@ cat(sprintf(
 
 ```
 
-Final confirmation there are no more "90 & Over" entries in my data and Age column converted into integer.
+**Step 2: Confirm that there are no more "90 & Over" entries in my data.**
 
 ```{r}
 sum(sgdemo2024$Age == "90 & Over")
 ```
 
+**Step 3: Confirm the column type for Age is integer.**
+
 ```{r}
 cat("Age column type:", class(sgdemo2024$Age), "\n")
 ```
+
+**Step 4: Ensure no NA in the column for Age.**
 
 ```{r}
 na_count <- sum(is.na(sgdemo2024$Age))
 cat("Number of NA in Age after parsing:", na_count, "\n")
 ```
 
-## 3.5 Confirm Sex Factor Levels
+## 2.6 Confirm Sex Factor Levels
 
 ::: callout-important
-## Inspecting Sex column in data
+## Inspecting Sex Column in Data
 
 The below code chunk will aim to ensure that there is plot consistency and reproducibility.
 :::
@@ -227,10 +290,10 @@ if (identical(actual_levels, expected_levels)) {
 }
 ```
 
-## 3.5 Checking for any 'Total' in Columns
+## 2.7 Checking for any 'Total' in Columns
 
 ::: callout-important
-## Final check and summary
+## Final Check and Summary
 
 Let's confirm that there are no values 'Total' in any of our columns so that we know our dataset is purely the granular, inhabited cells. It is not only for housekeeping, but to safeguard my visualisations and summary statistics to truly reflect Singapore's lived population in 2024.
 :::
@@ -264,7 +327,7 @@ if (n_sz_total + n_age_na + n_sex_total > 0) {
 }
 ```
 
-## 3.6 Final Summary
+## 2.8 Final Summary
 
 We are finally done with cleaning the data and converting what's needed to provide truthful and accurate data. Below is a quick summary of our freshly cleaned data!
 
@@ -297,13 +360,33 @@ sgdemo2024 %>%
   slice_sample(prop = 0.01)
 ```
 
-# 4 Population Pyramid
+
+<hr/>
+# Of Roots and Horizons: Singapore’s Generational Odyssey in 2024 {#article}
+
+In the heart of Singapore, a quiet transformation is unfolding. Across our island, fewer children are filling playgrounds even as more elders fill community centres, a reflection of smaller birth cohorts and longer lifespans. The signs are everywhere, from merged primary schools making way for new community spaces to classrooms with dwindling enrollments. For many families, the rhythm of daily life now balances the laughter of young ones with the care of ageing parents. Neighbourhoods once bustling with young professionals now host their former residents in well‑worn flats, while newly built towns welcome bright‑eyed families beginning their Singapore story.
+
+Our journey begins with the shape of this change: a population structure that has slimmed at the base and swelled at the top. From there, we follow the footsteps of the “sandwich generation,” where working‑age adults bear the combined responsibilities of childcare and eldercare, and see how that burden plays out from the Central Core to the island’s quieter corners. Finally, we walk the streets of each planning area to discover the median age that defines its character, whether it’s a youthful promise in Punggol or a seasoned community in Queenstown. Along the way, these insights reveal not just numbers on a page but the evolving stories of homes, families and the future Singapore we are building together.
+
+## Generational Imbalance: Shrinking Young Cohorts and Growing Elderhood
+
+::: callout-note
+## Plot Approach
+
+[**Technical Approach**]{.underline}
+
+For enhanced clarity, I’ve grouped the X‑axis into five‑year age bands and scaled the Y‑axis to population figures in thousands, keeping the chart readable despite its size. I have also calculated the percentages of each age group's gender by percentage of the total population to give a better understanding of the size.
+
+[**Visual Rationale**]{.underline}
+
+I also drew inspiration from an [article](https://www.datawrapper.de/blog/gendercolor) on moving beyond blue‑for‑boys and pink‑for‑girls: instead, Telegraph UK uses purple and green, echoing the UK’s “Votes for Women” campaign and offering superior contrast. By rejecting these stereotypes, we open the door to **more inclusive storytelling** and **richer understanding**, ensuring that our visual language **empowers individuals** rather than boxes them into outdated expectations.
+:::
 
 ```{r}
 #| fig-width: 12
 #| fig-height: 8
 
-# 1. Prepare pyramid data with percentages
+# 1. Prepare pyramid data with overall‐pop percentages
 pyr_df <- sgdemo2024 %>%
   mutate(
     AgeGroup = cut(
@@ -314,18 +397,18 @@ pyr_df <- sgdemo2024 %>%
     )
   ) %>%
   group_by(AgeGroup, Sex) %>%
-  summarise(Pop = sum(Pop), .groups = "drop") %>%
-  group_by(Sex) %>%
+    summarise(Pop = sum(Pop), .groups = "drop") %>%
+  # Calculate percentage of male/female over the total population
+  ungroup() %>%
   mutate(
-    SexTotal   = sum(Pop),
-    Perc       = Pop / SexTotal * 100,
-    LabelPerc  = sprintf("%.1f%%", Perc),
-    PopK       = Pop / 1000,
-    PopSignK   = if_else(Sex == "Males", -PopK, PopK)
-  ) %>%
-  ungroup()
+    total_all = sum(Pop),
+    PopK      = Pop / 1000,
+    PopSignK  = if_else(Sex == "Males", -PopK, PopK),
+    Perc      = Pop / total_all * 100,            
+    LabelPerc = sprintf("%.1f%%", Perc)
+  )
 
-# 2. Compute subtitle text with grand totals and percentages
+# 2. Compute subtitle text with grand totals
 total_all     <- sum(pyr_df$Pop)
 total_males   <- sum(pyr_df$Pop[pyr_df$Sex == "Males"])
 total_females <- sum(pyr_df$Pop[pyr_df$Sex == "Females"])
@@ -338,21 +421,20 @@ subtitle_text <- paste0(
   "Females: ", scales::comma(total_females), " (", sprintf("%.1f%%", pct_females), ")"
 )
 
-# 3. Fixed axis limits
 lim    <- 180
 breaks <- seq(-lim, lim, by = 10)
 
-# 4. Plot
+# 3. Plot
 ggplot(pyr_df, aes(x = PopSignK, y = AgeGroup, fill = Sex)) +
   geom_col(width = 0.8) +
-  # Male % labels
+  # Male % labels 
   geom_text(
     data    = filter(pyr_df, Sex == "Males"),
     aes(label = LabelPerc),
     hjust   = 1.1, nudge_x = -1.5,
     size    = 3.5, color = "black"
   ) +
-  # Female % labels
+  # Female % labels 
   geom_text(
     data    = filter(pyr_df, Sex == "Females"),
     aes(label = LabelPerc),
@@ -387,91 +469,30 @@ ggplot(pyr_df, aes(x = PopSignK, y = AgeGroup, fill = Sex)) +
     legend.position    = "bottom",
     plot.margin        = margin(5, 40, 5, 5)
   )
-``` 
-```{r}
-#| fig-width: 12
-#| fig-height: 8
-cohort_df <- sgdemo2024 %>%
-  mutate(
-    CohortKey = case_when(
-      Age <= 19            ~ "young",
-      Age >= 65            ~ "elderly",
-      TRUE                 ~ "labour"
-    )
-  ) %>%
-  group_by(CohortKey) %>%
-  summarise(TotalPop = sum(Pop), .groups = "drop") %>%
-  mutate(
-    TotalK    = TotalPop / 1000,
-    Perc      = TotalPop / sum(TotalPop) * 100,
-    LabelFull = paste0(
-      sprintf("%.1f%%", Perc),
-      "\n(",
-      scales::comma(TotalPop),
-      ")"
-    ),
-    CohortLabel = case_when(
-      CohortKey == "young"   ~ "**Young Dependents**<br>Age: 0 to 19",
-      CohortKey == "labour"  ~ "**Labour Force**<br>Age: 20 to 64",
-      CohortKey == "elderly" ~ "**Elderly Dependents**<br>Age: 65+"
-    ) %>%
-      factor(levels = c(
-        "**Young Dependents**<br>Age: 0 to 19",
-        "**Labour Force**<br>Age: 20 to 64",
-        "**Elderly Dependents**<br>Age: 65+"
-      ))
-  )
-
-# Computing grand total
-grand_total <- sum(cohort_df$TotalPop)
-
-# Adjust the x-axis limit so that values don't get cut off
-max_k     <- 3000
-nudge_amt <- max_k * 0.02  
-
-# Removing grid for minimalist approach
-ggplot(cohort_df, aes(x = TotalK, y = CohortLabel)) +
-  geom_col(fill = "#ACE1AF", width = 0.6) +
-  geom_text(aes(label = LabelFull),
-            hjust      = 0,
-            nudge_x    = nudge_amt,
-            size       = 5,
-            lineheight = 0.9,
-            color      = "black") +
-  scale_x_continuous(
-    name   = "Population (’000)",
-    breaks = seq(0, max_k, by = 250),
-    limits = c(0, max_k),
-    expand = expansion(mult = c(0, 0.05)),
-    labels = function(x) x
-  ) +
-  labs(
-    title    = "Population by Dependency Category, Singapore 2024",
-    subtitle = paste0("Total population: ", scales::comma(grand_total)),
-    x        = NULL,
-    y        = NULL
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    axis.text.y      = element_markdown(size = 12, color = "black"),
-    axis.text.x      = element_text(size = 12, color = "black"),
-    plot.title       = element_text(size = 18, face = "bold", hjust = 0.5),
-    plot.subtitle    = element_text(size = 12, hjust = 0.5, margin = margin(b = 10)),
-    legend.position  = "none",
-    plot.margin      = margin(10, 40, 10, 10)
-  )
-
 ```
 
+The 2024 population pyramid lays bare a society in transition: its base has thinned while its summit has swelled, reflecting both falling birth rates and rising longevity. Children and adolescents (ages 0–18) now comprise just under 19% of residents while the prime working‑age group (20–54) still represents the largest share at roughly 48%, though its growth has begun to taper. Meanwhile, those aged 55 and over make up about 33% of the population which underscores the urgent need to expand healthcare capacity and elder‑support services.
 
+## Balancing Act: Singapore’s Workforce Dynamics and Regional Age Hotspots
+
+::: callout-note
+## Plot Approach
+
+[**Technical Approach**]{.underline}
+Using the patchwork package, I assembled a composite figure that combines our national dependency‑cohort bar chart with a regional age‑by‑region heatmap. First, I mapped each Planning Area to its broader region (per the government’s official classification [here](https://www.newlaunchesreview.com/regions-of-singapore/)), which allowed me to group and districts. With those region labels in place, I plotted the heatmap to visualise age‑group concentrations across the island. Defining regions upfront not only streamlined the heatmap’s construction but also sets us up for cleaner, more flexible plotting in subsequent analyses.
+
+
+[**Visual Rationale**]{.underline}
+
+Building on the insights from our population pyramid, I wanted to drill down further **granularity** into the so‑called “Sandwich Generation,” whose members juggle childcare and eldercare. The dependency‑cohort chart quantifies exactly how many young and elderly dependents each 20–64 age bracket supports, while the regional heatmap reveals where those age groups cluster regionally. Recalling Lesson 2: Practical Guides for Using Colour in Charts, I’ve kept the dependency‑cohort bars in the same soft colour palette to maintain visual harmony and avoid overloading the viewer. Together, these visuals highlight both the scale of intergenerational care pressures and the specific districts where urban planners and policymakers must prioritise childcare facilities, eldercare services, and family‑friendly infrastructure.
+:::
 
 ```{r}
+#| fig-responsive: true
 #| fig-width: 12
-#| fig-height: 8
+#| fig-height: 14
 
-# 1. Define PA → Region lookup lists
+# Define PA → Region lookup
 central    <- c("Bishan","Bukit Merah","Bukit Timah","Downtown Core","Geylang",
                 "Kallang","Marina East","Marina South","Marine Parade","Museum",
                 "Newton","Novena","Orchard","Outram","Queenstown","River Valley",
@@ -486,7 +507,65 @@ west       <- c("Boon Lay","Bukit Batok","Bukit Panjang","Choa Chu Kang",
                 "Clementi","Jurong East","Jurong West","Pioneer","Tengah",
                 "Tuas","Western Islands","Western Water Catchment")
 
-# 2. Build heatmap data
+# 1. Cohort bar data & plot
+cohort_df <- sgdemo2024 %>%
+  mutate(
+    CohortKey = case_when(
+      Age <= 19 ~ "young",
+      Age >= 65 ~ "elderly",
+      TRUE      ~ "labour"
+    )
+  ) %>%
+  group_by(CohortKey) %>%
+    summarise(TotalPop = sum(Pop), .groups = "drop") %>%
+  mutate(
+    TotalK    = TotalPop/1000,
+    Perc      = TotalPop/sum(TotalPop)*100,
+    LabelFull = paste0(sprintf("%.1f%%", Perc), "\n(", comma(TotalPop),")"),
+    CohortLabel = case_when(
+      CohortKey=="young"   ~ "**Young Dependents**<br>Age: 0–19",
+      CohortKey=="labour"  ~ "**Labour Force**<br>Age: 20–64",
+      CohortKey=="elderly" ~ "**Elderly Dependents**<br>Age: 65+"
+    ) %>%
+      factor(levels=c(
+        "**Young Dependents**<br>Age: 0–19",
+        "**Labour Force**<br>Age: 20–64",
+        "**Elderly Dependents**<br>Age: 65+"
+      ))
+  )
+
+grand_total <- sum(cohort_df$TotalPop)
+max_k       <- 3000
+nudge_amt   <- max_k * 0.02
+
+p_cohort <- ggplot(cohort_df, aes(TotalK, CohortLabel)) +
+  geom_col(fill="#ACE1AF", width=0.6) +
+  geom_text(aes(label=LabelFull),
+            hjust=0, nudge_x=nudge_amt, size=5,
+            lineheight=0.9, color="black") +
+  scale_x_continuous(
+    name="Population (’000)",
+    breaks=seq(0,max_k,250),
+    limits=c(0,max_k),
+    expand=expansion(mult=c(0,0.05)),
+    labels=function(x)x
+  ) +
+  labs(
+    title    = "Population by Dependency Category, Singapore 2024",
+    subtitle = paste0("Total population: ", comma(grand_total)),
+    x        = NULL, y = NULL
+  ) +
+  theme_minimal(base_size=14) +
+  theme(
+    plot.title        = element_text(size=16, face="bold", hjust=0.5),
+    plot.subtitle     = element_text(size=12, hjust=0.5, margin=margin(b=10)),
+    axis.text.y       = element_markdown(size=12, color="black"),
+    axis.text.x       = element_text(size=12, color="black"),
+    panel.grid        = element_blank(),
+    legend.position   = "none"
+  )
+
+# 2. Heatmap data & plot 
 tile_df <- sgdemo2024 %>%
   mutate(
     Region = case_when(
@@ -494,169 +573,61 @@ tile_df <- sgdemo2024 %>%
       PA %in% east       ~ "East",
       PA %in% north      ~ "North",
       PA %in% north_east ~ "North-East",
-      PA %in% west       ~ "West",
-      TRUE               ~ NA_character_
-    )
-  ) %>%
-  filter(!is.na(Region)) %>%
-  mutate(
+      PA %in% west       ~ "West"
+    ),
     AgeBand = cut(
       Age,
-      breaks = c(seq(0, 90, by = 5), Inf),
+      breaks = c(seq(0,90,5), Inf),
       right  = FALSE,
       labels = c(paste0(seq(0,85,5), "-", seq(4,89,5)), "90+")
     )
   ) %>%
   group_by(Region, AgeBand) %>%
-  summarise(Pop = sum(Pop), .groups = "drop") %>%
+    summarise(Pop = sum(Pop), .groups = "drop") %>%
   mutate(
-    Region  = factor(Region, levels = c("Central","East","North","North-East","West")),
-    AgeBand = factor(AgeBand, levels = c(paste0(seq(0,85,5), "-", seq(4,89,5)), "90+"))
+    Region  = factor(Region, levels=c("Central","East","North","North-East","West")),
+    AgeBand = factor(AgeBand, levels=c(paste0(seq(0,85,5), "-", seq(4,89,5)), "90+"))
   )
 
-# 3. Plot
-ggplot(tile_df, aes(x = Region, y = AgeBand, fill = Pop)) +
-  geom_tile(color = "white") +
-  scale_fill_viridis_c(name = "Population", option = "C", labels = comma) +
-  labs(
-    title = "Heatmap of Age Population by Region, Singapore 2024",
-    x     = "Region",
-    y     = "Age Band"
-  ) +
-  theme_minimal(base_size = 14) +
+p_heat <- ggplot(tile_df, aes(Region, AgeBand, fill=Pop)) +
+  geom_tile(color="white") +
+  scale_fill_viridis_c(name="Population", option="C", labels=comma) +
+  labs(title = "Heatmap of Age Population by Region") +
+  theme_minimal(base_size=14) +
   theme(
-    axis.text.x      = element_text(face="bold", size = 12, color = "black"),
-    axis.text.y      = element_text(size = 14, color = "black"),
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
+    plot.title       = element_text(size=16, face="bold", hjust=0.5),
+    axis.text.x      = element_text(face="bold", size=12, color="black"),
+    axis.text.y      = element_text(size=12, color="black"),
+    axis.title.x     = element_blank(),
+    axis.title.y     = element_blank(),
+    panel.grid       = element_blank(),
     legend.position  = "right",
-    plot.title       = element_text(size = 16, face="bold", hjust = 0.5),
-    axis.ticks       = element_blank(),
-    panel.border     = element_blank()
+    legend.justification = "center"
   )
+
+# 3. Stack cohort on top, heatmap below
+p_cohort / p_heat +
+  plot_layout(heights=c(1,1))
 ```
-```{r}
-#| fig-width: 12
-#| fig-height: 8
+
+Caught between caring for aging parents and raising children, Singapore’s “sandwich generation” faces mounting pressure as 37 dependents fall on every 100 working‑age adults. With 63.1% of residents aged 20–64, these mid‑career adults must support 18.9% young dependents (ages 0–19) and 18.0% elderly dependents (65+), straining both family resources and national social services. 
+
+Our regional heatmap further reveals where this tension is most acute: the Central and North‑East districts not only concentrate the largest cohorts of prime‑age workers (35–44) but also show darker shades in the early senior bands (65–74), indicating dual hotspots of childcare and eldercare demand. In contrast, the North region’s lighter tones across all age bands point to relatively lower service needs there. Addressing the sandwich generation’s unique challenges will require integrated policies by expanding affordable childcare in family‑dense precincts, scaling up eldercare support in senior‑heavy districts, and fostering workplace flexibility to ensure that today’s caregivers are themselves cared for.
+
+## Generational Midpoints by Planning Area: Visualising Median Ages
+::: callout-note
+## Plot Approach
+
+[**Technical Approach**]{.underline}
+
+Building on our earlier maps and cohort charts, I began by calculating the median age for each Planning Area, split by sex. I then reshaped the results into a “wide” format so each area has two columns, one for female median age and one for male, and ordered the Planning Areas by their overall median (average of the two sexes).
+
+[**Visual Rationale**]{.underline}
+
+This dumbbell plot naturally extends our story from a national dependency load and regional heatmap to the local “midpoints” of each community. By placing female and male medians side by side, we immediately see both overall age trends and sex‑specific gaps: established estates cluster toward the upper end of the age scale, while newer towns remain lower. The consistent purple‑and‑green palette ties back to our earlier rationale in population pyramid. Ultimately, this chart highlights where generational midpoints and by extension, community needs vary most sharply between men and women, guiding targeted policy and infrastructure decisions at the Planning Area level.
+:::
 
 
-# 2. Assign each PA to its region (only the five defined)
-ridge_region <- sgdemo2024 %>%
-  mutate(
-    Region = case_when(
-      PA %in% central    ~ "Central",
-      PA %in% east       ~ "East",
-      PA %in% north      ~ "North",
-      PA %in% north_east ~ "North-East",
-      PA %in% west       ~ "West"
-    ),
-    Region = factor(Region, levels = c("Central","East","North-East","North","West"))
-  ) %>%
-  select(Age, Pop, Region)
-
-# 3. Plot ridgelines starting at the axis
-ggplot(ridge_region, aes(x = Age, y = Region, weight = Pop, fill = Region)) +
-  geom_density_ridges(
-    scale           = 1.2,
-    rel_min_height  = 0.01,
-    color           = NA,
-    alpha           = 0.8
-  ) +
-  scale_x_continuous(
-    name   = "Age (years)",
-    breaks = seq(0, 90, 10),
-    expand = c(0, 0)
-  ) +
-  scale_y_discrete(expand = c(0, 0)) +
-  scale_fill_manual(values = c(
-    Central      = "#1f77b4",
-    East         = "#ff7f0e",
-    `North-East` = "#2ca02c",
-    North        = "#d62728",
-    West         = "#9467bd"
-  )) +
-  labs(
-    title    = "Age Distribution by Region, Singapore 2024",
-    subtitle = "Each ridge is weighted by subzone population",
-    x        = NULL,
-    y        = NULL
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(
-    legend.position  = "none",
-    plot.title       = element_text(face = "bold", hjust = 0.5),
-    plot.subtitle    = element_text(hjust = 0.5, margin = margin(b = 10)),
-    axis.text.x      = element_text(color = "black", size = 13),
-    axis.text.y      = element_text(color = "black", size = 13),
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank()
-  )
-
-```
-```{r}
-#| fig-width: 12
-#| fig-height: 8
-
-# 1. Define PA → Region lookup
-ridge_region <- sgdemo2024 %>%
-  mutate(
-    Region = case_when(
-      PA %in% central    ~ "Central",
-      PA %in% east       ~ "East",
-      PA %in% north      ~ "North",
-      PA %in% north_east ~ "North-East",
-      PA %in% west       ~ "West"
-    ),
-    Region = factor(Region, levels = c("Central","East","North-East","North","West"))
-  ) %>%
-  select(Age, Pop, Region)
-
-# 2. Compute weighted median age by Region & Sex
-region_med <- sgdemo2024 %>%
-  mutate(
-    Region = case_when(
-      PA %in% central    ~ "Central",
-      PA %in% east       ~ "East",
-      PA %in% north      ~ "North",
-      PA %in% north_east ~ "North-East",
-      PA %in% west       ~ "West",
-    ),
-    Region = factor(Region, levels = c("Central","East","North-East","North","West"))
-  ) %>%
-  group_by(Region, Sex) %>%
-  summarise(
-    MedAge = matrixStats::weightedMedian(Age, w = Pop),
-    .groups = "drop"
-  )
-
-# 3. Plot grouped bar chart with no gap, 5-year bins, no grid lines
-ggplot(region_med, aes(x = Region, y = MedAge, fill = Sex)) +
-  geom_col(
-    position = position_dodge(width = 0.6), 
-    width = 0.6
-  ) +
-  scale_fill_manual(values = c("Males" = "#00C2A1", "Females" = "#9E00E3")) +
-  scale_y_continuous(
-    breaks = seq(0, 50, by = 5),
-    limits = c(0, 50),
-    expand = c(0, 0)
-  ) +
-  labs(
-    title = "Median Age by Sex and Region, Singapore 2024",
-    x     = NULL,
-    y     = "Median Age (years)",
-    fill  = NULL
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(
-    plot.title          = element_text(hjust = 0.5, face = "bold", size = 20),
-    axis.text.x         = element_text(color = "black", size = 13),
-    axis.text.y         = element_text(color = "black", size = 13),
-    panel.grid.major    = element_blank(),
-    panel.grid.minor    = element_blank(),
-    legend.position     = "bottom"
-  )
-```
 ```{r}
 #| fig-width: 12
 #| fig-height: 8
@@ -717,104 +688,9 @@ ggplot(med_age, aes(y = PA)) +
     legend.text          = element_text(size = 12)
   )
 ```
-`
-```{r}
-#| fig-width: 12
-#| fig-height: 8
 
+Building on our dependency‑cohort and regional heatmap analyses, examining the median age across Singapore’s Planning Areas reveals where communities skew younger or older at their cores. Older estates such as Queenstown and Bukit Merah register median ages in the mid 40s, reflecting long‑established neighbourhoods and a higher share of empty‑nesters. In contrast, newer towns like Punggol, Sengkang and Tengah show median ages in the low 30s, driven by young families and recent housing launches. Heartland hubs such as Jurong East and Tampines sit in between, with medians around 36–38 years, capturing both working professionals and a growing elder segment. These median‑age patterns not only mirror the “Sandwich Generation” pressures we identified where mid‑career adults balance dependents on either side of the age spectrum, but also pinpoint where planners must tailor services: youth‑oriented amenities in family‑heavy districts and age‑friendly infrastructure in more mature estates.
 
-# 1. Install/load
-if (!requireNamespace("gt", quietly=TRUE)) install.packages("gt")
-library(dplyr)
-library(gt)
+## Final Words - Bridging Generations: Tailoring Singapore's Communities for All Ages
+Together, our analysis paints a comprehensive portrait of Singapore’s evolving demographic landscape: declining birth rates have narrowed the population’s base while increased longevity has expanded its apex, leaving 37 dependents, 20 young and 17 elderly for every 100 working‑age adults. Regionally, Central and North‑East districts emerge as dual hotspots of both prime‑age workers and burgeoning senior cohorts, intensifying the “sandwich generation” pressures on mid‑career adults who juggle childcare and eldercare. Across Planning Areas, median ages range from the low 30s in growth towns like Punggol and Tengah to the mid‑40s in mature estates such as Queenstown and Bukit Merah, with notable sex‑specific gaps highlighted in our dumbbell plot. These patterns underscore the urgency of place‑based strategies by expanding affordable childcare in youthful precincts, scaling up geriatric care in senior‑dense districts, and tailoring urban infrastructure to each community’s generational midpoint. By aligning services with these demographic realities, Singapore can ensure that every cohort, young, working‑age and elderly receives the support it needs for a resilient, inclusive future.
 
-# 2. Define the five region vectors
-central    <- c("Bishan","Bukit Merah","Bukit Timah","Downtown Core","Geylang",
-                "Kallang","Marina East","Marina South","Marine Parade","Museum",
-                "Newton","Novena","Orchard","Outram","Queenstown","River Valley",
-                "Rochor","Singapore River","Southern Islands","Straits View",
-                "Tanglin","Toa Payoh")
-east       <- c("Bedok","Changi","Changi Bay","Pasir Ris","Paya Lebar","Tampines")
-north      <- c("Central Water Catchment","Lim Chu Kang","Mandai","Sembawang",
-                "Simpang","Sungei Kadut","Woodlands","Yishun")
-north_east <- c("Ang Mo Kio","Hougang","North-Eastern Islands","Punggol",
-                "Seletar","Sengkang","Serangoon")
-west       <- c("Boon Lay","Bukit Batok","Bukit Panjang","Choa Chu Kang",
-                "Clementi","Jurong East","Jurong West","Pioneer","Tengah",
-                "Tuas","Western Islands","Western Water Catchment")
-
-# 3. Build region_df
-max_len <- max(length(central), length(east), length(north_east), length(north), length(west))
-
-region_df <- tibble(
-  Central     = c(central,     rep(NA_character_, max_len - length(central))),
-  East        = c(east,        rep(NA_character_, max_len - length(east))),
-  `North-East`= c(north_east,  rep(NA_character_, max_len - length(north_east))),
-  North       = c(north,       rep(NA_character_, max_len - length(north))),
-  West        = c(west,        rep(NA_character_, max_len - length(west)))
-)
-
-# 4. Palette
-region_colors <- c(
-  Central      = "#1f77b4",
-  East         = "#ff7f0e",
-  `North-East` = "#2ca02c",
-  North        = "#d62728",
-  West         = "#9467bd"
-)
-
-# 5. gt with vertical borders
-region_df %>%
-  gt() %>%
-  fmt_missing(
-    columns      = everything(),
-    missing_text = ""
-  ) %>%
-  tab_header(
-    title = md("**Planning Areas by Region**")
-  ) %>%
-  { tbl <- .
-    for (reg in names(region_colors)) {
-      tbl <- tbl %>%
-        tab_style(
-          style = list(
-            cell_fill(color = region_colors[[reg]]),
-            cell_text(weight = "bold", color = "white")
-          ),
-          locations = cells_column_labels(columns = all_of(reg))
-        )
-    }
-    tbl
-  } %>%
-  # vertical lines between columns
-  tab_style(
-    style = cell_borders(sides = "right", color = "black", weight = px(1)),
-    locations = cells_body(columns = everything())
-  ) %>%
-  tab_style(
-    style = cell_borders(sides = "right", color = "black", weight = px(1)),
-    locations = cells_column_labels(columns = everything())
-  ) %>%
-  cols_label(
-    Central      = "Central",
-    East         = "East",
-    `North-East` = "North-East",
-    North        = "North",
-    West         = "West"
-  ) %>%
-  tab_options(
-    table.border.top.color    = "black",
-    table.border.top.width    = px(2),
-    table.border.bottom.color = "black",
-    table.border.bottom.width = px(2),
-    table.border.left.color   = "black",
-    table.border.left.width   = px(2),
-    table.border.right.color  = "black",
-    table.border.right.width  = px(2),
-    data_row.padding          = px(3)
-  )
-
-
-
-
-```
