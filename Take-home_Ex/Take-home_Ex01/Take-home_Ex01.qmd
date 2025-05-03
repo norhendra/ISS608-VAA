@@ -52,7 +52,7 @@ Use below links to skip ahead.
 
 Let's first import packages and data for this article.
 
-## 1.1 Importing Packages {#importingpackages}
+## 1.1 Importing Packages {#importing}
 
 ```{r}
 pacman::p_load(tidyverse, ggthemes,viridis,ggridges,ggrepel,patchwork, readr, dplyr, forcats, scales, ggtext, matrixStats)

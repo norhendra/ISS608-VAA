@@ -432,5 +432,12 @@
     "title": "About",
     "section": "",
     "text": "Hello there! Welcome to my Visual Analytics portfolio.\nI’m Nor Hendra, A Master of IT in Business student in Singapore Management University."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html#importing",
+    "href": "Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html#importing",
+    "title": "Take-home Exercise 1",
+    "section": "1.1 Importing Packages",
+    "text": "1.1 Importing Packages\n\n\nShow code\npacman::p_load(tidyverse, ggthemes,viridis,ggridges,ggrepel,patchwork, readr, dplyr, forcats, scales, ggtext, matrixStats)"
   }
 ]
