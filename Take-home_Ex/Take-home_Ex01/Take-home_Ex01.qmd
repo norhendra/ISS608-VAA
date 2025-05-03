@@ -77,7 +77,7 @@ sgdemo2024 <- read_csv(("data/respopagesex2024.csv"), show_col_types = FALSE)
 glimpse(sgdemo2024)
 ```
 
-# 2. Data Cleaning and Quality Checks {#datacleaningqc}
+# 2. Data Cleaning and Quality Checks {#datacleanqc}
 
 Before we proceed with plotting, we will first need to ensure data is clean to ensure accurate plots.
 
