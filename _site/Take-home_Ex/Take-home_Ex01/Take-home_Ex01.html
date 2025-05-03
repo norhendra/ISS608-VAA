@@ -272,7 +272,7 @@ body li {
 </style>
 <section id="foreword" class="level1">
 <h1>Foreword</h1>
-<p>In this take‑home exercise, I’m assuming the role of graphical editor at a local online media outlet that publishes daily across digital platforms. I’ll employ a range of charts to illuminate Singapore’s 2024 demographic landscape, guiding you through my data‑cleaning process and my “Plot Approach” notes for each visualization. More than simply presenting figures, <strong>my overarching aim is to shape these charts and their accompanying narratives into a seamless, story‑driven article</strong>, just as you would see in a professional feature where every plot advances the data story and keeps readers engaged.</p>
+<p>In this take‑home exercise, I’m assuming the role of graphical editor at a local online media outlet that publishes daily across digital platforms. I’ll employ a range of charts to illuminate Singapore’s 2024 demographic landscape, guiding you through my data‑cleaning process and my “Plot Approach” notes for each visualization. More than simply presenting figures, <strong>my overarching aim is to shape these charts and their accompanying narratives into a seamless, story‑driven article</strong>, just as you would see in a professional feature where every plot advances the data story and keeps readers engaged, all while ensuring honest, accurate and aesthetic plots.</p>
 <p>Use below links to skip ahead.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -794,6 +794,7 @@ Final Check and Summary
 </section>
 <section id="article" class="level1">
 <h1>Of Roots and Horizons: Singapore’s Generational Odyssey in 2024</h1>
+<p><img src="sgfamily.jpg" alt="Alt text for accessibility" style="display:block; margin:0 auto; width:100%;"></p>
 <p>In the heart of Singapore, a quiet transformation is unfolding. Across our island, fewer children are filling playgrounds even as more elders fill community centres, a reflection of smaller birth cohorts and longer lifespans. The signs are everywhere, from merged primary schools making way for new community spaces to classrooms with dwindling enrollments. For many families, the rhythm of daily life now balances the laughter of young ones with the care of ageing parents. Neighbourhoods once bustling with young professionals now host their former residents in well‑worn flats, while newly built towns welcome bright‑eyed families beginning their Singapore story.</p>
 <section id="generational-imbalance-shrinking-young-cohorts-and-growing-elderhood" class="level2">
 <h2 class="anchored" data-anchor-id="generational-imbalance-shrinking-young-cohorts-and-growing-elderhood">Generational Imbalance: Shrinking Young Cohorts and Growing Elderhood</h2>
@@ -810,7 +811,7 @@ Plot Approach
 <p><u><strong>Technical Approach</strong></u></p>
 <p>For enhanced clarity, I’ve grouped the X‑axis into five‑year age bands and scaled the Y‑axis to population figures in thousands, keeping the chart readable despite its size. I have also calculated the percentages of each age group’s gender by percentage of the total population to give a better understanding of the size.</p>
 <p><u><strong>Visual Rationale</strong></u></p>
-<p>I also drew inspiration from an <a href="https://www.datawrapper.de/blog/gendercolor">article</a> on moving beyond blue‑for‑boys and pink‑for‑girls: instead, Telegraph UK uses purple and green, echoing the UK’s “Votes for Women” campaign and offering superior contrast. By rejecting these stereotypes, we open the door to <strong>more inclusive storytelling</strong> and <strong>richer understanding</strong>, ensuring that our visual language <strong>empowers individuals</strong> rather than boxes them into outdated expectations.</p>
+<p>I also drew inspiration from an <a href="https://www.datawrapper.de/blog/gendercolor">article</a> on moving beyond blue‑for‑boys and pink‑for‑girls: instead, Telegraph UK uses purple and green, echoing the UK’s “Votes for Women” campaign and offering superior contrast. By rejecting these stereotypes, we open the door to <strong>more inclusive storytelling</strong> and <strong>richer understanding</strong>, ensuring that our visual language <strong>empowers individuals</strong> rather than boxes them into outdated expectations. I also removed the horizontal grids to avoid the chart looking cluttered and because it does not add any value.</p>
 </div>
 </div>
 <div class="cell">
@@ -881,7 +882,7 @@ Plot Approach
 <span id="cb51-63"><a href="#cb51-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"grey50"</span>, <span class="at">size =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
 <span id="cb51-64"><a href="#cb51-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">clip =</span> <span class="st">"off"</span>) <span class="sc">+</span></span>
 <span id="cb51-65"><a href="#cb51-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb51-66"><a href="#cb51-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">"Singapore Population by Age Group, 2024"</span>,</span>
+<span id="cb51-66"><a href="#cb51-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">"Singapore Population by Age Group in 2024"</span>,</span>
 <span id="cb51-67"><a href="#cb51-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> subtitle_text,</span>
 <span id="cb51-68"><a href="#cb51-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">x        =</span> <span class="st">"Population (’000)"</span>,</span>
 <span id="cb51-69"><a href="#cb51-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">y        =</span> <span class="st">"Age Group"</span>,</span>
@@ -892,13 +893,15 @@ Plot Approach
 <span id="cb51-74"><a href="#cb51-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border       =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">size =</span> <span class="fl">0.2</span>),</span>
 <span id="cb51-75"><a href="#cb51-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title         =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
 <span id="cb51-76"><a href="#cb51-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle      =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">10</span>)),</span>
-<span id="cb51-77"><a href="#cb51-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y        =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">"black"</span>),</span>
-<span id="cb51-78"><a href="#cb51-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x        =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">"black"</span>),</span>
-<span id="cb51-79"><a href="#cb51-79" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb51-80"><a href="#cb51-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor   =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb51-81"><a href="#cb51-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position    =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb51-82"><a href="#cb51-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin        =</span> <span class="fu">margin</span>(<span class="dv">5</span>, <span class="dv">40</span>, <span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb51-83"><a href="#cb51-83" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-77"><a href="#cb51-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y        =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">color =</span> <span class="st">"black"</span>),</span>
+<span id="cb51-78"><a href="#cb51-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x        =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">color =</span> <span class="st">"black"</span>),</span>
+<span id="cb51-79"><a href="#cb51-79" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x       =</span> <span class="fu">element_text</span>(<span class="at">face=</span> <span class="st">"bold"</span>),</span>
+<span id="cb51-80"><a href="#cb51-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y       =</span> <span class="fu">element_text</span>(<span class="at">face=</span> <span class="st">"bold"</span>), </span>
+<span id="cb51-81"><a href="#cb51-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb51-82"><a href="#cb51-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor   =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb51-83"><a href="#cb51-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position    =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb51-84"><a href="#cb51-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin        =</span> <span class="fu">margin</span>(<span class="dv">5</span>, <span class="dv">40</span>, <span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb51-85"><a href="#cb51-85" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -926,7 +929,8 @@ Plot Approach
 <p><u><strong>Technical Approach</strong></u></p>
 <p>Using the patchwork package, I assembled a composite figure that combines our national dependency‑cohort bar chart with a regional age‑by‑region heatmap. First, I mapped each Planning Area to its broader region (per the government’s official classification <a href="https://www.newlaunchesreview.com/regions-of-singapore/">here</a>), which allowed me to group and districts. With those region labels in place, I plotted the heatmap to visualise age‑group concentrations across the island. Defining regions upfront not only streamlined the heatmap’s construction but also sets us up for cleaner, more flexible plotting in subsequent analyses.</p>
 <p><u><strong>Visual Rationale</strong></u></p>
-<p>Building on the insights from our population pyramid, I wanted to drill down further <strong>granularity</strong> into the so‑called “Sandwich Generation,” whose members juggle childcare and eldercare. The dependency‑cohort chart quantifies exactly how many young and elderly dependents each 20–64 age bracket supports, while the regional heatmap reveals where those age groups cluster regionally. Recalling Lesson 2: Practical Guides for Using Colour in Charts, I’ve kept the dependency‑cohort bars in the same soft colour palette to maintain visual harmony and avoid overloading the viewer. Together, these visuals highlight both the scale of intergenerational care pressures and the specific districts where urban planners and policymakers must prioritise childcare facilities, eldercare services, and family‑friendly infrastructure.</p>
+<p>Building on the insights from our population pyramid, I wanted to drill down further <strong>granularity</strong> into the so‑called “Sandwich Generation,” whose members juggle childcare and eldercare. The dependency‑cohort chart quantifies exactly how many young and elderly dependents each 20–64 age bracket supports. I removed the grids for a clean look as I only have 3 categories and labels are clear. The main focus are the bar lengths to and adding grid-lines would draw attention away from an already simple bar graph. Recalling Lesson 2: Practical Guides for Using Colour in Charts, I’ve kept the dependency‑cohort bars in the same soft colour palette to maintain visual harmony and avoid overloading the viewer.</p>
+<p>The regional heatmap reveals where those age groups cluster regionally. Together, these visuals highlight both the scale of intergenerational care pressures and the specific districts where urban planners and policymakers must prioritise childcare facilities, eldercare services, and family‑friendly infrastructure.</p>
 </div>
 </div>
 <div class="cell" data-fig-responsive="true">
@@ -991,7 +995,7 @@ Plot Approach
 <span id="cb52-57"><a href="#cb52-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels=</span><span class="cf">function</span>(x)x</span>
 <span id="cb52-58"><a href="#cb52-58" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb52-59"><a href="#cb52-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb52-60"><a href="#cb52-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">"Population by Dependency Category, Singapore&nbsp;2024"</span>,</span>
+<span id="cb52-60"><a href="#cb52-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">"Singapore Population by Dependency Category in 2024"</span>,</span>
 <span id="cb52-61"><a href="#cb52-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Total population: "</span>, <span class="fu">comma</span>(grand_total)),</span>
 <span id="cb52-62"><a href="#cb52-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">x        =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span></span>
 <span id="cb52-63"><a href="#cb52-63" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
@@ -1001,53 +1005,54 @@ Plot Approach
 <span id="cb52-67"><a href="#cb52-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle     =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">hjust=</span><span class="fl">0.5</span>, <span class="at">margin=</span><span class="fu">margin</span>(<span class="at">b=</span><span class="dv">10</span>)),</span>
 <span id="cb52-68"><a href="#cb52-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y       =</span> <span class="fu">element_markdown</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">color=</span><span class="st">"black"</span>),</span>
 <span id="cb52-69"><a href="#cb52-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x       =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">color=</span><span class="st">"black"</span>),</span>
-<span id="cb52-70"><a href="#cb52-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid        =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb52-71"><a href="#cb52-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position   =</span> <span class="st">"none"</span></span>
-<span id="cb52-72"><a href="#cb52-72" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb52-73"><a href="#cb52-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-74"><a href="#cb52-74" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Heatmap data &amp; plot </span></span>
-<span id="cb52-75"><a href="#cb52-75" aria-hidden="true" tabindex="-1"></a>tile_df <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
-<span id="cb52-76"><a href="#cb52-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb52-77"><a href="#cb52-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region =</span> <span class="fu">case_when</span>(</span>
-<span id="cb52-78"><a href="#cb52-78" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> central    <span class="sc">~</span> <span class="st">"Central"</span>,</span>
-<span id="cb52-79"><a href="#cb52-79" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> east       <span class="sc">~</span> <span class="st">"East"</span>,</span>
-<span id="cb52-80"><a href="#cb52-80" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north      <span class="sc">~</span> <span class="st">"North"</span>,</span>
-<span id="cb52-81"><a href="#cb52-81" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north_east <span class="sc">~</span> <span class="st">"North-East"</span>,</span>
-<span id="cb52-82"><a href="#cb52-82" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> west       <span class="sc">~</span> <span class="st">"West"</span></span>
-<span id="cb52-83"><a href="#cb52-83" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb52-84"><a href="#cb52-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">AgeBand =</span> <span class="fu">cut</span>(</span>
-<span id="cb52-85"><a href="#cb52-85" aria-hidden="true" tabindex="-1"></a>      Age,</span>
-<span id="cb52-86"><a href="#cb52-86" aria-hidden="true" tabindex="-1"></a>      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">90</span>,<span class="dv">5</span>), <span class="cn">Inf</span>),</span>
-<span id="cb52-87"><a href="#cb52-87" aria-hidden="true" tabindex="-1"></a>      <span class="at">right  =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb52-88"><a href="#cb52-88" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">85</span>,<span class="dv">5</span>), <span class="st">"-"</span>, <span class="fu">seq</span>(<span class="dv">4</span>,<span class="dv">89</span>,<span class="dv">5</span>)), <span class="st">"90+"</span>)</span>
-<span id="cb52-89"><a href="#cb52-89" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb52-90"><a href="#cb52-90" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb52-91"><a href="#cb52-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, AgeBand) <span class="sc">%&gt;%</span></span>
-<span id="cb52-92"><a href="#cb52-92" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">Pop =</span> <span class="fu">sum</span>(Pop), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb52-93"><a href="#cb52-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb52-94"><a href="#cb52-94" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region  =</span> <span class="fu">factor</span>(Region, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Central"</span>,<span class="st">"East"</span>,<span class="st">"North"</span>,<span class="st">"North-East"</span>,<span class="st">"West"</span>)),</span>
-<span id="cb52-95"><a href="#cb52-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">AgeBand =</span> <span class="fu">factor</span>(AgeBand, <span class="at">levels=</span><span class="fu">c</span>(<span class="fu">paste0</span>(<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">85</span>,<span class="dv">5</span>), <span class="st">"-"</span>, <span class="fu">seq</span>(<span class="dv">4</span>,<span class="dv">89</span>,<span class="dv">5</span>)), <span class="st">"90+"</span>))</span>
-<span id="cb52-96"><a href="#cb52-96" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb52-97"><a href="#cb52-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-98"><a href="#cb52-98" aria-hidden="true" tabindex="-1"></a>p_heat <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tile_df, <span class="fu">aes</span>(Region, AgeBand, <span class="at">fill=</span>Pop)) <span class="sc">+</span></span>
-<span id="cb52-99"><a href="#cb52-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color=</span><span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb52-100"><a href="#cb52-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name=</span><span class="st">"Population"</span>, <span class="at">option=</span><span class="st">"C"</span>, <span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb52-101"><a href="#cb52-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Heatmap of Age Population by Region"</span>) <span class="sc">+</span></span>
-<span id="cb52-102"><a href="#cb52-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size=</span><span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb52-103"><a href="#cb52-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb52-104"><a href="#cb52-104" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title       =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>, <span class="at">face=</span><span class="st">"bold"</span>, <span class="at">hjust=</span><span class="fl">0.5</span>),</span>
-<span id="cb52-105"><a href="#cb52-105" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x      =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>, <span class="at">size=</span><span class="dv">12</span>, <span class="at">color=</span><span class="st">"black"</span>),</span>
-<span id="cb52-106"><a href="#cb52-106" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y      =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">color=</span><span class="st">"black"</span>),</span>
-<span id="cb52-107"><a href="#cb52-107" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x     =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb52-108"><a href="#cb52-108" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y     =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb52-109"><a href="#cb52-109" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid       =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb52-110"><a href="#cb52-110" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position  =</span> <span class="st">"right"</span>,</span>
-<span id="cb52-111"><a href="#cb52-111" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.justification =</span> <span class="st">"center"</span></span>
-<span id="cb52-112"><a href="#cb52-112" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb52-113"><a href="#cb52-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-114"><a href="#cb52-114" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Stack cohort on top, heatmap below</span></span>
-<span id="cb52-115"><a href="#cb52-115" aria-hidden="true" tabindex="-1"></a>p_cohort <span class="sc">/</span> p_heat <span class="sc">+</span></span>
-<span id="cb52-116"><a href="#cb52-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">heights=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-70"><a href="#cb52-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x       =</span> <span class="fu">element_text</span>(<span class="at">face=</span> <span class="st">"bold"</span>),</span>
+<span id="cb52-71"><a href="#cb52-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid        =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb52-72"><a href="#cb52-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position   =</span> <span class="st">"none"</span></span>
+<span id="cb52-73"><a href="#cb52-73" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-74"><a href="#cb52-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-75"><a href="#cb52-75" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Heatmap data &amp; plot </span></span>
+<span id="cb52-76"><a href="#cb52-76" aria-hidden="true" tabindex="-1"></a>tile_df <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
+<span id="cb52-77"><a href="#cb52-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb52-78"><a href="#cb52-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region =</span> <span class="fu">case_when</span>(</span>
+<span id="cb52-79"><a href="#cb52-79" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> central    <span class="sc">~</span> <span class="st">"Central"</span>,</span>
+<span id="cb52-80"><a href="#cb52-80" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> east       <span class="sc">~</span> <span class="st">"East"</span>,</span>
+<span id="cb52-81"><a href="#cb52-81" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north      <span class="sc">~</span> <span class="st">"North"</span>,</span>
+<span id="cb52-82"><a href="#cb52-82" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> north_east <span class="sc">~</span> <span class="st">"North-East"</span>,</span>
+<span id="cb52-83"><a href="#cb52-83" aria-hidden="true" tabindex="-1"></a>      PA <span class="sc">%in%</span> west       <span class="sc">~</span> <span class="st">"West"</span></span>
+<span id="cb52-84"><a href="#cb52-84" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb52-85"><a href="#cb52-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">AgeBand =</span> <span class="fu">cut</span>(</span>
+<span id="cb52-86"><a href="#cb52-86" aria-hidden="true" tabindex="-1"></a>      Age,</span>
+<span id="cb52-87"><a href="#cb52-87" aria-hidden="true" tabindex="-1"></a>      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">90</span>,<span class="dv">5</span>), <span class="cn">Inf</span>),</span>
+<span id="cb52-88"><a href="#cb52-88" aria-hidden="true" tabindex="-1"></a>      <span class="at">right  =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb52-89"><a href="#cb52-89" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">85</span>,<span class="dv">5</span>), <span class="st">"-"</span>, <span class="fu">seq</span>(<span class="dv">4</span>,<span class="dv">89</span>,<span class="dv">5</span>)), <span class="st">"90+"</span>)</span>
+<span id="cb52-90"><a href="#cb52-90" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb52-91"><a href="#cb52-91" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb52-92"><a href="#cb52-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, AgeBand) <span class="sc">%&gt;%</span></span>
+<span id="cb52-93"><a href="#cb52-93" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">Pop =</span> <span class="fu">sum</span>(Pop), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb52-94"><a href="#cb52-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb52-95"><a href="#cb52-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">Region  =</span> <span class="fu">factor</span>(Region, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Central"</span>,<span class="st">"East"</span>,<span class="st">"North"</span>,<span class="st">"North-East"</span>,<span class="st">"West"</span>)),</span>
+<span id="cb52-96"><a href="#cb52-96" aria-hidden="true" tabindex="-1"></a>    <span class="at">AgeBand =</span> <span class="fu">factor</span>(AgeBand, <span class="at">levels=</span><span class="fu">c</span>(<span class="fu">paste0</span>(<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">85</span>,<span class="dv">5</span>), <span class="st">"-"</span>, <span class="fu">seq</span>(<span class="dv">4</span>,<span class="dv">89</span>,<span class="dv">5</span>)), <span class="st">"90+"</span>))</span>
+<span id="cb52-97"><a href="#cb52-97" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-98"><a href="#cb52-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-99"><a href="#cb52-99" aria-hidden="true" tabindex="-1"></a>p_heat <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tile_df, <span class="fu">aes</span>(Region, AgeBand, <span class="at">fill=</span>Pop)) <span class="sc">+</span></span>
+<span id="cb52-100"><a href="#cb52-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color=</span><span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb52-101"><a href="#cb52-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name=</span><span class="st">"Population"</span>, <span class="at">option=</span><span class="st">"C"</span>, <span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb52-102"><a href="#cb52-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Singapore Heatmap of Age Population by Region in 2024"</span>) <span class="sc">+</span></span>
+<span id="cb52-103"><a href="#cb52-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size=</span><span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb52-104"><a href="#cb52-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb52-105"><a href="#cb52-105" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title       =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>, <span class="at">face=</span><span class="st">"bold"</span>, <span class="at">hjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb52-106"><a href="#cb52-106" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x      =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"black"</span>),</span>
+<span id="cb52-107"><a href="#cb52-107" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y      =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"black"</span>),</span>
+<span id="cb52-108"><a href="#cb52-108" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x     =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb52-109"><a href="#cb52-109" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y     =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb52-110"><a href="#cb52-110" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid       =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb52-111"><a href="#cb52-111" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position  =</span> <span class="st">"right"</span>,</span>
+<span id="cb52-112"><a href="#cb52-112" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.justification =</span> <span class="st">"center"</span></span>
+<span id="cb52-113"><a href="#cb52-113" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-114"><a href="#cb52-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-115"><a href="#cb52-115" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Stack cohort on top, heatmap below</span></span>
+<span id="cb52-116"><a href="#cb52-116" aria-hidden="true" tabindex="-1"></a>p_cohort <span class="sc">/</span> p_heat <span class="sc">+</span></span>
+<span id="cb52-117"><a href="#cb52-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">heights=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1075,7 +1080,7 @@ Plot Approach
 <p><u><strong>Technical Approach</strong></u></p>
 <p>Building on our earlier maps and cohort charts, I began by calculating the median age for each Planning Area, split by sex. I then reshaped the results into a “wide” format so each area has two columns, one for female median age and one for male, and ordered the Planning Areas by their overall median (average of the two sexes).</p>
 <p><u><strong>Visual Rationale</strong></u></p>
-<p>This dumbbell plot naturally extends our story from a national dependency load and regional heatmap to the local “midpoints” of each community. By placing female and male medians side by side, we immediately see both overall age trends and sex‑specific gaps: established estates cluster toward the upper end of the age scale, while newer towns remain lower. The consistent purple‑and‑green palette ties back to our earlier rationale in population pyramid. Ultimately, this chart highlights where generational midpoints and by extension, community needs vary most sharply between men and women, guiding targeted policy and infrastructure decisions at the Planning Area level.</p>
+<p>This dumbbell plot naturally extends our story from a national dependency load and regional heatmap to the local “midpoints” of each community. By placing female and male medians side by side, we immediately see both overall age trends and sex‑specific gaps: established estates cluster toward the upper end of the age scale, while newer towns remain lower. The consistent purple‑and‑green palette ties back to our earlier rationale in population pyramid. Both horizontal and veritcal grids are added to guide users to link Planning Areas and Median Age. However, it has been kept soft enough to not clutter the plot, especially since the dumbell itself has a line in between the male and female. Ultimately, this chart highlights where generational midpoints and by extension, community needs vary most sharply between men and women, guiding targeted policy and infrastructure decisions at the Planning Area level.</p>
 </div>
 </div>
 <div class="cell">
@@ -1107,35 +1112,34 @@ Plot Approach
 <span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Female, <span class="at">color =</span> <span class="st">"Female"</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
 <span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. Scale and legend</span></span>
 <span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">name   =</span> <span class="st">"Sex"</span>,</span>
-<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Male"</span> <span class="ot">=</span> <span class="st">"#00C2A1"</span>, <span class="st">"Female"</span> <span class="ot">=</span> <span class="st">"#9E00E3"</span>)</span>
-<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">55</span>, <span class="at">by =</span> <span class="dv">5</span>),</span>
-<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">55</span>, <span class="at">by =</span> <span class="dv">5</span>),</span>
-<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">55</span>),</span>
-<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Median Age by Sex and Planning Area, Singapore 2024"</span>,</span>
-<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Median Age (years)"</span>,</span>
-<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="cn">NULL</span>,</span>
-<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="cn">NULL</span></span>
-<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb53-42"><a href="#cb53-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb53-43"><a href="#cb53-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb53-44"><a href="#cb53-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title           =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb53-45"><a href="#cb53-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x          =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb53-46"><a href="#cb53-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x         =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb53-47"><a href="#cb53-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y          =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb53-48"><a href="#cb53-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x   =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">size =</span> <span class="fl">0.2</span>),</span>
-<span id="cb53-49"><a href="#cb53-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x   =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">size =</span> <span class="fl">0.2</span>),</span>
-<span id="cb53-50"><a href="#cb53-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y   =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">size =</span> <span class="fl">0.2</span>),</span>
-<span id="cb53-51"><a href="#cb53-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.y   =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">size =</span> <span class="fl">0.2</span>),</span>
-<span id="cb53-52"><a href="#cb53-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position      =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb53-53"><a href="#cb53-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.justification =</span> <span class="st">"top"</span>,</span>
-<span id="cb53-54"><a href="#cb53-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text          =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>)</span>
-<span id="cb53-55"><a href="#cb53-55" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Male"</span> <span class="ot">=</span> <span class="st">"#00C2A1"</span>, <span class="st">"Female"</span> <span class="ot">=</span> <span class="st">"#9E00E3"</span>)</span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">55</span>, <span class="at">by =</span> <span class="dv">5</span>),</span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">55</span>, <span class="at">by =</span> <span class="dv">5</span>),</span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">55</span>),</span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Singapore Median Age by Sex and Planning Area in 2024"</span>,</span>
+<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Median Age (years)"</span>,</span>
+<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="cn">NULL</span>,</span>
+<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="cn">NULL</span></span>
+<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb53-42"><a href="#cb53-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb53-43"><a href="#cb53-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title           =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb53-44"><a href="#cb53-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x          =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb53-45"><a href="#cb53-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x         =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb53-46"><a href="#cb53-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y          =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb53-47"><a href="#cb53-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x   =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">size =</span> <span class="fl">0.2</span>),</span>
+<span id="cb53-48"><a href="#cb53-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x   =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">size =</span> <span class="fl">0.2</span>),</span>
+<span id="cb53-49"><a href="#cb53-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y   =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">size =</span> <span class="fl">0.2</span>),</span>
+<span id="cb53-50"><a href="#cb53-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.y   =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">size =</span> <span class="fl">0.2</span>),</span>
+<span id="cb53-51"><a href="#cb53-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position      =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb53-52"><a href="#cb53-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.justification =</span> <span class="st">"top"</span>,</span>
+<span id="cb53-53"><a href="#cb53-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text          =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>)</span>
+<span id="cb53-54"><a href="#cb53-54" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>

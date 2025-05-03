@@ -34,7 +34,7 @@ body li {
 
 # Foreword
 
-In this take‑home exercise, I’m assuming the role of graphical editor at a local online media outlet that publishes daily across digital platforms. I’ll employ a range of charts to illuminate Singapore’s 2024 demographic landscape, guiding you through my data‑cleaning process and my “Plot Approach” notes for each visualization. More than simply presenting figures, **my overarching aim is to shape these charts and their accompanying narratives into a seamless, story‑driven article**, just as you would see in a professional feature where every plot advances the data story and keeps readers engaged.
+In this take‑home exercise, I’m assuming the role of graphical editor at a local online media outlet that publishes daily across digital platforms. I’ll employ a range of charts to illuminate Singapore’s 2024 demographic landscape, guiding you through my data‑cleaning process and my “Plot Approach” notes for each visualization. More than simply presenting figures, **my overarching aim is to shape these charts and their accompanying narratives into a seamless, story‑driven article**, just as you would see in a professional feature where every plot advances the data story and keeps readers engaged, all while ensuring honest, accurate and aesthetic plots. 
 
 Use below links to skip ahead.
 
@@ -48,7 +48,8 @@ Use below links to skip ahead.
 -   [Article - Of Roots and Horizons: Singapore’s Generational Odyssey in 2024](#article)
 :::
 
-# 1. Getting Started
+
+# 1. Getting Started 
 
 Let's first import packages and data for this article.
 
@@ -76,7 +77,6 @@ sgdemo2024 <- read_csv(("data/respopagesex2024.csv"), show_col_types = FALSE)
 ```{r}
 glimpse(sgdemo2024)
 ```
-
 # 2. Data Cleaning and Quality Checks {#datacleanqc}
 
 Before we proceed with plotting, we will first need to ensure data is clean to ensure accurate plots.
@@ -363,6 +363,8 @@ sgdemo2024 %>%
 
 <hr/>
 # Of Roots and Horizons: Singapore’s Generational Odyssey in 2024 {#article}
+<img src="sgfamily.jpg" alt="Alt text for accessibility"
+     style="display:block; margin:0 auto; width:100%;" />
 
 In the heart of Singapore, a quiet transformation is unfolding. Across our island, fewer children are filling playgrounds even as more elders fill community centres, a reflection of smaller birth cohorts and longer lifespans. The signs are everywhere, from merged primary schools making way for new community spaces to classrooms with dwindling enrollments. For many families, the rhythm of daily life now balances the laughter of young ones with the care of ageing parents. Neighbourhoods once bustling with young professionals now host their former residents in well‑worn flats, while newly built towns welcome bright‑eyed families beginning their Singapore story.
 
@@ -373,11 +375,11 @@ In the heart of Singapore, a quiet transformation is unfolding. Across our islan
 
 [**Technical Approach**]{.underline}
 
-For enhanced clarity, I’ve grouped the X‑axis into five‑year age bands and scaled the Y‑axis to population figures in thousands, keeping the chart readable despite its size. I have also calculated the percentages of each age group's gender by percentage of the total population to give a better understanding of the size.
+For enhanced clarity, I’ve grouped the X‑axis into five‑year age bands and scaled the Y‑axis to population figures in thousands, keeping the chart readable despite its size. I have also calculated the percentages of each age group's gender by percentage of the total population to give a better understanding of the size. 
 
 [**Visual Rationale**]{.underline}
 
-I also drew inspiration from an [article](https://www.datawrapper.de/blog/gendercolor) on moving beyond blue‑for‑boys and pink‑for‑girls: instead, Telegraph UK uses purple and green, echoing the UK’s “Votes for Women” campaign and offering superior contrast. By rejecting these stereotypes, we open the door to **more inclusive storytelling** and **richer understanding**, ensuring that our visual language **empowers individuals** rather than boxes them into outdated expectations.
+I also drew inspiration from an [article](https://www.datawrapper.de/blog/gendercolor) on moving beyond blue‑for‑boys and pink‑for‑girls: instead, Telegraph UK uses purple and green, echoing the UK’s “Votes for Women” campaign and offering superior contrast. By rejecting these stereotypes, we open the door to **more inclusive storytelling** and **richer understanding**, ensuring that our visual language **empowers individuals** rather than boxes them into outdated expectations. I also removed the horizontal grids to avoid the chart looking cluttered and because it does not add any value.
 :::
 
 ```{r}
@@ -449,7 +451,7 @@ ggplot(pyr_df, aes(x = PopSignK, y = AgeGroup, fill = Sex)) +
   geom_vline(xintercept = 0, color = "grey50", size = 0.3) +
   coord_cartesian(clip = "off") +
   labs(
-    title    = "Singapore Population by Age Group, 2024",
+    title    = "Singapore Population by Age Group in 2024",
     subtitle = subtitle_text,
     x        = "Population (’000)",
     y        = "Age Group",
@@ -460,8 +462,10 @@ ggplot(pyr_df, aes(x = PopSignK, y = AgeGroup, fill = Sex)) +
     panel.border       = element_rect(color = "black", fill = NA, size = 0.2),
     plot.title         = element_text(size = 18, face = "bold", hjust = 0.5),
     plot.subtitle      = element_text(size = 12, hjust = 0.5, margin = margin(b = 10)),
-    axis.text.y        = element_text(size = 10, color = "black"),
-    axis.text.x        = element_text(size = 10, color = "black"),
+    axis.text.y        = element_text(size = 11, color = "black"),
+    axis.text.x        = element_text(size = 11, color = "black"),
+    axis.title.x       = element_text(face= "bold"),
+    axis.title.y       = element_text(face= "bold"), 
     panel.grid.major.y = element_blank(),
     panel.grid.minor   = element_blank(),
     legend.position    = "bottom",
@@ -485,7 +489,9 @@ Using the patchwork package, I assembled a composite figure that combines our na
 
 [**Visual Rationale**]{.underline}
 
-Building on the insights from our population pyramid, I wanted to drill down further **granularity** into the so‑called “Sandwich Generation,” whose members juggle childcare and eldercare. The dependency‑cohort chart quantifies exactly how many young and elderly dependents each 20–64 age bracket supports, while the regional heatmap reveals where those age groups cluster regionally. Recalling Lesson 2: Practical Guides for Using Colour in Charts, I’ve kept the dependency‑cohort bars in the same soft colour palette to maintain visual harmony and avoid overloading the viewer. Together, these visuals highlight both the scale of intergenerational care pressures and the specific districts where urban planners and policymakers must prioritise childcare facilities, eldercare services, and family‑friendly infrastructure.
+Building on the insights from our population pyramid, I wanted to drill down further **granularity** into the so‑called “Sandwich Generation,” whose members juggle childcare and eldercare. The dependency‑cohort chart quantifies exactly how many young and elderly dependents each 20–64 age bracket supports. I removed the grids for a clean look as I only have 3 categories and labels are clear. The main focus are the bar lengths to and adding grid-lines would draw attention away from an already simple bar graph. Recalling Lesson 2: Practical Guides for Using Colour in Charts, I’ve kept the dependency‑cohort bars in the same soft colour palette to maintain visual harmony and avoid overloading the viewer. 
+
+The regional heatmap reveals where those age groups cluster regionally. Together, these visuals highlight both the scale of intergenerational care pressures and the specific districts where urban planners and policymakers must prioritise childcare facilities, eldercare services, and family‑friendly infrastructure.
 :::
 
 ```{r}
@@ -552,7 +558,7 @@ p_cohort <- ggplot(cohort_df, aes(TotalK, CohortLabel)) +
     labels=function(x)x
   ) +
   labs(
-    title    = "Population by Dependency Category, Singapore 2024",
+    title    = "Singapore Population by Dependency Category in 2024",
     subtitle = paste0("Total population: ", comma(grand_total)),
     x        = NULL, y = NULL
   ) +
@@ -562,6 +568,7 @@ p_cohort <- ggplot(cohort_df, aes(TotalK, CohortLabel)) +
     plot.subtitle     = element_text(size=12, hjust=0.5, margin=margin(b=10)),
     axis.text.y       = element_markdown(size=12, color="black"),
     axis.text.x       = element_text(size=12, color="black"),
+    axis.title.x       = element_text(face= "bold"),
     panel.grid        = element_blank(),
     legend.position   = "none"
   )
@@ -593,12 +600,12 @@ tile_df <- sgdemo2024 %>%
 p_heat <- ggplot(tile_df, aes(Region, AgeBand, fill=Pop)) +
   geom_tile(color="white") +
   scale_fill_viridis_c(name="Population", option="C", labels=comma) +
-  labs(title = "Heatmap of Age Population by Region") +
+  labs(title = "Singapore Heatmap of Age Population by Region in 2024") +
   theme_minimal(base_size=14) +
   theme(
     plot.title       = element_text(size=16, face="bold", hjust=0.5),
-    axis.text.x      = element_text(face="bold", size=12, color="black"),
-    axis.text.y      = element_text(size=12, color="black"),
+    axis.text.x      = element_text(color="black"),
+    axis.text.y      = element_text(color="black"),
     axis.title.x     = element_blank(),
     axis.title.y     = element_blank(),
     panel.grid       = element_blank(),
@@ -625,7 +632,7 @@ Building on our earlier maps and cohort charts, I began by calculating the media
 
 [**Visual Rationale**]{.underline}
 
-This dumbbell plot naturally extends our story from a national dependency load and regional heatmap to the local “midpoints” of each community. By placing female and male medians side by side, we immediately see both overall age trends and sex‑specific gaps: established estates cluster toward the upper end of the age scale, while newer towns remain lower. The consistent purple‑and‑green palette ties back to our earlier rationale in population pyramid. Ultimately, this chart highlights where generational midpoints and by extension, community needs vary most sharply between men and women, guiding targeted policy and infrastructure decisions at the Planning Area level.
+This dumbbell plot naturally extends our story from a national dependency load and regional heatmap to the local “midpoints” of each community. By placing female and male medians side by side, we immediately see both overall age trends and sex‑specific gaps: established estates cluster toward the upper end of the age scale, while newer towns remain lower. The consistent purple‑and‑green palette ties back to our earlier rationale in population pyramid. Both horizontal and veritcal grids are added to guide users to link Planning Areas and Median Age. However, it has been kept soft enough to not clutter the plot, especially since the dumbell itself has a line in between the male and female. Ultimately, this chart highlights where generational midpoints and by extension, community needs vary most sharply between men and women, guiding targeted policy and infrastructure decisions at the Planning Area level.
 :::
 
 
@@ -659,7 +666,6 @@ ggplot(med_age, aes(y = PA)) +
   geom_point(aes(x = Female, color = "Female"), size = 4) +
   # 3. Scale and legend
   scale_color_manual(
-    name   = "Sex",
     values = c("Male" = "#00C2A1", "Female" = "#9E00E3")
   ) +
   scale_x_continuous(
@@ -669,7 +675,7 @@ ggplot(med_age, aes(y = PA)) +
     expand = c(0, 0)
   ) +
   labs(
-    title = "Median Age by Sex and Planning Area, Singapore 2024",
+    title = "Singapore Median Age by Sex and Planning Area in 2024",
     x     = "Median Age (years)",
     y     = NULL,
     color = NULL
@@ -677,9 +683,9 @@ ggplot(med_age, aes(y = PA)) +
   theme_classic(base_size = 14) +
   theme(
     plot.title           = element_text(hjust = 0.5, face = "bold"),
-    axis.text.x          = element_text(color = "black", size = 14),
+    axis.text.x          = element_text(color = "black", size = 11),
     axis.title.x         = element_text(size = 14),
-    axis.text.y          = element_text(color = "black", size = 12),
+    axis.text.y          = element_text(color = "black", size = 11),
     panel.grid.major.x   = element_line(color = "grey90", size = 0.2),
     panel.grid.minor.x   = element_line(color = "grey90", size = 0.2),
     panel.grid.major.y   = element_line(color = "grey90", size = 0.2),
