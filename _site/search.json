@@ -690,20 +690,20 @@
     "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#animating-the-plot",
     "title": "Hands-on Exercise 4A",
     "section": "4.1 Animating the Plot",
-    "text": "4.1 Animating the Plot\n\nlibrary(readr)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(ggridges)\nlibrary(gganimate)\n\n# Import your data\nexam &lt;- read_csv(\"data/Exam_data.csv\")\n\n# Make sure CLASS is a factor (so gganimate can treat each level as a state)\nexam &lt;- exam %&gt;%\n  mutate(CLASS = factor(CLASS))\n\n# Build the animated ridgeline plot\np &lt;- ggplot(exam, \n            aes(x = ENGLISH, \n                y = CLASS, \n                fill = CLASS, \n                group = CLASS)) +\n  geom_density_ridges(\n    scale = 3, \n    alpha = 0.6\n  ) +\n  transition_states(\n    CLASS, \n    transition_length = 2, \n    state_length = 1\n  ) +\n  labs(\n    title = \"Class: {closest_state}\",\n    x = \"English Score\", \n    y = NULL\n  ) +\n  theme_ridges() +\n  enter_fade() + \n  exit_fade()\n\n# Render the animation (adjust nframes and fps as desired)\nanimate(p, nframes = 80, fps = 10)"
+    "text": "4.1 Animating the Plot\n\n\nShow code\nlibrary(readr)\nlibrary(dplyr)\nlibrary(gganimate)\n\n# Import your data\nexam &lt;- read_csv(\"data/Exam_data.csv\")\n\n# Make sure CLASS is a factor (so gganimate can treat each level as a state)\nexam &lt;- exam %&gt;%\n  mutate(CLASS = factor(CLASS))\n\n# Build the animated ridgeline plot\np &lt;- ggplot(exam, \n            aes(x = ENGLISH, \n                y = CLASS, \n                fill = CLASS, \n                group = CLASS)) +\n  geom_density_ridges(\n    scale = 3, \n    alpha = 0.6\n  ) +\n  transition_states(\n    CLASS, \n    transition_length = 2, \n    state_length = 1\n  ) +\n  labs(\n    title = \"Class: {closest_state}\",\n    x = \"English Score\", \n    y = NULL\n  ) +\n  theme_ridges() +\n  enter_fade() + \n  exit_fade()\n\n# Render the animation (adjust nframes and fps as desired)\nanimate(p, nframes = 80, fps = 10)"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#stacking-ridges",
     "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#stacking-ridges",
     "title": "Hands-on Exercise 4A",
     "section": "4.2 Stacking ridges",
-    "text": "4.2 Stacking ridges\n\nexam_long &lt;- exam %&gt;%\n  pivot_longer(c(ENGLISH, MATHS), names_to = \"Subject\", values_to = \"Score\")\n\nggplot(exam_long, aes(x = Score, y = Subject, fill = Subject)) +\n  geom_density_ridges(alpha = 0.7, scale = 2) +\n  theme_ridges() +\n  facet_wrap(~CLASS, ncol = 1, scales = \"free_y\")"
+    "text": "4.2 Stacking ridges\n\n\nShow code\nexam_long &lt;- exam %&gt;%\n  pivot_longer(c(ENGLISH, MATHS), names_to = \"Subject\", values_to = \"Score\")\n\nggplot(exam_long, aes(x = Score, y = Subject, fill = Subject)) +\n  geom_density_ridges(alpha = 0.7, scale = 2) +\n  theme_ridges() +\n  facet_wrap(~CLASS, ncol = 1, scales = \"free_y\")"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#half-violin-boxplot-dotplot",
     "href": "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04a.html#half-violin-boxplot-dotplot",
     "title": "Hands-on Exercise 4A",
     "section": "4.3 Half-Violin, Boxplot + Dotplot?",
-    "text": "4.3 Half-Violin, Boxplot + Dotplot?\n\nggplot(exam, aes(x = CLASS, y = ENGLISH)) +\n  stat_halfeye(\n    aes(fill = CLASS),\n    side         = \"right\",     # use full \"right\"\n    .width       = c(.5, .8),   # 50% & 80% intervals\n    justification = 0.3\n  ) +\n  geom_boxplot(width = 0.15, outlier.shape = NA) +\n  geom_jitter(width = 0.1, size = 1, alpha = 0.6) +\n  coord_flip() +\n  theme_minimal()"
+    "text": "4.3 Half-Violin, Boxplot + Dotplot?\n\n\nShow code\nggplot(exam, aes(x = CLASS, y = ENGLISH)) +\n  stat_halfeye(\n    aes(fill = CLASS),\n    side         = \"right\",     # use full \"right\"\n    .width       = c(.5, .8),   # 50% & 80% intervals\n    justification = 0.3\n  ) +\n  geom_boxplot(width = 0.15, outlier.shape = NA) +\n  geom_jitter(width = 0.1, size = 1, alpha = 0.6) +\n  coord_flip() +\n  theme_minimal()"
   }
 ]

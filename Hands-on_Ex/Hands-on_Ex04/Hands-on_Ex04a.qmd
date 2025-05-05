@@ -463,11 +463,11 @@ ggplot(exam,
 ```{r}
 #| fig-height: 8
 #| fig-width: 12
+#| code-fold: true
+#| code-summary: "Show code"
 
 library(readr)
 library(dplyr)
-library(ggplot2)
-library(ggridges)
 library(gganimate)
 
 # Import your data
@@ -506,6 +506,8 @@ animate(p, nframes = 80, fps = 10)
 ```
 ## 4.2 Stacking ridges
 ```{r}
+#| code-fold: true
+#| code-summary: "Show code"
 #| fig-height: 8
 #| fig-width: 12
 exam_long <- exam %>%
@@ -521,6 +523,8 @@ ggplot(exam_long, aes(x = Score, y = Subject, fill = Subject)) +
 ```{r}
 #| fig-height: 8
 #| fig-width: 12
+#| code-fold: true
+#| code-summary: "Show code"
 ggplot(exam, aes(x = CLASS, y = ENGLISH)) +
   stat_halfeye(
     aes(fill = CLASS),
