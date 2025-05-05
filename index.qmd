@@ -3,7 +3,7 @@ title: "Visual Analytics and Applications"
 
 listing:
   type: grid
-  max-items: 3
+  max-items: 6
   contents:
     - "Hands-on_Ex/*/*.qmd"
     - "Take-home_Ex/*/*.qmd"
