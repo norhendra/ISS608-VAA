@@ -1,5 +1,5 @@
 ---
-title: "Take-home Exercise 1"
+title: "Take-home Exercise 1: Phase 1"
 author: "Nor Hendra"
 date: "30 April 2025"
 date-modified: "last-modified"
@@ -12,9 +12,9 @@ execute:
   eval: true
   echo: true
   warning: false
-
 ---
 
+```{=html}
 <style>
 p {
   text-align: justify;
@@ -31,10 +31,11 @@ body li {
   color: #000 !important;
 }
 </style>
+```
 
 # Foreword
 
-In this take‑home exercise, I’m assuming the role of graphical editor at a local online media outlet that publishes daily across digital platforms. I’ll employ a range of charts to illuminate Singapore’s 2024 demographic landscape, guiding you through my data‑cleaning process and my “Plot Approach” notes for each visualization. More than simply presenting figures, **my overarching aim is to shape these charts and their accompanying narratives into a seamless, story‑driven article**, just as you would see in a professional feature where every plot advances the data story and keeps readers engaged, all while ensuring honest, accurate and aesthetic plots. 
+In this take‑home exercise, I’m assuming the role of graphical editor at a local online media outlet that publishes daily across digital platforms. I’ll employ a range of charts to illuminate Singapore’s 2024 demographic landscape, guiding you through my data‑cleaning process and my “Plot Approach” notes for each visualization. More than simply presenting figures, **my overarching aim is to shape these charts and their accompanying narratives into a seamless, story‑driven article**, just as you would see in a professional feature where every plot advances the data story and keeps readers engaged, all while ensuring honest, accurate and aesthetic plots.
 
 Use below links to skip ahead.
 
@@ -48,8 +49,7 @@ Use below links to skip ahead.
 -   [Article - Of Roots and Horizons: Singapore’s Generational Odyssey in 2024](#article)
 :::
 
-
-# 1. Getting Started 
+# 1. Getting Started
 
 Let's first import packages and data for this article.
 
@@ -77,6 +77,7 @@ sgdemo2024 <- read_csv(("data/respopagesex2024.csv"), show_col_types = FALSE)
 ```{r}
 glimpse(sgdemo2024)
 ```
+
 # 2. Data Cleaning and Quality Checks {#datacleanqc}
 
 Before we proceed with plotting, we will first need to ensure data is clean to ensure accurate plots.
@@ -360,11 +361,14 @@ sgdemo2024 %>%
   slice_sample(prop = 0.01)
 ```
 
-
 <hr/>
+
 # Of Roots and Horizons: Singapore’s Generational Odyssey in 2024 {#article}
+
+```{=html}
 <img src="sgfamily.jpg" alt="Alt text for accessibility"
      style="display:block; margin:0 auto; width:100%;" />
+```
 
 In the heart of Singapore, a quiet transformation is unfolding. Across our island, fewer children are filling playgrounds even as more elders fill community centres, a reflection of smaller birth cohorts and longer lifespans. The signs are everywhere, from merged primary schools making way for new community spaces to classrooms with dwindling enrollments. For many families, the rhythm of daily life now balances the laughter of young ones with the care of ageing parents. Neighbourhoods once bustling with young professionals now host their former residents in well‑worn flats, while newly built towns welcome bright‑eyed families beginning their Singapore story.
 
@@ -375,7 +379,7 @@ In the heart of Singapore, a quiet transformation is unfolding. Across our islan
 
 [**Technical Approach**]{.underline}
 
-For enhanced clarity, I’ve grouped the X‑axis into five‑year age bands and scaled the Y‑axis to population figures in thousands, keeping the chart readable despite its size. I have also calculated the percentages of each age group's gender by percentage of the total population to give a better understanding of the size. 
+For enhanced clarity, I’ve grouped the X‑axis into five‑year age bands and scaled the Y‑axis to population figures in thousands, keeping the chart readable despite its size. I have also calculated the percentages of each age group's gender by percentage of the total population to give a better understanding of the size.
 
 [**Visual Rationale**]{.underline}
 
@@ -486,10 +490,9 @@ Let’s turn our attention to the prime working‑age cohort, those between 20 a
 
 Using the patchwork package, I assembled a composite figure that combines our national dependency‑cohort bar chart with a regional age‑by‑region heatmap. First, I mapped each Planning Area to its broader region (per the government’s official classification [here](https://www.newlaunchesreview.com/regions-of-singapore/)), which allowed me to group and districts. With those region labels in place, I plotted the heatmap to visualise age‑group concentrations across the island. Defining regions upfront not only streamlined the heatmap’s construction but also sets us up for cleaner, more flexible plotting in subsequent analyses.
 
-
 [**Visual Rationale**]{.underline}
 
-Building on the insights from our population pyramid, I wanted to drill down further **granularity** into the so‑called “Sandwich Generation,” whose members juggle childcare and eldercare. The dependency‑cohort chart quantifies exactly how many young and elderly dependents each 20–64 age bracket supports. I removed the grids for a clean look as I only have 3 categories and labels are clear. The main focus are the bar lengths to and adding grid-lines would draw attention away from an already simple bar graph. Recalling Lesson 2: Practical Guides for Using Colour in Charts, I’ve kept the dependency‑cohort bars in the same soft colour palette to maintain visual harmony and avoid overloading the viewer. 
+Building on the insights from our population pyramid, I wanted to drill down further **granularity** into the so‑called “Sandwich Generation,” whose members juggle childcare and eldercare. The dependency‑cohort chart quantifies exactly how many young and elderly dependents each 20–64 age bracket supports. I removed the grids for a clean look as I only have 3 categories and labels are clear. The main focus are the bar lengths to and adding grid-lines would draw attention away from an already simple bar graph. Recalling Lesson 2: Practical Guides for Using Colour in Charts, I’ve kept the dependency‑cohort bars in the same soft colour palette to maintain visual harmony and avoid overloading the viewer.
 
 The regional heatmap reveals where those age groups cluster regionally. Together, these visuals highlight both the scale of intergenerational care pressures and the specific districts where urban planners and policymakers must prioritise childcare facilities, eldercare services, and family‑friendly infrastructure.
 :::
@@ -618,11 +621,12 @@ p_cohort / p_heat +
   plot_layout(heights=c(1,1))
 ```
 
-Caught between caring for aging parents and raising children, Singapore’s “sandwich generation” faces mounting pressure as 37 dependents fall on every 100 working‑age adults. With 63.1% of residents aged 20–64, these mid‑career adults must support 18.9% young dependents (ages 0–19) and 18.0% elderly dependents (65+), straining both family resources and national social services. 
+Caught between caring for aging parents and raising children, Singapore’s “sandwich generation” faces mounting pressure as 37 dependents fall on every 100 working‑age adults. With 63.1% of residents aged 20–64, these mid‑career adults must support 18.9% young dependents (ages 0–19) and 18.0% elderly dependents (65+), straining both family resources and national social services.
 
 Our regional heatmap further reveals where this tension is most acute: the Central and North‑East districts not only concentrate the largest cohorts of prime‑age workers (35–44) but also show darker shades in the early senior bands (65–74), indicating dual hotspots of childcare and eldercare demand. In contrast, the North region’s lighter tones across all age bands point to relatively lower service needs there. Addressing the sandwich generation’s unique challenges will require integrated policies by expanding affordable childcare in family‑dense precincts, scaling up eldercare support in senior‑heavy districts, and fostering workplace flexibility to ensure that today’s caregivers are themselves cared for.
 
 ## Generational Midpoints by Planning Area: Visualising Median Ages
+
 ::: callout-note
 ## Plot Approach
 
@@ -634,7 +638,6 @@ Building on our earlier maps and cohort charts, I began by calculating the media
 
 This dumbbell plot naturally extends our story from a national dependency load and regional heatmap to the local “midpoints” of each community. By placing female and male medians side by side, we immediately see both overall age trends and sex‑specific gaps: established estates cluster toward the upper end of the age scale, while newer towns remain lower. The consistent purple‑and‑green palette ties back to our earlier rationale in population pyramid. Both horizontal and veritcal grids are added to guide users to link Planning Areas and Median Age. However, it has been kept soft enough to not clutter the plot, especially since the dumbell itself has a line in between the male and female. Ultimately, this chart highlights where generational midpoints and by extension, community needs vary most sharply between men and women, guiding targeted policy and infrastructure decisions at the Planning Area level.
 :::
-
 
 ```{r}
 #| fig-width: 12
@@ -699,5 +702,5 @@ ggplot(med_age, aes(y = PA)) +
 Building on our dependency‑cohort and regional heatmap analyses, examining the median age across Singapore’s Planning Areas reveals where communities skew younger or older at their cores. Older estates such as Queenstown and Bukit Merah register median ages in the mid 40s, reflecting long‑established neighbourhoods and a higher share of empty‑nesters. In contrast, newer towns like Punggol, Sengkang and Tengah show median ages in the low 30s, driven by young families and recent housing launches. Heartland hubs such as Jurong East and Tampines sit in between, with medians around 36–38 years, capturing both working professionals and a growing elder segment. These median‑age patterns not only mirror the “Sandwich Generation” pressures we identified where mid‑career adults balance dependents on either side of the age spectrum, but also pinpoint where planners must tailor services: youth‑oriented amenities in family‑heavy districts and age‑friendly infrastructure in more mature estates.
 
 ## Final Words - Bridging Generations: Tailoring Singapore's Communities for All Ages
-Together, our analysis paints a comprehensive portrait of Singapore’s evolving demographic landscape: declining birth rates have narrowed the population’s base while increased longevity has expanded its apex, leaving 37 dependents, 20 young and 17 elderly for every 100 working‑age adults. Regionally, Central and North‑East districts emerge as dual hotspots of both prime‑age workers and burgeoning senior cohorts, intensifying the “sandwich generation” pressures on mid‑career adults who juggle childcare and eldercare. Across Planning Areas, median ages range from the low 30s in growth towns like Punggol and Tengah to the mid‑40s in mature estates such as Queenstown and Bukit Merah, with notable sex‑specific gaps highlighted in our dumbbell plot. These patterns underscore the urgency of place‑based strategies by expanding affordable childcare in youthful precincts, scaling up geriatric care in senior‑dense districts, and tailoring urban infrastructure to each community’s generational midpoint. By aligning services with these demographic realities, Singapore can ensure that every cohort, young, working‑age and elderly receives the support it needs for a resilient, inclusive future.
 
+Together, our analysis paints a comprehensive portrait of Singapore’s evolving demographic landscape: declining birth rates have narrowed the population’s base while increased longevity has expanded its apex, leaving 37 dependents, 20 young and 17 elderly for every 100 working‑age adults. Regionally, Central and North‑East districts emerge as dual hotspots of both prime‑age workers and burgeoning senior cohorts, intensifying the “sandwich generation” pressures on mid‑career adults who juggle childcare and eldercare. Across Planning Areas, median ages range from the low 30s in growth towns like Punggol and Tengah to the mid‑40s in mature estates such as Queenstown and Bukit Merah, with notable sex‑specific gaps highlighted in our dumbbell plot. These patterns underscore the urgency of place‑based strategies by expanding affordable childcare in youthful precincts, scaling up geriatric care in senior‑dense districts, and tailoring urban infrastructure to each community’s generational midpoint. By aligning services with these demographic realities, Singapore can ensure that every cohort, young, working‑age and elderly receives the support it needs for a resilient, inclusive future.
