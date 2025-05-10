@@ -912,7 +912,6 @@ Wow, it already looks much better, cleaner and compact! However, just one more m
 The increment units are 100,000. Let's switch it to 10,000 instead. This allows for finer granularity in mid-range areas as there are some that are clearly a bunch below 100,000. This will also allow for easier side-by-side comparison and better visual balance. Denser grid lines creates a subtler "graph paper" effect that can help the eye track horizontally without overwhelming the chart. Hence, I am careful not to make the lines thick. Below code chunk will do exactly that by adding `breaks` and `limits` to our `scale_y_continous`. I have made the limits to `290000 *1.005` to allow for some breathing room as Tampines has more than 280,000 people. The 1.005 will make sure that the font 290 does not get clipped off. 
 
 ```{r}
-
 #| eval: false 
 #| code-fold: false 
 
