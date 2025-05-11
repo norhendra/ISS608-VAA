@@ -466,7 +466,7 @@ sgdemo2024 <- sgdemo2024 %>%
 
 ```{r}
 
-# Define age bins
+
 age_order <- c(
   "0 to 4", "5 to 9",  "10 to 14", "15 to 19", "20 to 24", "25 to 29",
   "30 to 34","35 to 39","40 to 44", "45 to 49", "50 to 54", "55 to 59",
@@ -544,7 +544,7 @@ scale_y_continuous(
 
 ```{r}
 
-# Define age bins
+
 age_order <- c(
   "0 to 4", "5 to 9",  "10 to 14", "15 to 19", "20 to 24", "25 to 29",
   "30 to 34","35 to 39","40 to 44", "45 to 49", "50 to 54", "55 to 59",
@@ -552,7 +552,7 @@ age_order <- c(
   "90+"
 )
 
-# Apply binning and label cleanup
+
 sgdemo2024 <- sgdemo2024 %>%
   mutate(
     AG = cut(Age, breaks = c(seq(0, 90, by = 5), Inf), right = FALSE, labels = age_order),
@@ -562,19 +562,19 @@ sgdemo2024 <- sgdemo2024 %>%
     AG = factor(AG, levels = gsub("_to_", "-", gsub("_and_over", "+", age_order)))
   )
 
-# Aggregate and prepare data
+
 pyramid_data <- sgdemo2024 %>%
   group_by(AG, Sex) %>%
   summarise(Pop = sum(Pop), .groups = "drop") %>%
   mutate(Pop = if_else(Sex == "Males", -Pop, Pop))
 
-# Determine max for 20k axis break
+
 max_pop <- ceiling(max(abs(pyramid_data$Pop)) / 20000) * 20000
 
-# Force max_pop to show up to 180k at least
+
 max_pop <- max(180000, ceiling(max(abs(pyramid_data$Pop)) / 20000) * 20000)
 
-ggplot(pyramid_data, aes(x = AG, y = Pop / 1000, fill = Sex)) +  # Convert to thousands
+ggplot(pyramid_data, aes(x = AG, y = Pop / 1000, fill = Sex)) +  
   geom_col(width = 0.8) +
   coord_flip() +
 scale_y_continuous(
@@ -614,9 +614,9 @@ scale_fill_manual(values = c(Males = "skyblue", Females = "salmon"))
 #| eval: false
 #| code-fold: false
 labs(
-  title    = "Population Pyramid (2024)",               # ← your main header
+  title    = "Population Pyramid (2024)",            
   subtitle = paste0("Total population: ", comma(total_pop)),
-                                                        # ← sub-header showing the formatted total
+                                                        
   x        = "Age Group",
   y        = "Population (in thousands)"
 )
@@ -687,12 +687,11 @@ ggplot(pct_data, aes(x = AG, y = Pop/1000, fill = Sex)) +
     ),
     size = 3, color = "gray20"
   ) +
-  # clamp exactly at +/-180 and allow labels outside
   scale_y_continuous(
     limits = c(-180, 180),
     breaks = seq(-180, 180, by = 20),
     labels = abs,
-    expand = c(0, 0.02),    # small headroom so 180 isn't cut off
+    expand = c(0, 0.02),    
     oob = scales::squish
   ) +
   coord_flip(clip = "off") +
@@ -705,15 +704,11 @@ ggplot(pct_data, aes(x = AG, y = Pop/1000, fill = Sex)) +
   ) +
   theme_minimal() +
   theme(
-    # remove horizontal grid (behind bars), keep vertical grid for reference
     panel.grid.major.y = element_blank(),
     panel.grid.major.x = element_line(color = "gray90", size=0.3),
     panel.grid.minor.x = element_line(color = "gray90",size=0.3),
-
-    # move legend to right
     legend.position    = "right",
     legend.title       = element_blank(),
-    # center title + subtitle
     plot.title         = element_text(hjust = 0.5, face= "bold"),
     plot.subtitle      = element_text(hjust = 0.5)
   )
@@ -732,10 +727,10 @@ Below is the bar chart plotted by the same [classmate](https://iss608-vaa.netlif
 ```{r}
 #| fig-height: 10
 #| fig-width: 12
-# 1. Filter out any NA or zero rows
+
 filtered_data <- sgdemo2024[!is.na(sgdemo2024$Pop) & sgdemo2024$Pop > 0, ]
 
-# 2. Draw the bar chart
+
 ggplot(data = filtered_data, aes(x = reorder(PA, Pop), y = Pop)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +
@@ -784,7 +779,7 @@ Below code chunk will be added before the ggplot to arrange them in descending o
 pa_totals <- sgdemo2024 %>%
   group_by(PA) %>%
   summarise(Pop = sum(Pop, na.rm = TRUE)) %>%
-  filter(Pop > 0) %>%            # drop zero/NA if you still want
+  filter(Pop > 0) %>%            
   arrange(desc(Pop))             # largest → smallest
 pa_totals$PA <- factor(pa_totals$PA, levels = rev(pa_totals$PA))
 ```
@@ -794,15 +789,15 @@ pa_totals$PA <- factor(pa_totals$PA, levels = rev(pa_totals$PA))
 ```{r}
 #| fig-height: 10
 #| fig-width: 12
-# 1. Sum up Pop for each PA
+
 pa_totals <- sgdemo2024 %>%
   group_by(PA) %>%
   summarise(Pop = sum(Pop, na.rm = TRUE)) %>%
-  filter(Pop > 0) %>%            # drop zero/NA if you still want
+  filter(Pop > 0) %>%          
   arrange(desc(Pop))             # largest → smallest
 pa_totals$PA <- factor(pa_totals$PA, levels = rev(pa_totals$PA))
 
-# 3. Plot
+
 ggplot(pa_totals, aes(x = PA, y = Pop)) +
   geom_col(fill = "steelblue") +
   coord_flip() +
@@ -830,14 +825,9 @@ Because the bars themselves run themselves run horizontally, adding grid lines i
 ```{r}
 #| eval: false
 #| code-fold: false
-# In the scale of your discrete (PA) axis, you allow just a tiny bit of padding:
-scale_x_discrete(expand = c(0, 0.02))
+panel.grid.major.y = element_blank(),
+panel.grid.minor.y = element_blank(),
 
-axis.text.y = element_text(
-  size   = 15,
-  hjust  = 1,
-  margin = margin(r = 2)
-)
 ```
 
 In the original plot, the planning-area labels sit far from the bar and the horizontal bar lines extends on the left-hand side of the bars. When labels are far from the bars they describe, readers must track back and forth across the white space, increasing cognitive load. Pulling the text flush to the bar edge establishes an immediate, one-to-one visual link between name and value. Below code chunk aims to achieve that by keeping the layout tight ensuring nothing feels floating in the margin and the plot frame remains compact.
@@ -845,8 +835,13 @@ In the original plot, the planning-area labels sit far from the bar and the hori
 ```{r}
 #| eval: false
 #| code-fold: false
-panel.grid.major.y = element_blank(),
-panel.grid.minor.y = element_blank(),
+scale_x_discrete(expand = c(0, 0.02))
+
+axis.text.y = element_text(
+  size   = 15,
+  hjust  = 1,
+  margin = margin(r = 2)
+)
 ```
 
 **Putting it Together - Improvement 2**
@@ -930,15 +925,11 @@ The increment units are 100,000. Let's switch it to 10,000 instead. This allows 
 ggplot(pa_totals, aes(x = PA, y = Pop)) +
   geom_col(fill = "steelblue") +
 
-  # only flip here
-  coord_flip(expand = FALSE) +
 
-  # zero baseline
+  coord_flip(expand = FALSE) +
   geom_hline(yintercept = 0, linewidth = 0.5, color = "black", inherit.aes = FALSE) +
 
   scale_x_discrete(expand = c(0, 0.02)) +
-
-  # move limits & headroom into the scale
   scale_y_continuous(
     limits = c(0, 290000 * 1.005),
     breaks = seq(0, 290000, by = 10000),

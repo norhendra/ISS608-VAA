@@ -274,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">May 10, 2025</p>
+      <p class="date-modified">May 11, 2025</p>
     </div>
   </div>
     
@@ -793,47 +793,46 @@ Rewriting code
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define age bins</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>age_order <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0 to 4"</span>, <span class="st">"5 to 9"</span>,  <span class="st">"10 to 14"</span>, <span class="st">"15 to 19"</span>, <span class="st">"20 to 24"</span>, <span class="st">"25 to 29"</span>,</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"30 to 34"</span>,<span class="st">"35 to 39"</span>,<span class="st">"40 to 44"</span>, <span class="st">"45 to 49"</span>, <span class="st">"50 to 54"</span>, <span class="st">"55 to 59"</span>,</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"60 to 64"</span>,<span class="st">"65 to 69"</span>,<span class="st">"70 to 74"</span>, <span class="st">"75 to 79"</span>, <span class="st">"80 to 84"</span>, <span class="st">"85 to 89"</span>,</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"90+"</span></span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>sgdemo2024 <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">cut</span>(Age, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">5</span>), <span class="cn">Inf</span>), <span class="at">right =</span> <span class="cn">FALSE</span>, <span class="at">labels =</span> age_order),</span>
-<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">fct_explicit_na</span>(AG, <span class="at">na_level =</span> <span class="st">"90_and_over"</span>),</span>
-<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">gsub</span>(<span class="st">"_to_"</span>, <span class="st">"-"</span>, AG),</span>
-<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">gsub</span>(<span class="st">"_and_over"</span>, <span class="st">"+"</span>, AG),</span>
-<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">factor</span>(AG, <span class="at">levels =</span> <span class="fu">gsub</span>(<span class="st">"_to_"</span>, <span class="st">"-"</span>, <span class="fu">gsub</span>(<span class="st">"_and_over"</span>, <span class="st">"+"</span>, age_order)))</span>
-<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>pyramid_data <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
-<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AG, Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Pop =</span> <span class="fu">sum</span>(Pop), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pop =</span> <span class="fu">if_else</span>(Sex <span class="sc">==</span> <span class="st">"Males"</span>, <span class="sc">-</span>Pop, Pop))</span>
-<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pyramid_data, <span class="fu">aes</span>(<span class="at">x =</span> AG, <span class="at">y =</span> Pop, <span class="at">fill =</span> Sex)) <span class="sc">+</span></span>
-<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> comma) <span class="sc">+</span></span>
-<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(</span>
-<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">Males   =</span> <span class="st">"salmon"</span>,</span>
-<span id="cb46-30"><a href="#cb46-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">Females =</span> <span class="st">"skyblue"</span></span>
-<span id="cb46-31"><a href="#cb46-31" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb46-32"><a href="#cb46-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb46-33"><a href="#cb46-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb46-34"><a href="#cb46-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population Pyramid (2024)"</span>,</span>
-<span id="cb46-35"><a href="#cb46-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Age Group"</span>,</span>
-<span id="cb46-36"><a href="#cb46-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Population"</span></span>
-<span id="cb46-37"><a href="#cb46-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb46-38"><a href="#cb46-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb46-39"><a href="#cb46-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb46-40"><a href="#cb46-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y        =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)</span>
-<span id="cb46-41"><a href="#cb46-41" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>age_order <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0 to 4"</span>, <span class="st">"5 to 9"</span>,  <span class="st">"10 to 14"</span>, <span class="st">"15 to 19"</span>, <span class="st">"20 to 24"</span>, <span class="st">"25 to 29"</span>,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"30 to 34"</span>,<span class="st">"35 to 39"</span>,<span class="st">"40 to 44"</span>, <span class="st">"45 to 49"</span>, <span class="st">"50 to 54"</span>, <span class="st">"55 to 59"</span>,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"60 to 64"</span>,<span class="st">"65 to 69"</span>,<span class="st">"70 to 74"</span>, <span class="st">"75 to 79"</span>, <span class="st">"80 to 84"</span>, <span class="st">"85 to 89"</span>,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"90+"</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>sgdemo2024 <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">cut</span>(Age, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">5</span>), <span class="cn">Inf</span>), <span class="at">right =</span> <span class="cn">FALSE</span>, <span class="at">labels =</span> age_order),</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">fct_explicit_na</span>(AG, <span class="at">na_level =</span> <span class="st">"90_and_over"</span>),</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">gsub</span>(<span class="st">"_to_"</span>, <span class="st">"-"</span>, AG),</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">gsub</span>(<span class="st">"_and_over"</span>, <span class="st">"+"</span>, AG),</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">factor</span>(AG, <span class="at">levels =</span> <span class="fu">gsub</span>(<span class="st">"_to_"</span>, <span class="st">"-"</span>, <span class="fu">gsub</span>(<span class="st">"_and_over"</span>, <span class="st">"+"</span>, age_order)))</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>pyramid_data <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AG, Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Pop =</span> <span class="fu">sum</span>(Pop), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pop =</span> <span class="fu">if_else</span>(Sex <span class="sc">==</span> <span class="st">"Males"</span>, <span class="sc">-</span>Pop, Pop))</span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pyramid_data, <span class="fu">aes</span>(<span class="at">x =</span> AG, <span class="at">y =</span> Pop, <span class="at">fill =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> comma) <span class="sc">+</span></span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(</span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">Males   =</span> <span class="st">"salmon"</span>,</span>
+<span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">Females =</span> <span class="st">"skyblue"</span></span>
+<span id="cb46-30"><a href="#cb46-30" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb46-31"><a href="#cb46-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb46-32"><a href="#cb46-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb46-33"><a href="#cb46-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population Pyramid (2024)"</span>,</span>
+<span id="cb46-34"><a href="#cb46-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Age Group"</span>,</span>
+<span id="cb46-35"><a href="#cb46-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Population"</span></span>
+<span id="cb46-36"><a href="#cb46-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb46-37"><a href="#cb46-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb46-38"><a href="#cb46-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb46-39"><a href="#cb46-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y        =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)</span>
+<span id="cb46-40"><a href="#cb46-40" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -870,56 +869,55 @@ Rewriting code
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define age bins</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>age_order <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0 to 4"</span>, <span class="st">"5 to 9"</span>,  <span class="st">"10 to 14"</span>, <span class="st">"15 to 19"</span>, <span class="st">"20 to 24"</span>, <span class="st">"25 to 29"</span>,</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"30 to 34"</span>,<span class="st">"35 to 39"</span>,<span class="st">"40 to 44"</span>, <span class="st">"45 to 49"</span>, <span class="st">"50 to 54"</span>, <span class="st">"55 to 59"</span>,</span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"60 to 64"</span>,<span class="st">"65 to 69"</span>,<span class="st">"70 to 74"</span>, <span class="st">"75 to 79"</span>, <span class="st">"80 to 84"</span>, <span class="st">"85 to 89"</span>,</span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"90+"</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>age_order <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0 to 4"</span>, <span class="st">"5 to 9"</span>,  <span class="st">"10 to 14"</span>, <span class="st">"15 to 19"</span>, <span class="st">"20 to 24"</span>, <span class="st">"25 to 29"</span>,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"30 to 34"</span>,<span class="st">"35 to 39"</span>,<span class="st">"40 to 44"</span>, <span class="st">"45 to 49"</span>, <span class="st">"50 to 54"</span>, <span class="st">"55 to 59"</span>,</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"60 to 64"</span>,<span class="st">"65 to 69"</span>,<span class="st">"70 to 74"</span>, <span class="st">"75 to 79"</span>, <span class="st">"80 to 84"</span>, <span class="st">"85 to 89"</span>,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"90+"</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply binning and label cleanup</span></span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>sgdemo2024 <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">cut</span>(Age, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">5</span>), <span class="cn">Inf</span>), <span class="at">right =</span> <span class="cn">FALSE</span>, <span class="at">labels =</span> age_order),</span>
-<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">fct_explicit_na</span>(AG, <span class="at">na_level =</span> <span class="st">"90_and_over"</span>),</span>
-<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">gsub</span>(<span class="st">"_to_"</span>, <span class="st">"-"</span>, AG),</span>
-<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">gsub</span>(<span class="st">"_and_over"</span>, <span class="st">"+"</span>, AG),</span>
-<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">factor</span>(AG, <span class="at">levels =</span> <span class="fu">gsub</span>(<span class="st">"_to_"</span>, <span class="st">"-"</span>, <span class="fu">gsub</span>(<span class="st">"_and_over"</span>, <span class="st">"+"</span>, age_order)))</span>
-<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>sgdemo2024 <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">cut</span>(Age, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">5</span>), <span class="cn">Inf</span>), <span class="at">right =</span> <span class="cn">FALSE</span>, <span class="at">labels =</span> age_order),</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">fct_explicit_na</span>(AG, <span class="at">na_level =</span> <span class="st">"90_and_over"</span>),</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">gsub</span>(<span class="st">"_to_"</span>, <span class="st">"-"</span>, AG),</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">gsub</span>(<span class="st">"_and_over"</span>, <span class="st">"+"</span>, AG),</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">AG =</span> <span class="fu">factor</span>(AG, <span class="at">levels =</span> <span class="fu">gsub</span>(<span class="st">"_to_"</span>, <span class="st">"-"</span>, <span class="fu">gsub</span>(<span class="st">"_and_over"</span>, <span class="st">"+"</span>, age_order)))</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate and prepare data</span></span>
-<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>pyramid_data <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
-<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AG, Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Pop =</span> <span class="fu">sum</span>(Pop), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pop =</span> <span class="fu">if_else</span>(Sex <span class="sc">==</span> <span class="st">"Males"</span>, <span class="sc">-</span>Pop, Pop))</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>pyramid_data <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AG, Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Pop =</span> <span class="fu">sum</span>(Pop), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pop =</span> <span class="fu">if_else</span>(Sex <span class="sc">==</span> <span class="st">"Males"</span>, <span class="sc">-</span>Pop, Pop))</span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine max for 20k axis break</span></span>
-<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>max_pop <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(<span class="fu">abs</span>(pyramid_data<span class="sc">$</span>Pop)) <span class="sc">/</span> <span class="dv">20000</span>) <span class="sc">*</span> <span class="dv">20000</span></span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>max_pop <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(<span class="fu">abs</span>(pyramid_data<span class="sc">$</span>Pop)) <span class="sc">/</span> <span class="dv">20000</span>) <span class="sc">*</span> <span class="dv">20000</span></span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Force max_pop to show up to 180k at least</span></span>
-<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a>max_pop <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="dv">180000</span>, <span class="fu">ceiling</span>(<span class="fu">max</span>(<span class="fu">abs</span>(pyramid_data<span class="sc">$</span>Pop)) <span class="sc">/</span> <span class="dv">20000</span>) <span class="sc">*</span> <span class="dv">20000</span>)</span>
-<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pyramid_data, <span class="fu">aes</span>(<span class="at">x =</span> AG, <span class="at">y =</span> Pop <span class="sc">/</span> <span class="dv">1000</span>, <span class="at">fill =</span> Sex)) <span class="sc">+</span>  <span class="co"># Convert to thousands</span></span>
-<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_y_continuous</span>(</span>
-<span id="cb49-35"><a href="#cb49-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">180000</span>, <span class="dv">180000</span>) <span class="sc">/</span> <span class="dv">1000</span>,</span>
-<span id="cb49-36"><a href="#cb49-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180000</span>, <span class="dv">180000</span>, <span class="at">by =</span> <span class="dv">20000</span>) <span class="sc">/</span> <span class="dv">1000</span>,</span>
-<span id="cb49-37"><a href="#cb49-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">abs</span>(x),</span>
-<span id="cb49-38"><a href="#cb49-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb49-39"><a href="#cb49-39" aria-hidden="true" tabindex="-1"></a>)<span class="sc">+</span></span>
-<span id="cb49-40"><a href="#cb49-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">Males =</span> <span class="st">"salmon"</span>, <span class="at">Females =</span> <span class="st">"skyblue"</span>)) <span class="sc">+</span></span>
-<span id="cb49-41"><a href="#cb49-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb49-42"><a href="#cb49-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population Pyramid (2024)"</span>,</span>
-<span id="cb49-43"><a href="#cb49-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Age Group"</span>,</span>
-<span id="cb49-44"><a href="#cb49-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Population (in thousands)"</span></span>
-<span id="cb49-45"><a href="#cb49-45" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb49-46"><a href="#cb49-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb49-47"><a href="#cb49-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb49-48"><a href="#cb49-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb49-49"><a href="#cb49-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"gray90"</span>)</span>
-<span id="cb49-50"><a href="#cb49-50" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>max_pop <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="dv">180000</span>, <span class="fu">ceiling</span>(<span class="fu">max</span>(<span class="fu">abs</span>(pyramid_data<span class="sc">$</span>Pop)) <span class="sc">/</span> <span class="dv">20000</span>) <span class="sc">*</span> <span class="dv">20000</span>)</span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pyramid_data, <span class="fu">aes</span>(<span class="at">x =</span> AG, <span class="at">y =</span> Pop <span class="sc">/</span> <span class="dv">1000</span>, <span class="at">fill =</span> Sex)) <span class="sc">+</span>  </span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_y_continuous</span>(</span>
+<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">180000</span>, <span class="dv">180000</span>) <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb49-35"><a href="#cb49-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180000</span>, <span class="dv">180000</span>, <span class="at">by =</span> <span class="dv">20000</span>) <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb49-36"><a href="#cb49-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="cf">function</span>(x) <span class="fu">abs</span>(x),</span>
+<span id="cb49-37"><a href="#cb49-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb49-38"><a href="#cb49-38" aria-hidden="true" tabindex="-1"></a>)<span class="sc">+</span></span>
+<span id="cb49-39"><a href="#cb49-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">Males =</span> <span class="st">"salmon"</span>, <span class="at">Females =</span> <span class="st">"skyblue"</span>)) <span class="sc">+</span></span>
+<span id="cb49-40"><a href="#cb49-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb49-41"><a href="#cb49-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population Pyramid (2024)"</span>,</span>
+<span id="cb49-42"><a href="#cb49-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Age Group"</span>,</span>
+<span id="cb49-43"><a href="#cb49-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Population (in thousands)"</span></span>
+<span id="cb49-44"><a href="#cb49-44" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb49-45"><a href="#cb49-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb49-46"><a href="#cb49-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb49-47"><a href="#cb49-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb49-48"><a href="#cb49-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"gray90"</span>)</span>
+<span id="cb49-49"><a href="#cb49-49" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -940,9 +938,9 @@ Rewriting code
 <p><strong>Adding percentage-of-population</strong>: Absolute bar lengths show “how many” but not “how large a share” so I will be annotating each bar with its percentage to immediately tell the audience. This view will make both scale and structure transparent at a glance. Hence, even when 2 bars look of similar length, the percentage call-out removes any guessworrk readers have to mentally translate. Also, I’ll be adding the total population in the header to immediately anchor every subsequent percentage to give more context to the percentages added. With below code chunk, I will be adjusting the header to calculate total population so that the percentages can be referenced, along with percentage of total population on each bar.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">title    =</span> <span class="st">"Population Pyramid (2024)"</span>,               <span class="co"># ← your main header</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">title    =</span> <span class="st">"Population Pyramid (2024)"</span>,            </span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Total population: "</span>, <span class="fu">comma</span>(total_pop)),</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>                                                        <span class="co"># ← sub-header showing the formatted total</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>                                                        </span>
 <span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x        =</span> <span class="st">"Age Group"</span>,</span>
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">y        =</span> <span class="st">"Population (in thousands)"</span></span>
 <span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1006,36 +1004,31 @@ Rewriting code
 <span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"gray20"</span></span>
 <span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># clamp exactly at +/-180 and allow labels outside</span></span>
-<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>),</span>
-<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>, <span class="at">by =</span> <span class="dv">20</span>),</span>
-<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> abs,</span>
-<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.02</span>),    <span class="co"># small headroom so 180 isn't cut off</span></span>
-<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">oob =</span> scales<span class="sc">::</span>squish</span>
-<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>(<span class="at">clip =</span> <span class="st">"off"</span>) <span class="sc">+</span></span>
-<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">Males =</span> <span class="st">"skyblue"</span>, <span class="at">Females =</span> <span class="st">"salmon"</span>)) <span class="sc">+</span></span>
-<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">"Population Pyramid (2024)"</span>,</span>
-<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Total population: "</span>, <span class="fu">comma</span>(total_pop)),</span>
-<span id="cb54-48"><a href="#cb54-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">x        =</span> <span class="st">"Age Group"</span>,</span>
-<span id="cb54-49"><a href="#cb54-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">y        =</span> <span class="st">"Population (in thousands)"</span></span>
-<span id="cb54-50"><a href="#cb54-50" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb54-51"><a href="#cb54-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb54-52"><a href="#cb54-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb54-53"><a href="#cb54-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># remove horizontal grid (behind bars), keep vertical grid for reference</span></span>
-<span id="cb54-54"><a href="#cb54-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb54-55"><a href="#cb54-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"gray90"</span>, <span class="at">size=</span><span class="fl">0.3</span>),</span>
-<span id="cb54-56"><a href="#cb54-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"gray90"</span>,<span class="at">size=</span><span class="fl">0.3</span>),</span>
-<span id="cb54-57"><a href="#cb54-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-58"><a href="#cb54-58" aria-hidden="true" tabindex="-1"></a>    <span class="co"># move legend to right</span></span>
-<span id="cb54-59"><a href="#cb54-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position    =</span> <span class="st">"right"</span>,</span>
-<span id="cb54-60"><a href="#cb54-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title       =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb54-61"><a href="#cb54-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># center title + subtitle</span></span>
-<span id="cb54-62"><a href="#cb54-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title         =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face=</span> <span class="st">"bold"</span>),</span>
-<span id="cb54-63"><a href="#cb54-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle      =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
-<span id="cb54-64"><a href="#cb54-64" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>),</span>
+<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>, <span class="at">by =</span> <span class="dv">20</span>),</span>
+<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> abs,</span>
+<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.02</span>),    </span>
+<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">oob =</span> scales<span class="sc">::</span>squish</span>
+<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>(<span class="at">clip =</span> <span class="st">"off"</span>) <span class="sc">+</span></span>
+<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">Males =</span> <span class="st">"skyblue"</span>, <span class="at">Females =</span> <span class="st">"salmon"</span>)) <span class="sc">+</span></span>
+<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">"Population Pyramid (2024)"</span>,</span>
+<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Total population: "</span>, <span class="fu">comma</span>(total_pop)),</span>
+<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">x        =</span> <span class="st">"Age Group"</span>,</span>
+<span id="cb54-48"><a href="#cb54-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">y        =</span> <span class="st">"Population (in thousands)"</span></span>
+<span id="cb54-49"><a href="#cb54-49" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb54-50"><a href="#cb54-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb54-51"><a href="#cb54-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb54-52"><a href="#cb54-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb54-53"><a href="#cb54-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"gray90"</span>, <span class="at">size=</span><span class="fl">0.3</span>),</span>
+<span id="cb54-54"><a href="#cb54-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"gray90"</span>,<span class="at">size=</span><span class="fl">0.3</span>),</span>
+<span id="cb54-55"><a href="#cb54-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position    =</span> <span class="st">"right"</span>,</span>
+<span id="cb54-56"><a href="#cb54-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title       =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb54-57"><a href="#cb54-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title         =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face=</span> <span class="st">"bold"</span>),</span>
+<span id="cb54-58"><a href="#cb54-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle      =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb54-59"><a href="#cb54-59" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1066,26 +1059,25 @@ Rewriting code
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Filter out any NA or zero rows</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> sgdemo2024[<span class="sc">!</span><span class="fu">is.na</span>(sgdemo2024<span class="sc">$</span>Pop) <span class="sc">&amp;</span> sgdemo2024<span class="sc">$</span>Pop <span class="sc">&gt;</span> <span class="dv">0</span>, ]</span>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> sgdemo2024[<span class="sc">!</span><span class="fu">is.na</span>(sgdemo2024<span class="sc">$</span>Pop) <span class="sc">&amp;</span> sgdemo2024<span class="sc">$</span>Pop <span class="sc">&gt;</span> <span class="dv">0</span>, ]</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Draw the bar chart</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> filtered_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PA, Pop), <span class="at">y =</span> Pop)) <span class="sc">+</span></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population by Planning Area (Singapore, 2024)"</span>,</span>
-<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Planning Area"</span>,</span>
-<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Population"</span></span>
-<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> comma) <span class="sc">+</span></span>
-<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
-<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>),</span>
-<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="st">"cm"</span>)</span>
-<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> filtered_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(PA, Pop), <span class="at">y =</span> Pop)) <span class="sc">+</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population by Planning Area (Singapore, 2024)"</span>,</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Planning Area"</span>,</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Population"</span></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> comma) <span class="sc">+</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>),</span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="st">"cm"</span>)</span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1117,7 +1109,7 @@ Rewriting code
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>pa_totals <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA) <span class="sc">%&gt;%</span></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Pop =</span> <span class="fu">sum</span>(Pop, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Pop <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span>            <span class="co"># drop zero/NA if you still want</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Pop <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span>            </span>
 <span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Pop))             <span class="co"># largest → smallest</span></span>
 <span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>pa_totals<span class="sc">$</span>PA <span class="ot">&lt;-</span> <span class="fu">factor</span>(pa_totals<span class="sc">$</span>PA, <span class="at">levels =</span> <span class="fu">rev</span>(pa_totals<span class="sc">$</span>PA))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1125,31 +1117,30 @@ Rewriting code
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Sum up Pop for each PA</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>pa_totals <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA) <span class="sc">%&gt;%</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Pop =</span> <span class="fu">sum</span>(Pop, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Pop <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span>            <span class="co"># drop zero/NA if you still want</span></span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Pop))             <span class="co"># largest → smallest</span></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>pa_totals<span class="sc">$</span>PA <span class="ot">&lt;-</span> <span class="fu">factor</span>(pa_totals<span class="sc">$</span>PA, <span class="at">levels =</span> <span class="fu">rev</span>(pa_totals<span class="sc">$</span>PA))</span>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>pa_totals <span class="ot">&lt;-</span> sgdemo2024 <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PA) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Pop =</span> <span class="fu">sum</span>(Pop, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Pop <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span>          </span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Pop))             <span class="co"># largest → smallest</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>pa_totals<span class="sc">$</span>PA <span class="ot">&lt;-</span> <span class="fu">factor</span>(pa_totals<span class="sc">$</span>PA, <span class="at">levels =</span> <span class="fu">rev</span>(pa_totals<span class="sc">$</span>PA))</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Plot</span></span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pa_totals, <span class="fu">aes</span>(<span class="at">x =</span> PA, <span class="at">y =</span> Pop)) <span class="sc">+</span></span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> comma) <span class="sc">+</span></span>
-<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population by Planning Area (Singapore, 2024)"</span>,</span>
-<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Planning Area"</span>,</span>
-<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Population"</span></span>
-<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
-<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>),</span>
-<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="st">"cm"</span>)</span>
-<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pa_totals, <span class="fu">aes</span>(<span class="at">x =</span> PA, <span class="at">y =</span> Pop)) <span class="sc">+</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> comma) <span class="sc">+</span></span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population by Planning Area (Singapore, 2024)"</span>,</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Planning Area"</span>,</span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Population"</span></span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>),</span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="st">"cm"</span>)</span>
+<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1165,19 +1156,18 @@ Rewriting code
 <h3 class="anchored" data-anchor-id="improvement-2---gridlines-and-margins">4.2.2 Improvement 2 - Gridlines and Margins</h3>
 <p>Because the bars themselves run themselves run horizontally, adding grid lines in the same direction creates visual “noise” that doesn’t add new information. Readers already naturally follow the length of each bar to compare values. By stripping out the horizontal grids, I can declutter the plot while still preserving the vertical grid lines that act as helpful reference ticks. WIth fewer lines means a higher “data-ink ratio” as we can guide the eye straight to the bars. Below code chunk will aim to achieve those things!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the scale of your discrete (PA) axis, you allow just a tiny bit of padding:</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_x_discrete</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.02</span>))</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>axis.text.y <span class="ot">=</span> <span class="fu">element_text</span>(</span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">size   =</span> <span class="dv">15</span>,</span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">hjust  =</span> <span class="dv">1</span>,</span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r =</span> <span class="dv">2</span>)</span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>panel.grid.major.y <span class="ot">=</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>panel.grid.minor.y <span class="ot">=</span> <span class="fu">element_blank</span>(),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the original plot, the planning-area labels sit far from the bar and the horizontal bar lines extends on the left-hand side of the bars. When labels are far from the bars they describe, readers must track back and forth across the white space, increasing cognitive load. Pulling the text flush to the bar edge establishes an immediate, one-to-one visual link between name and value. Below code chunk aims to achieve that by keeping the layout tight ensuring nothing feels floating in the margin and the plot frame remains compact.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>panel.grid.major.y <span class="ot">=</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>panel.grid.minor.y <span class="ot">=</span> <span class="fu">element_blank</span>(),</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_x_discrete</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.02</span>))</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>axis.text.y <span class="ot">=</span> <span class="fu">element_text</span>(</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">size   =</span> <span class="dv">15</span>,</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">hjust  =</span> <span class="dv">1</span>,</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r =</span> <span class="dv">2</span>)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Putting it Together - Improvement 2</strong></p>
 <div class="cell">
@@ -1261,41 +1251,37 @@ Rewriting code
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pa_totals, <span class="fu">aes</span>(<span class="at">x =</span> PA, <span class="at">y =</span> Pop)) <span class="sc">+</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># only flip here</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># zero baseline</span></span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.02</span>)) <span class="sc">+</span></span>
-<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># move limits &amp; headroom into the scale</span></span>
-<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">290000</span> <span class="sc">*</span> <span class="fl">1.005</span>),</span>
-<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">290000</span>, <span class="at">by =</span> <span class="dv">10000</span>),</span>
-<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) x <span class="sc">/</span> <span class="dv">1000</span></span>
-<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population by Planning Area (Singapore, 2024)"</span>,</span>
-<span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Planning Area"</span>,</span>
-<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Population (’000s)"</span></span>
-<span id="cb62-24"><a href="#cb62-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb62-25"><a href="#cb62-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-26"><a href="#cb62-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
-<span id="cb62-27"><a href="#cb62-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb62-28"><a href="#cb62-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y        =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r =</span> <span class="dv">2</span>)),</span>
-<span id="cb62-29"><a href="#cb62-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x        =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">5</span>)),</span>
-<span id="cb62-30"><a href="#cb62-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-31"><a href="#cb62-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb62-32"><a href="#cb62-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb62-33"><a href="#cb62-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey80"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>),</span>
-<span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.line.x        =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>),</span>
-<span id="cb62-36"><a href="#cb62-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title         =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb62-37"><a href="#cb62-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin        =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">5</span>, <span class="at">r =</span> <span class="dv">5</span>, <span class="at">b =</span> <span class="dv">15</span>, <span class="at">l =</span> <span class="dv">5</span>, <span class="st">"pt"</span>)</span>
-<span id="cb62-38"><a href="#cb62-38" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.02</span>)) <span class="sc">+</span></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">290000</span> <span class="sc">*</span> <span class="fl">1.005</span>),</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">290000</span>, <span class="at">by =</span> <span class="dv">10000</span>),</span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="cf">function</span>(x) x <span class="sc">/</span> <span class="dv">1000</span></span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population by Planning Area (Singapore, 2024)"</span>,</span>
+<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Planning Area"</span>,</span>
+<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Population (’000s)"</span></span>
+<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb62-24"><a href="#cb62-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y        =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r =</span> <span class="dv">2</span>)),</span>
+<span id="cb62-25"><a href="#cb62-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x        =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">5</span>)),</span>
+<span id="cb62-26"><a href="#cb62-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-27"><a href="#cb62-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb62-28"><a href="#cb62-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb62-29"><a href="#cb62-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey80"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>),</span>
+<span id="cb62-30"><a href="#cb62-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb62-31"><a href="#cb62-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.line.x        =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>),</span>
+<span id="cb62-32"><a href="#cb62-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title         =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb62-33"><a href="#cb62-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin        =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">5</span>, <span class="at">r =</span> <span class="dv">5</span>, <span class="at">b =</span> <span class="dv">15</span>, <span class="at">l =</span> <span class="dv">5</span>, <span class="st">"pt"</span>)</span>
+<span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
