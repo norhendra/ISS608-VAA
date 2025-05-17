@@ -5,7 +5,6 @@ date: "17 May 2025"
 date-modified: "last-modified"
 format: html
 editor: visual
-freeze: true
 execute:
   eval: true
   echo: true
