@@ -1,0 +1,14 @@
+/* css styles */
+
+.navbar {
+  background-color: #000 !important; /* black navbar */
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: #fff !important; /* white text */
+}
+
+.navbar .nav-link:hover {
+  color: #ccc !important; /* optional: lighter hover */
+}

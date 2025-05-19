@@ -34,8 +34,7 @@ By the end of this hands-on exercise you will be able create the followings data
 #| code-fold: false
 pacman::p_load(scales, viridis, lubridate, ggthemes,
                gridExtra, readxl, knitr, data.table,
-               CGPfunctions, ggHoriPlot, tidyverse,
-               gganimate,ggplot2,dplyr,scales)
+               CGPfunctions, ggHoriPlot, tidyverse)
 ```
 
 ## **2.2 Plotting Calendar Heatmap**
@@ -378,7 +377,7 @@ For effective data visualisation design, `factor()` is used convert the value ty
 
 ### 6.3.1 Stream Graph
 
-### 6.3.1.1 Loading Packages
+#### 6.3.1.1 Loading Packages
 
 ggstream will be used to plot the Stream Graph (aka Theme River). Although other packages are already loaded, I have included them in this pacman load to show what I will be using for this plot.
 
@@ -386,7 +385,7 @@ ggstream will be used to plot the Stream Graph (aka Theme River). Although other
 pacman::p_load(ggstream,dplyr,tidyr,ggplot2,scales)
 ```
 
-### 6.3.1.2 Plotting the Stream Graph
+#### 6.3.1.2 Plotting the Stream Graph
 
 ```{r}
 
@@ -418,7 +417,6 @@ ggplot(rice_stream, aes(x = Year, y = Yield, fill = Country)) +
   theme_minimal()
 
 ```
-
 ### 6.3.2 Animated Bubble Plot
 
 We have done this hands-on before, but let's see what this rice data looks like on an animated bubble plot.
@@ -455,7 +453,7 @@ p <- ggplot(bubble_data, aes(x = Year, y = Yield, size = Size, color = Country))
   ease_aes('linear')
 
 
-animate(p, nframes = 40, fps = 10, width = 600, height = 450)
+animate(p, nframes = 30, renderer = gifski_renderer("rice_yield_bubble.gif"))
 ```
 
 ::: callout-tip
@@ -486,11 +484,10 @@ line_data <- line_data %>% filter(Country %in% top_countries)
 # Plot
 p <- ggplot(line_data, aes(x = Year, y = Yield, color = Country, group = Country)) +
   geom_line(linewidth = 1.2) +
-  geom_point(size = 2) +
   scale_y_continuous(labels = label_comma()) +
   labs(
     title = "Rice Yield by Country (1961–1980)",
-    subtitle = "Year: {frame_time}",
+    subtitle = "Year: 1960 to 1980",
     x = "Year", y = "Yield (tonnes per hectare)",
     caption = "Animated line plot using gganimate"
   ) +
@@ -499,14 +496,8 @@ p <- ggplot(line_data, aes(x = Year, y = Yield, color = Country, group = Country
   transition_reveal(Year)
 
 # Animate
-animate(p, nframes = 40, fps = 10, width = 600, height = 450)
+animate(p, nframes = 30, renderer = gifski_renderer("rice_yield.gif"))
 ```
-
-::: callout-tip
-## Observation
-
-This now makes more sense! We can see how each country rice yield decrease or increase over the years.
-:::
 
 ### 6.3.4 Time on the Horizon: ggHoriPlot methods
 
