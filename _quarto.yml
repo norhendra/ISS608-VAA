@@ -2,6 +2,7 @@ project:
   type: website
 
 website:
+  site-url: https://norhendra-isss608.netlify.app/
   title: "ISSS608"
   navbar:
     left:
