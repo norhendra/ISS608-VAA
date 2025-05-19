@@ -833,6 +833,19 @@ Thing to learn from the code chunk above
 <section id="animated-bubble-plot" class="level3">
 <h3 class="anchored" data-anchor-id="animated-bubble-plot">6.3.2 Animated Bubble Plot</h3>
 <p>We have done this hands-on before, but let’s see what this rice data looks like on an animated bubble plot.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+nframes adjustment
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I first tried <code>animate(p, nframes = 40, fps = 10, width = 600, height = 450)</code> which looked much better but it seems like it took too long to render and was not saving. Hence, I changed it to nframes = 30 and used <code>renderer = gifski_renderer</code> to not preview. Afterwards, it was working fine. The 2 animation plots will be using this set up.</p>
+</div>
+</div>
 <section id="loading-packages-1" class="level4">
 <h4 class="anchored" data-anchor-id="loading-packages-1">6.3.2.1 Loading Packages</h4>
 <div class="cell">

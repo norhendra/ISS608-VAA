@@ -5,6 +5,7 @@ date: "19 May 2025"
 date-modified: "last-modified"
 format: html
 editor: visual
+freeze: true
 execute:
   eval: true
   echo: true
@@ -420,6 +421,12 @@ ggplot(rice_stream, aes(x = Year, y = Yield, fill = Country)) +
 ### 6.3.2 Animated Bubble Plot
 
 We have done this hands-on before, but let's see what this rice data looks like on an animated bubble plot.
+
+::: callout-note
+## nframes adjustment
+I first tried ``animate(p, nframes = 40, fps = 10, width = 600, height = 450)`` which looked much better but it seems like it took too long to render and was not saving. Hence, I changed it to nframes = 30 and used ``renderer = gifski_renderer`` to not preview. Afterwards, it was working fine. The 2 animation plots will be using this set up.
+:::
+
 
 #### 6.3.2.1 Loading Packages
 
