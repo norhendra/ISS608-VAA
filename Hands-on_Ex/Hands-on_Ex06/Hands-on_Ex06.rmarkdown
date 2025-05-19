@@ -1,7 +1,7 @@
 ---
 title: "Hands-on Exercise 6"
 author: "Nor Hendra"
-date: "19 May 2025"
+date: "12 May 2025"
 date-modified: "last-modified"
 format: html
 editor: visual
@@ -12,6 +12,8 @@ execute:
   warning: false
 code-fold: true
 ---
+
+
 
 # Visualising and Analysing Time-oriented Data
 
@@ -31,12 +33,16 @@ By the end of this hands-on exercise you will be able create the followings data
 
 ## 2.1 Importing Packages
 
+
+
 ```{r}
 #| code-fold: false
 pacman::p_load(scales, viridis, lubridate, ggthemes,
                gridExtra, readxl, knitr, data.table,
                CGPfunctions, ggHoriPlot, tidyverse)
 ```
+
+
 
 ## **2.2 Plotting Calendar Heatmap**
 
@@ -60,10 +66,14 @@ For the purpose of this hands-on exercise, eventlog.csv file will be used. This 
 
 ### 2.3.1 Importing the data
 
+
+
 ```{r}
 #| code-fold: false
 attacks <- read_csv("data/eventlog.csv")
 ```
+
+
 
 ### 2.3.2 Examining the data structure
 
@@ -71,10 +81,14 @@ It is always a good practice to examine the imported data frame before further a
 
 For example, kable() can be used to review the structure of the imported data frame.
 
+
+
 ```{r}
 #| code-fold: false
 kable(head(attacks))
 ```
+
+
 
 There are three columns, namely *timestamp*, *source_country* and *tz*.
 
@@ -90,6 +104,8 @@ Step 1: Deriving weekday and hour of day fields
 
 Before we can plot the calender heatmap, two new fields namely wkday and hour need to be derived. In this step, we will write a function to perform the task.
 
+
+
 ```{r}
 #| code-fold: false
 make_hr_wkday <- function(ts, sc, tz) {
@@ -103,6 +119,8 @@ make_hr_wkday <- function(ts, sc, tz) {
   }
 ```
 
+
+
 ::: callout-note
 ## Note
 
@@ -112,6 +130,8 @@ make_hr_wkday <- function(ts, sc, tz) {
 :::
 
 Step 2: Deriving the attacks tibble data frame
+
+
 
 ```{r}
 #| code-fold: false
@@ -132,6 +152,8 @@ attacks <- attacks %>%
       hour, levels = 0:23))
 ```
 
+
+
 ::: callout-note
 ## Note
 
@@ -140,12 +162,18 @@ Beside extracting the necessary data into *attacks* data frame, `mutate()` of **
 
 Table below shows the tidy tibble table after processing
 
+
+
 ```{r}
 #| code-fold: false
 kable(head(attacks))
 ```
 
+
+
 # 3. Building the Calendar Heatmaps
+
+
 
 ```{r}
 grouped <- attacks %>% 
@@ -172,6 +200,8 @@ theme(axis.ticks = element_blank(),
       legend.title = element_text(size = 8),
       legend.text = element_text(size = 6) )
 ```
+
+
 
 ::: callout-tip
 ## Things to learn from the code chunk
@@ -207,6 +237,8 @@ In order to identify the top 4 countries with the highest number of attacks, you
 
 -   save the results in a tibble data frame.
 
+
+
 ```{r}
 #| code-fold: false
 attacks_by_country <- count(
@@ -215,9 +247,13 @@ attacks_by_country <- count(
   arrange(desc(n))
 ```
 
+
+
 Step 2: Preparing the tidy data frame
 
 In this step, you are required to extract the attack records of the top 4 countries from *attacks* data frame and save the data in a new tibble data frame (i.e. *top4_attacks*).
+
+
 
 ```{r}
 #| code-fold: false
@@ -225,7 +261,11 @@ top4 <- attacks_by_country$source_country[1:4] #<< Top 4 countries
 summary(top4)
 ```
 
+
+
 Step 3: Plotting the Multiple Calender Heatmap by using ggplot2 package.
+
+
 
 ```{r}
 #| code-fold: false
@@ -239,7 +279,11 @@ top4_attacks <- attacks %>%
   na.omit()
 ```
 
+
+
 ## 4.1 Plotting Multiple Calendar Heatmaps
+
+
 
 ```{r}
 #| code-fold: false
@@ -266,6 +310,8 @@ ggplot(top4_attacks,
         legend.text = element_text(size = 6) )
 ```
 
+
+
 # 5. Plotting Cycle Plot
 
 In this section, you will learn how to plot a cycle plot showing the time-series patterns and trend of visitor arrivals from Vietnam programmatically by using ggplot2 functions.
@@ -276,14 +322,20 @@ For the purpose of this hands-on exercise, *arrivals_by_air.xlsx* will be used.
 
 The code chunk below imports *arrivals_by_air.xlsx* by using `read_excel()` of **readxl** package and save it as a tibble data frame called *air*.
 
+
+
 ```{r}
 #| code-fold: false
 air <- read_excel("data/arrivals_by_air.xlsx")
 ```
 
+
+
 ## 5.2 Step 2: Deriving month and year fields
 
 Next, two new fields called month and year are derived from Month-Year field.
+
+
 
 ```{r}
 #| code-fold: false
@@ -294,9 +346,13 @@ air$month <- factor(month(air$`Month-Year`),
 air$year <- year(ymd(air$`Month-Year`))
 ```
 
+
+
 ## 5.3 Step 3: Extracting the target country
 
 Next, the code chunk below is use to extract data for the target country (i.e. Vietnam)
+
+
 
 ```{r}
 #| code-fold: false
@@ -307,9 +363,13 @@ Vietnam <- air %>%
   filter(year >= 2010)
 ```
 
+
+
 ## 5.4 Step 4: Computing year average arrivals by month
 
 The code chunk below uses `group_by()` and `summarise()` of **dplyr** to compute year average arrivals by month.
+
+
 
 ```{r}
 #| code-fold: false
@@ -318,7 +378,11 @@ hline.data <- Vietnam %>%
   summarise(avgvalue = mean(`Vietnam`))
 ```
 
+
+
 ## 5.5 Step 5: Plotting the cycle plot
+
+
 
 ```{r}
 #| code-fold: false
@@ -341,6 +405,8 @@ ggplot() +
   theme_tufte(base_family = "Helvetica")
 ```
 
+
+
 # 6. Plotting Slopegraph
 
 In this section I will learn how to plot a [slopegraph](https://www.storytellingwithdata.com/blog/2020/7/27/what-is-a-slopegraph) by using R.
@@ -351,12 +417,18 @@ Before getting start, make sure that **CGPfunctions** has been installed and loa
 
 Import the rice data set into R environment by using the code chunk below:
 
+
+
 ```{r}
 #| code-fold: false
 rice <- read_csv("data/rice.csv")
 ```
 
+
+
 ## 6.2 Step 2: Plotting the slopegraph
+
+
 
 ```{r}
 rice %>% 
@@ -367,6 +439,8 @@ rice %>%
                 SubTitle = "1961-1980",
                 Caption = "Prepared by: Nor Hendra")
 ```
+
+
 
 ::: callout-tip
 ## Thing to learn from the code chunk above
@@ -380,12 +454,18 @@ For effective data visualisation design, `factor()` is used convert the value ty
 ### 6.3.1.1 Loading Packages
 
 ggstream will be used to plot the Stream Graph (aka Theme River). Although other packages are already loaded, I have included them in this pacman load to show what I will be using for this plot.
+
+
 ```{r}
 pacman::p_load(ggstream,dplyr,tidyr,ggplot2,scales)
 ```
 
 
+
+
 ### 6.3.1.2 Plotting the Stream Graph
+
+
 
 ```{r}
 
@@ -418,15 +498,23 @@ ggplot(rice_stream, aes(x = Year, y = Yield, fill = Country)) +
 
 ```
 
+
+
 ### 6.3.2 Animated Bubble Plot
 We have done this hands-on before, but let's see what this rice data looks like on an animated bubble plot.
 
 #### 6.3.2.1 Loading Packages
+
+
 ```{r}
 pacman::p_load(gganimate,ggplot2,dplyr,scales)
 ```
 
+
+
 #### 6.3.2.2 The Plot
+
+
 ```{r}
 
 bubble_data <- rice %>%
@@ -454,12 +542,16 @@ p <- ggplot(bubble_data, aes(x = Year, y = Yield, size = Size, color = Country))
 animate(p, nframes = 100, fps = 10, width = 800, height = 600)
 ```
 
+
+
 ::: .callout-tip
 ## Observation
 I don't think this is useful, but from the animation - a line animation would be much better! So let's try that.
 :::
 
 ### 6.3.3 Animating Line Graph Method
+
+
 ```{r}
 # Prepare the data
 line_data <- rice %>%
@@ -495,6 +587,8 @@ p <- ggplot(line_data, aes(x = Year, y = Yield, color = Country, group = Country
 # Animate
 animate(p, nframes = 100, fps = 10, width = 800, height = 600)
 ```
+
+
 ::: .callout-tip
 ## Observation
 This now makes more sense! We can see how each country rice yield decrease or increase over the years.
@@ -508,10 +602,14 @@ A horizon graph essentially an area chart that has been split into slices and th
 
 #### 6.3.4.1 Data Import
 
+
+
 ```{r}
 averp <- read_csv("data/AVERP.csv") %>%
   mutate(`Date` = dmy(`Date`))
 ```
+
+
 
 ::: callout-tip
 ## Things to learn from the code chunk above
@@ -520,6 +618,8 @@ averp <- read_csv("data/AVERP.csv") %>%
 :::
 
 #### 6.3.4.2 Plotting the horizon graph
+
+
 
 ```{r}
 averp %>% 
@@ -545,7 +645,11 @@ averp %>%
   ggtitle('Average Retail Prices of Selected Consumer Items (Jan 2018 to Dec 2022)')
 ```
 
+
+
 ## 6.3.5 BumpCharts in R
+
+
 
 ```{r}
 rice %>% 
@@ -566,7 +670,11 @@ rice %>%
         panel.background = element_rect(fill="#f5f5f5"))
 ```
 
+
+
 ## 6.3.6 LineColour
+
+
 
 ```{r}
 rice %>% 
@@ -583,6 +691,4 @@ rice %>%
         panel.background = element_rect(fill="#f5f5f5")
       ) 
 ```
-
-
 

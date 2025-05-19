@@ -144,7 +144,7 @@
     "href": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#plotting-multiple-calendar-heatmaps",
     "title": "Hands-on Exercise 6",
     "section": "4.1 Plotting Multiple Calendar Heatmaps",
-    "text": "4.1 Plotting Multiple Calendar Heatmaps\n\n\nCode\nggplot(top4_attacks, \n       aes(hour, \n           wkday, \n           fill = n)) + \n  geom_tile(color = \"white\", \n          size = 0.1) + \n  theme_tufte(base_family = \"Helvetica\") + \n  coord_equal() +\n  scale_fill_gradient(name = \"# of attacks\",\n                    low = \"sky blue\", \n                    high = \"dark blue\") +\n  facet_wrap(~source_country, ncol = 2) +\n  labs(x = NULL, y = NULL, \n     title = \"Attacks on top 4 countries by weekday and time of day\") +\n  theme(axis.ticks = element_blank(),\n        axis.text.x = element_text(size = 7),\n        plot.title = element_text(hjust = 0.5),\n        legend.title = element_text(size = 8),\n        legend.text = element_text(size = 6) )"
+    "text": "4.1 Plotting Multiple Calendar Heatmaps\n\nggplot(top4_attacks, \n       aes(hour, \n           wkday, \n           fill = n)) + \n  geom_tile(color = \"white\", \n          size = 0.1) + \n  theme_tufte(base_family = \"Helvetica\") + \n  coord_equal() +\n  scale_fill_gradient(name = \"# of attacks\",\n                    low = \"sky blue\", \n                    high = \"dark blue\") +\n  facet_wrap(~source_country, ncol = 2) +\n  labs(x = NULL, y = NULL, \n     title = \"Attacks on top 4 countries by weekday and time of day\") +\n  theme(axis.ticks = element_blank(),\n        axis.text.x = element_text(size = 7),\n        plot.title = element_text(hjust = 0.5),\n        legend.title = element_text(size = 8),\n        legend.text = element_text(size = 6) )"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html",
@@ -985,5 +985,68 @@
     "title": "Take-home Exercise 1: Phase 1",
     "section": "Final Words - Bridging Generations: Tailoring Singapore’s Communities for All Ages",
     "text": "Final Words - Bridging Generations: Tailoring Singapore’s Communities for All Ages\nTogether, our analysis paints a comprehensive portrait of Singapore’s evolving demographic landscape: declining birth rates have narrowed the population’s base while increased longevity has expanded its apex, leaving 37 dependents, 20 young and 17 elderly for every 100 working‑age adults. Regionally, Central and North‑East districts emerge as dual hotspots of both prime‑age workers and burgeoning senior cohorts, intensifying the “sandwich generation” pressures on mid‑career adults who juggle childcare and eldercare. Across Planning Areas, median ages range from the low 30s in growth towns like Punggol and Tengah to the mid‑40s in mature estates such as Queenstown and Bukit Merah, with notable sex‑specific gaps highlighted in our dumbbell plot. These patterns underscore the urgency of place‑based strategies by expanding affordable childcare in youthful precincts, scaling up geriatric care in senior‑dense districts, and tailoring urban infrastructure to each community’s generational midpoint. By aligning services with these demographic realities, Singapore can ensure that every cohort, young, working‑age and elderly receives the support it needs for a resilient, inclusive future."
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-1-data-import",
+    "href": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-1-data-import",
+    "title": "Hands-on Exercise 6",
+    "section": "5.1 Step 1: Data Import",
+    "text": "5.1 Step 1: Data Import\nFor the purpose of this hands-on exercise, arrivals_by_air.xlsx will be used.\nThe code chunk below imports arrivals_by_air.xlsx by using read_excel() of readxl package and save it as a tibble data frame called air.\n\nair &lt;- read_excel(\"data/arrivals_by_air.xlsx\")"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-2-deriving-month-and-year-fields",
+    "href": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-2-deriving-month-and-year-fields",
+    "title": "Hands-on Exercise 6",
+    "section": "5.2 Step 2: Deriving month and year fields",
+    "text": "5.2 Step 2: Deriving month and year fields\nNext, two new fields called month and year are derived from Month-Year field.\n\nair$month &lt;- factor(month(air$`Month-Year`), \n                    levels=1:12, \n                    labels=month.abb, \n                    ordered=TRUE) \nair$year &lt;- year(ymd(air$`Month-Year`))"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-3-extracting-the-target-country",
+    "href": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-3-extracting-the-target-country",
+    "title": "Hands-on Exercise 6",
+    "section": "5.3 Step 3: Extracting the target country",
+    "text": "5.3 Step 3: Extracting the target country\nNext, the code chunk below is use to extract data for the target country (i.e. Vietnam)\n\nVietnam &lt;- air %&gt;% \n  select(`Vietnam`, \n         month, \n         year) %&gt;%\n  filter(year &gt;= 2010)"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-4-computing-year-average-arrivals-by-month",
+    "href": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-4-computing-year-average-arrivals-by-month",
+    "title": "Hands-on Exercise 6",
+    "section": "5.4 Step 4: Computing year average arrivals by month",
+    "text": "5.4 Step 4: Computing year average arrivals by month\nThe code chunk below uses group_by() and summarise() of dplyr to compute year average arrivals by month.\n\nhline.data &lt;- Vietnam %&gt;% \n  group_by(month) %&gt;%\n  summarise(avgvalue = mean(`Vietnam`))"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-5-plotting-the-cycle-plot",
+    "href": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-5-plotting-the-cycle-plot",
+    "title": "Hands-on Exercise 6",
+    "section": "5.5 Step 5: Plotting the cycle plot",
+    "text": "5.5 Step 5: Plotting the cycle plot\n\nggplot() + \n  geom_line(data=Vietnam,\n            aes(x=year, \n                y=`Vietnam`, \n                group=month), \n            colour=\"black\") +\n  geom_hline(aes(yintercept=avgvalue), \n             data=hline.data, \n             linetype=6, \n             colour=\"red\", \n             size=0.5) + \n  facet_grid(~month) +\n  labs(axis.text.x = element_blank(),\n       title = \"Visitor arrivals from Vietnam by air, Jan 2010-Dec 2019\") +\n  xlab(\"\") +\n  ylab(\"No. of Visitors\") +\n  theme_tufte(base_family = \"Helvetica\")"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-1-data-import-1",
+    "href": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-1-data-import-1",
+    "title": "Hands-on Exercise 6",
+    "section": "6.1 Step 1: Data Import",
+    "text": "6.1 Step 1: Data Import\nImport the rice data set into R environment by using the code chunk below:\n\nrice &lt;- read_csv(\"data/rice.csv\")"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-2-plotting-the-slopegraph",
+    "href": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#step-2-plotting-the-slopegraph",
+    "title": "Hands-on Exercise 6",
+    "section": "6.2 Step 2: Plotting the slopegraph",
+    "text": "6.2 Step 2: Plotting the slopegraph\n\n\nCode\nrice %&gt;% \n  mutate(Year = factor(Year)) %&gt;%\n  filter(Year %in% c(1961, 1980)) %&gt;%\n  newggslopegraph(Year, Yield, Country,\n                Title = \"Rice Yield of Top 11 Asian Counties\",\n                SubTitle = \"1961-1980\",\n                Caption = \"Prepared by: Nor Hendra\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThing to learn from the code chunk above\n\n\n\nFor effective data visualisation design, factor() is used convert the value type of Year field from numeric to factor."
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#bumpcharts-in-r",
+    "href": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#bumpcharts-in-r",
+    "title": "Hands-on Exercise 6",
+    "section": "6.3.1 BumpCharts in R",
+    "text": "6.3.1 BumpCharts in R\n\n\nCode\nrice %&gt;% \n  mutate(Year = factor(Year)) %&gt;%\n  filter(Year %in% c(2005, 2006, 2007, 2008, 2009, 2010)) %&gt;%\n  ggplot(aes(x = Year,\n         y = Yield,\n         color = Country))+\n  geom_point(color = \"#FFFFFF\", size = 1) +\n  ggbump::geom_bump(mapping=aes(x = Year,\n                                y = Yield, \n                                group = Country\n                                ))+\n  labs(title = \"Rice Yield of Top 11 Asian Countries\") +  \n  theme_minimal()+\n  theme(\n        plot.background = element_rect(fill = \"#f5f5f5\", color = \"#f5f2f5\"),\n        panel.background = element_rect(fill=\"#f5f5f5\"))"
+  },
+  {
+    "objectID": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#linecolour",
+    "href": "Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html#linecolour",
+    "title": "Hands-on Exercise 6",
+    "section": "6.3.2 LineColour",
+    "text": "6.3.2 LineColour\n\n\nCode\nrice %&gt;% \n  mutate(Year = factor(Year)) %&gt;%\n  filter(Year %in% c(2005, 2006, 2007, 2008, 2009, 2010)) %&gt;%\n  newggslopegraph(Year, Yield, Country,\n                Title = \"Rice Yield of Top 11 Asian Countries\",\n                SubTitle = \"2005 to 2010\",\n                Caption = NULL,\n                LineColor = c(\"Korea\" = \"#e0218a\", \"Thailand\" = \"#FFBC2F\"),\n                DataLabelFillColor = \"#f5f5f5\",) +\n    theme(\n        plot.background = element_rect(fill = \"#f5f5f5\", color = \"#f5f2f5\"),\n        panel.background = element_rect(fill=\"#f5f5f5\")\n      ) \n\n\n\n\n\n\n\n\n\n\n6.3.3 Stream Graph\n\n\n6.3.3.1 Loading Packages\nggstream will be used to plot the Stream Graph (aka Theme River). Although other packages are already loaded, I have included them in this pacman load to show what I will be using for this plot.\n\n\nCode\npacman::p_load(ggstream,dplyr,tidyr,ggplot2,scales)\n\n\n\n\n6.3.3.2 Plotting the Stream Graph\n\n\nCode\n# Assuming `rice` has columns: Country, Year, Yield\n\n# Step 1: Filter to years with sufficient data\nrice_stream &lt;- rice %&gt;%\n  filter(Year &gt;= 1961, Year &lt;= 1980) %&gt;%\n  group_by(Year, Country) %&gt;%\n  summarise(Yield = sum(Yield, na.rm = TRUE), .groups = \"drop\")\n\n# Step 2: Optional - filter to top 11 countries by total yield\ntop_countries &lt;- rice_stream %&gt;%\n  group_by(Country) %&gt;%\n  summarise(total = sum(Yield)) %&gt;%\n  arrange(desc(total)) %&gt;%\n  slice(1:11) %&gt;%\n  pull(Country)\n\nrice_stream &lt;- rice_stream %&gt;% filter(Country %in% top_countries)\n\n# Step 3: Plot using ggstream\n\nggplot(rice_stream, aes(x = Year, y = Yield, fill = Country)) +\n  geom_stream(type = \"ridge\") +\n  scale_y_continuous(labels = label_comma()) +  # &lt;- prevents scientific notation\n  labs(\n    title = \"Rice Yield of Top 11 Asian Countries (1961–1980)\",\n    x = \"Year\", y = \"Yield (tonnes/ha)\",  # You can customize the unit\n    caption = \"Static streamgraph using ggstream\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\n6.3.3 Time on the Horizon: ggHoriPlot methods\nA horizon graph is an analytical graphical method specially designed for visualising large numbers of time-series. It aims to overcome the issue of visualising highly overlapping time-series as shown in the figure below.\nA horizon graph essentially an area chart that has been split into slices and the slices then layered on top of one another with the areas representing the highest (absolute) values on top. Each slice has a greater intensity of colour based on the absolute value it represents.\n\n6.3.3.1 Data Import\n\n\nCode\naverp &lt;- read_csv(\"data/AVERP.csv\") %&gt;%\n  mutate(`Date` = dmy(`Date`))\n\n\n\n\n\n\n\n\nThings to learn from the code chunk above\n\n\n\n\nBy default, read_csv will import data in Date field as Character data type. dmy() of lubridate package to palse the Date field into appropriate Date data type in R.\n\n\n\n\n\n6.3.3.2 Plotting the horizon graph\n\n\nCode\naverp %&gt;% \n  filter(Date &gt;= \"2018-01-01\") %&gt;%\n  ggplot() +\n  geom_horizon(aes(x = Date, y=Values), \n               origin = \"midpoint\", \n               horizonscale = 6)+\n  facet_grid(`Consumer Items`~.) +\n    theme_few() +\n  scale_fill_hcl(palette = 'RdBu') +\n  theme(panel.spacing.y=unit(0, \"lines\"), strip.text.y = element_text(\n    size = 5, angle = 0, hjust = 0),\n    legend.position = 'none',\n    axis.text.y = element_blank(),\n    axis.text.x = element_text(size=7),\n    axis.title.y = element_blank(),\n    axis.title.x = element_blank(),\n    axis.ticks.y = element_blank(),\n    panel.border = element_blank()\n    ) +\n    scale_x_date(expand=c(0,0), date_breaks = \"3 month\", date_labels = \"%b%y\") +\n  ggtitle('Average Retail Prices of Selected Consumer Items (Jan 2018 to Dec 2022)')"
   }
 ]
