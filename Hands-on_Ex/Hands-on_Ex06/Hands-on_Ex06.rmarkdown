@@ -1,7 +1,7 @@
 ---
 title: "Hands-on Exercise 6"
 author: "Nor Hendra"
-date: "12 May 2025"
+date: "19 May 2025"
 date-modified: "last-modified"
 format: html
 editor: visual
@@ -39,7 +39,8 @@ By the end of this hands-on exercise you will be able create the followings data
 #| code-fold: false
 pacman::p_load(scales, viridis, lubridate, ggthemes,
                gridExtra, readxl, knitr, data.table,
-               CGPfunctions, ggHoriPlot, tidyverse)
+               CGPfunctions, ggHoriPlot, tidyverse,
+               gganimate,ggplot2,dplyr,scales)
 ```
 
 
@@ -451,15 +452,16 @@ For effective data visualisation design, `factor()` is used convert the value ty
 # 6.3 Extras
 
 ### 6.3.1 Stream Graph
+
 ### 6.3.1.1 Loading Packages
 
 ggstream will be used to plot the Stream Graph (aka Theme River). Although other packages are already loaded, I have included them in this pacman load to show what I will be using for this plot.
 
 
+
 ```{r}
 pacman::p_load(ggstream,dplyr,tidyr,ggplot2,scales)
 ```
-
 
 
 
@@ -501,9 +503,11 @@ ggplot(rice_stream, aes(x = Year, y = Yield, fill = Country)) +
 
 
 ### 6.3.2 Animated Bubble Plot
+
 We have done this hands-on before, but let's see what this rice data looks like on an animated bubble plot.
 
 #### 6.3.2.1 Loading Packages
+
 
 
 ```{r}
@@ -513,6 +517,7 @@ pacman::p_load(gganimate,ggplot2,dplyr,scales)
 
 
 #### 6.3.2.2 The Plot
+
 
 
 ```{r}
@@ -544,12 +549,14 @@ animate(p, nframes = 100, fps = 10, width = 800, height = 600)
 
 
 
-::: .callout-tip
+::: callout-tip
 ## Observation
+
 I don't think this is useful, but from the animation - a line animation would be much better! So let's try that.
 :::
 
 ### 6.3.3 Animating Line Graph Method
+
 
 
 ```{r}
@@ -589,8 +596,10 @@ animate(p, nframes = 100, fps = 10, width = 800, height = 600)
 ```
 
 
-::: .callout-tip
+
+::: callout-tip
 ## Observation
+
 This now makes more sense! We can see how each country rice yield decrease or increase over the years.
 :::
 
