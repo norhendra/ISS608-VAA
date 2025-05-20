@@ -319,26 +319,41 @@ hline.data <- Vietnam %>%
 ```
 
 ## 5.5 Step 5: Plotting the cycle plot
+::: callout-tip
+## Slight modification to code
+The X-Axis is all squished up in the original cycle plot, I have made some changes to plot it clearly
+:::
 
 ```{r}
 #| code-fold: false
+#| fig-height: 8
+#| fig-width: 10
+# Use existing integer year column
+Vietnam$year_num <- Vietnam$year
+
+# Plot
 ggplot() + 
-  geom_line(data=Vietnam,
-            aes(x=year, 
-                y=`Vietnam`, 
-                group=month), 
-            colour="black") +
-  geom_hline(aes(yintercept=avgvalue), 
-             data=hline.data, 
-             linetype=6, 
-             colour="red", 
-             size=0.5) + 
+  geom_line(data = Vietnam,
+            aes(x = year_num, 
+                y = Vietnam, 
+                group = month), 
+            colour = "black") +
+  geom_hline(data = hline.data, 
+             aes(yintercept = avgvalue), 
+             linetype = 6, 
+             colour = "red", 
+             size = 0.5) + 
   facet_grid(~month) +
-  labs(axis.text.x = element_blank(),
-       title = "Visitor arrivals from Vietnam by air, Jan 2010-Dec 2019") +
-  xlab("") +
-  ylab("No. of Visitors") +
-  theme_tufte(base_family = "Helvetica")
+  labs(
+    title = "Visitor arrivals from Vietnam by air, Jan 2010–Dec 2019",
+    x = "",
+    y = "No. of Visitors"
+  ) +
+  theme_tufte(base_family = "Helvetica") +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
 ```
 
 # 6. Plotting Slopegraph
@@ -418,15 +433,16 @@ ggplot(rice_stream, aes(x = Year, y = Yield, fill = Country)) +
   theme_minimal()
 
 ```
+
 ### 6.3.2 Animated Bubble Plot
 
 We have done this hands-on before, but let's see what this rice data looks like on an animated bubble plot.
 
 ::: callout-note
 ## nframes adjustment
-I first tried ``animate(p, nframes = 40, fps = 10, width = 600, height = 450)`` which looked much better but it seems like it took too long to render and was not saving. Hence, I changed it to nframes = 30 and used ``renderer = gifski_renderer`` to not preview. Afterwards, it was working fine. The 2 animation plots will be using this set up.
-:::
 
+I first tried `animate(p, nframes = 40, fps = 10, width = 600, height = 450)` which looked much better but it seems like it took too long to render and was not saving. Hence, I changed it to nframes = 30 and used `renderer = gifski_renderer` to not preview. Afterwards, it was working fine. The 2 animation plots will be using this set up.
+:::
 
 #### 6.3.2.1 Loading Packages
 
