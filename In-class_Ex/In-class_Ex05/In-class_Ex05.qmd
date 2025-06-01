@@ -13,10 +13,13 @@ code-fold: true
 ---
 
 # *Mini-Challenge 1*
+
 # 1. Getting Started
+
 ## 1.1 Installing Packages
 
 In the code chunk below, p_load() of pacman package is used to load the R packages into R environment
+
 ```{r}
 pacman::p_load(tidyverse,jsonlite,SmartEDA,tidygraph,ggraph)
 ```
@@ -30,21 +33,26 @@ kg <- fromJSON("data/MC1_graph.json")
 ```
 
 ### Inspect structure
+
 ```{r}
 str(kg, max.level =1)
 ```
+
 ### Extract and inspect
+
 ```{r}
 nodes_tbl <- as_tibble(kg$nodes)
 edges_tbl <- as_tibble(kg$links)
 ```
 
 ## Initial EDA
+
 ```{r}
 ggplot(data = edges_tbl,
        aes(y = `Edge Type`)) +
  geom_bar()
 ```
+
 ```{r}
 ggplot(data = nodes_tbl,
        aes(y= `Node Type`)) +
@@ -83,17 +91,21 @@ edges_tbl <- edges_tbl %>%
 ### Step 4: Creating the graph
 
 Lastly, `tbl_graph()` is used to create tidygraph's graph object by using the code chunk below.
+
 ```{r}
 graph <- tbl_graph(nodes = nodes_tbl,
                    edges = edges_tbl,
                    directed =kg$directed)
 ```
+
 ## Visualising the knowledge graph
+
 ```{r}
 set.seed(1234)
 ```
 
 ### Visualising the whole graph
+
 ```{r}
 #| eval: false
 #| code-fold: false
@@ -111,9 +123,11 @@ ggraph(graph, layout = "fr") +
 ```
 
 ### Visualising the sub-graph
-In this section, we are interested to create a sub-graph base on *MemberOf* value in *Edge Type*  column of the *edges* data frame. 
+
+In this section, we are interested to create a sub-graph base on *MemberOf* value in *Edge Type* column of the *edges* data frame.
 
 #### Step 1: Filter edges to only "MemberOf"
+
 ```{r}
 graph_memberof <- graph %>%
   activate(edges) %>%
@@ -121,6 +135,7 @@ graph_memberof <- graph %>%
 ```
 
 #### Step 2: Extract only connected nodes (i.e., used in these edges)
+
 ```{r}
 used_node_indices <- graph_memberof %>%
   activate(edges) %>%
@@ -131,6 +146,7 @@ used_node_indices <- graph_memberof %>%
 ```
 
 #### Step 3: Keep only those nodes
+
 ```{r}
 graph_memberof <- graph_memberof %>%
   activate(nodes) %>%
@@ -140,6 +156,7 @@ graph_memberof <- graph_memberof %>%
 ```
 
 #### Plot the sub-graph
+
 ```{r}
 ggraph(graph_memberof, 
        layout = "fr") +
@@ -154,5 +171,4 @@ ggraph(graph_memberof,
 ```
 
 
-
-
+```
