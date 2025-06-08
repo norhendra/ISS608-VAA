@@ -1447,5 +1447,12 @@
     "title": "Hands-on Exercise 8C",
     "section": "6.4 Boxmap function",
     "text": "6.4 Boxmap function\nThe code chunk below is an R function to create a box map. - arguments: - vnam: variable name (as character, in quotes) - df: simple features polygon layer - legtitle: legend title - mtitle: map title - mult: multiplier for IQR - returns: - a tmap-element (plots a map)\n\nboxmap &lt;- function(vnam, df, \n                   legtitle=NA,\n                   mtitle=\"Box Map\",\n                   mult=1.5){\n  var &lt;- get.var(vnam,df)\n  bb &lt;- boxbreaks(var)\n  tm_shape(df) +\n    tm_polygons() +\n  tm_shape(df) +\n     tm_fill(vnam,title=legtitle,\n             breaks=bb,\n             palette=\"Blues\",\n          labels = c(\"lower outlier\", \n                     \"&lt; 25%\", \n                     \"25% - 50%\", \n                     \"50% - 75%\",\n                     \"&gt; 75%\", \n                     \"upper outlier\"))  +\n  tm_borders() +\n  tm_layout(main.title = mtitle, \n            title.position = c(\"left\",\n                               \"top\"))\n}\ntmap_mode(\"plot\")\nboxmap(\"wp_nonfunctional\", NGA_wp)"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html",
+    "href": "Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html",
+    "title": "Take Home Exercise 3",
+    "section": "",
+    "text": "Take-home Exercise 3: Prototype"
   }
 ]

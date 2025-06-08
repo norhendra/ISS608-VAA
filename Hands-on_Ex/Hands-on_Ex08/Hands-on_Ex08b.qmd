@@ -1,5 +1,5 @@
 ---
-title: "Hands-on Exercise 8A"
+title: "Hands-on Exercise 8B"
 author: "Nor Hendra"
 date: "06 June 2025"
 date-modified: "last-modified"

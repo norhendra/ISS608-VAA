@@ -1,0 +1,15 @@
+---
+title: "Take Home Exercise 3"
+author: "Nor Hendra"
+date: "8 June 2025"
+date-modified: "last-modified"
+format: html
+editor: visual
+freeze: true
+execute:
+  eval: true
+  echo: true
+  warning: false
+---
+
+# Take-home Exercise 3: Prototype
