@@ -1454,5 +1454,26 @@
     "title": "Take Home Exercise 3",
     "section": "",
     "text": "Take-home Exercise 3: Prototype"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html#domain-alignment",
+    "href": "Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html#domain-alignment",
+    "title": "Take Home Exercise 3",
+    "section": "Domain Alignment",
+    "text": "Domain Alignment\nThe Spotify metaphor maps directly onto our knowledge graph’s core entities. Artists, albums, genres, and collaborations correspond to Spotify’s “Artist” profiles, “Album” pages, and “Playlist” collections. This one-to-one mapping reduces cognitive load: music-literate users do not need to learn a novel UI paradigm to traverse relationships in the graph."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html#discovery-engagement",
+    "href": "Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html#discovery-engagement",
+    "title": "Take Home Exercise 3",
+    "section": "Discovery & Engagement",
+    "text": "Discovery & Engagement\nSpotify’s recommendation carousel inspires an “Artists You May Like” feature, driven by graph-based similarity measures (e.g., shared collaborators or genre overlap). Users scroll horizontally through suggested emerging Oceanus Folk artists, fostering exploratory serendipity. A timeline scrubber akin to track scrubbing animates network evolution: sliding from 2023 to 2040 gradually reveals new collaborations, genre shifts, and the emergence of Sailor’s former bandmates. This temporal interaction deepens users’ understanding of historical progression."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html#arrangement-of-modules",
+    "href": "Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html#arrangement-of-modules",
+    "title": "Take Home Exercise 3",
+    "section": "Arrangement of Modules",
+    "text": "Arrangement of Modules\nTo foreground the story of Sailor Shift and her musical milieu, I’ll organize my analysis not by generic methods (EDA, CDA, etc.) but by three thematic lenses:\n\nSailor Shift’s Personal Network\nThe Oceanus Folk Genre\nOther Artists & Cross-Genre Bridges\n\nBy splitting the report into Sailor Shift → Oceanus Folk → Other Artists, I both tell a coherent musical story and ensure that each analytic technique serves the narrative, rather than being an end in itself.\nBelow is how the Spotify UI looks like.\n\nLet’s try recreating this as a storyboard using Figma."
   }
 ]
