@@ -38,7 +38,7 @@ For fluidity of the prototype, I will be incorporating the data preparation and 
 
 The group has decided to do MC1 - <https://vast-challenge.github.io/2025/MC1.html> which is a challenge to unravel the impact of Sailor Shift and the Oceanus Folk genre.
 
-# 1. Packages to Use and Data
+# 1. Packages to Use and Loading Data
 
 ```{r}
 #| code-fold: false
