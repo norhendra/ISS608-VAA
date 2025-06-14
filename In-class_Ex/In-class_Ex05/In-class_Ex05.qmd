@@ -170,5 +170,4 @@ ggraph(graph_memberof,
   theme_void()
 ```
 
-
-```
+\`\`\`
