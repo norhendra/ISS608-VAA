@@ -38,7 +38,7 @@ For fluidity of the prototype, I will be incorporating the data preparation and 
 
 The group has decided to do MC1 - <https://vast-challenge.github.io/2025/MC1.html> which is a challenge to unravel the impact of Sailor Shift and the Oceanus Folk genre.
 
-# 1. Loading Libraries and Data
+# 1. Packages to Use and Data
 
 ```{r}
 #| code-fold: false
@@ -126,7 +126,7 @@ The components of the UI would work as follows:
 
     </iframe>
 
-### 3.2.2 Sailor Shift
+### 3.2.2 Module 1: Sailor Shift
 
 ![](images/clipboard-3533960195.png){width="1516"}
 
@@ -879,7 +879,7 @@ On the **Sailor Shift** tab you can explore her creative network from two comple
 
 These options let you zoom in on a single collaboration or zoom out to grasp Sailor’s entire influence web at a glance.
 
-### 3.2.3 Oceanus Folk
+### 3.2.3 Module 2: Oceanus Folk
 
 ![](images/clipboard-2234209972.png){width="1515"}
 
@@ -1991,7 +1991,7 @@ On the **Oceanus Folk** tab, users can explore how the genre radiates across and
 
     -   **Timeline Slider** – scrub through years; every panel refreshes in sync.
 
-### 3.2.4 Other Artists
+### 3.2.4 Module 3: Other Artists
 
 ![](images/clipboard-2373117349.png){width="1513"}
 
