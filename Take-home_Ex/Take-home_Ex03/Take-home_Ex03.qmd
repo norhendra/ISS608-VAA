@@ -46,7 +46,7 @@ pacman::p_load(tidyverse, jsonlite,
                SmartEDA, tidygraph, 
                ggraph,dplyr,igraph, 
                visNetwork,RColorBrewer,
-               htmltools,ggplot2,scales,plotly,tidytext,patchwork, lubridate, shinyuiedtior)
+               htmltools,ggplot2,scales,plotly,tidytext,patchwork, lubridate)
 ```
 
 ```{r}
